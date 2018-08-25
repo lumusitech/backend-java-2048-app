@@ -5,6 +5,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+
+import negocio.Tablero;
+
 import javax.swing.JTextField;
 import javax.swing.JPanel;
 import java.awt.Color;
@@ -12,13 +15,14 @@ import java.awt.Color;
 public class MainFrame {
 
 	private JFrame ventana;
+	private Tablero tableroDeValores;
 	private JTextField[][] cuadros;
 	private int cuadroPosX;
 	private int cuadroPosY;
 	private int cuadrosTamanio;
 
 
-	//Lanza la aplicación
+	//Lanza la aplicacion
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -32,7 +36,7 @@ public class MainFrame {
 		});
 	}
 
-	//crea la aplicación
+	//crea la aplicacion
 	public MainFrame() {
 		initialize();
 	}
@@ -46,6 +50,10 @@ public class MainFrame {
 		//Se crea el tablero de juego
 		tableroDeJuego();
 	}
+	
+	
+	////////////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////METODOS AUXILIARES/////////////////////////////////////
 
 	public void tableroDeJuego() {
 		//Se crea el panel que contiene a los cuadros
@@ -54,6 +62,9 @@ public class MainFrame {
 		contenedorDeCuadros.setBounds(161, 69, 290, 290);
 		ventana.getContentPane().add(contenedorDeCuadros);
 		contenedorDeCuadros.setLayout(null);
+		
+		//Se crea un nuevo tablero de valores
+		tableroDeValores = new Tablero();
 		
 		//Inicializa el tablero y la posicin de los cuadros
 		cuadros=new JTextField[4][4];
@@ -80,6 +91,14 @@ public class MainFrame {
 					cuadroPosX+=70;
 					cuadroPosY=10;
 				}
+				
+				//Se recuperan los valores del tablero de negocio
+				String valor=Integer.toString(tableroDeValores.getValor(i, j));
+				if(!valor.equals("0")) {
+					//si no son cero se los muestra
+					cuadros[i][j].setText(valor);
+				}
+				
 			}
 		}
 	}
@@ -92,7 +111,7 @@ public class MainFrame {
 		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ventana.getContentPane().setLayout(null);
 		
-		//Título
+		//Ttulo
 		JLabel titulo = new JLabel("2048");
 		titulo.setBounds(222, 11, 158, 50);
 		titulo.setHorizontalAlignment(SwingConstants.CENTER);
