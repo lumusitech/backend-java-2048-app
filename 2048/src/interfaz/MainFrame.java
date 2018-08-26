@@ -58,7 +58,7 @@ public class MainFrame {
 	public void tableroDeJuego() {
 		//Se crea el panel que contiene a los cuadros
 		JPanel contenedorDeCuadros = new JPanel();
-		contenedorDeCuadros.setBackground(Color.DARK_GRAY);
+		contenedorDeCuadros.setBackground(new Color(187, 173, 160));
 		contenedorDeCuadros.setBounds(161, 69, 290, 290);
 		ventana.getContentPane().add(contenedorDeCuadros);
 		contenedorDeCuadros.setLayout(null);
@@ -80,7 +80,9 @@ public class MainFrame {
 					cuadroPosY+=70;
 				}
 				cuadros[i][j]=new JTextField();
-				cuadros[i][j].setFont(new Font("Tahoma", Font.PLAIN, 16));
+				cuadros[i][j].setBorder(null);
+				cuadros[i][j].setBackground(new Color(205,193,180));
+				cuadros[i][j].setFont(new Font("Tahoma", Font.BOLD, 25));
 				cuadros[i][j].setHorizontalAlignment(SwingConstants.CENTER);
 				cuadros[i][j].setEditable(false);
 				cuadros[i][j].setBounds(cuadroPosX, cuadroPosY, cuadrosTamanio, cuadrosTamanio);
@@ -96,15 +98,20 @@ public class MainFrame {
 				String valor=Integer.toString(tableroDeValores.getValor(i, j));
 				if(!valor.equals("0")) {
 					//si no son cero se los muestra
+					cuadros[i][j].setBorder(null);
+					cuadros[i][j].setBackground(new Color(238,228,218));
+					cuadros[i][j].setForeground(new Color(119,110,101));
 					cuadros[i][j].setText(valor);
 				}
 				
 			}
 		}
+		
 	}
 
 	public void ventanaPrincipal() {
 		ventana = new JFrame();
+		ventana.getContentPane().setBackground(new Color(250, 248, 239));
 		ventana.setTitle("Juego 2048");
 		ventana.setBounds(100, 100, 640, 480);
 		ventana.setResizable(false);
@@ -115,7 +122,8 @@ public class MainFrame {
 		JLabel titulo = new JLabel("2048");
 		titulo.setBounds(222, 11, 158, 50);
 		titulo.setHorizontalAlignment(SwingConstants.CENTER);
-		titulo.setFont(new Font("Times New Roman", Font.BOLD, 30));
+		titulo.setForeground(new Color(119,110,101));
+		titulo.setFont(new Font("Times New Roman", Font.BOLD, 50));
 		ventana.getContentPane().add(titulo);
 	}
 }

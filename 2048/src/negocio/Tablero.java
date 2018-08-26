@@ -45,7 +45,6 @@ public class Tablero {
 		
 		int valorAleatorio = r3.nextInt(100);
 		if(valorAleatorio<50) {
-			
 			DosOCuatro=2;
 		}
 		else {
