@@ -55,6 +55,26 @@ public class Tablero {
 	public int getValor(int i, int j) {
 		return tablero[i][j];
 	}
+
+	public void reiniciar() {
+		for(int i=0; i<4; i++) {
+			for(int j=0; j<4; j++) {
+				tablero[i][j]=0;
+			}
+		}
+		
+		valorInicial1=0;
+		valorInicial2=0;
+		
+		valorAleatorio();
+		valorInicial1=DosOCuatro;
+		tablero[fila][columna]=valorInicial1;
+		
+		valorAleatorio();
+		valorInicial2=DosOCuatro;
+		tablero[fila][columna]=valorInicial2;
+		
+	}
 	
 	
 	
