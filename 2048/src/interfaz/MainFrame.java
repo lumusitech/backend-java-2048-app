@@ -3,6 +3,8 @@ package interfaz;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
@@ -115,7 +117,7 @@ public class MainFrame{
 		cuadroPosX=10;
 		cuadroPosY=10;
 		
-		//Se crean los cuadros
+		//Se crean los cuadros y se los ordena en el panel
 		for(int i=0; i<4; i++) {
 			for(int j=0; j<4; j++) {
 				
@@ -136,11 +138,10 @@ public class MainFrame{
 					cuadroPosX+=70;
 					cuadroPosY=10;
 				}
-				
-				iniciarTableroGrafico(i, j);
-				
 			}
 		}
+		
+		actualizarTableroGrafico();
 		
 	}
 	
@@ -161,22 +162,64 @@ public class MainFrame{
 			public void keyPressed(KeyEvent e){
 				
                 if(e.getKeyCode()==KeyEvent.VK_RIGHT){
-                    System.out.println("presiono derecha");
-                    //aca va la funcion que se encarga de la logica
+                	if(tableroDeValores.mover("derecha")) {
+                		actualizarTableroGrafico();
+                	}
+                	else {
+                		int opcion=JOptionPane.showConfirmDialog(ventana,"Fin del juego - Desea reintentar?");
+                		if(opcion==0) {
+                			nuevo();
+                		}
+                		else if(opcion==1) {
+                			System.exit(0);
+                		}
+                	}
+                	
                 }
                 if(e.getKeyCode()==KeyEvent.VK_LEFT){
-                    System.out.println("presiono izquierda");
-                    //aca va la funcion que se encarga de la logica
+                	if(tableroDeValores.mover("izquierda")) {
+                		actualizarTableroGrafico();
+                	}
+                	else {
+                		int opcion=JOptionPane.showConfirmDialog(ventana,"Fin del juego - Desea reintentar?");
+                		if(opcion==0) {
+                			nuevo();
+                		}
+                		else if(opcion==1) {
+                			System.exit(0);
+                		}
+                	}
                 }
                 if(e.getKeyCode()==KeyEvent.VK_UP){
-                    System.out.println("presiono arriba");
-                    //aca va la funcion que se encarga de la logica
+                	if(tableroDeValores.mover("arriba")) {
+                		actualizarTableroGrafico();
+                	}
+                	else {
+                		int opcion=JOptionPane.showConfirmDialog(ventana,"Fin del juego - Desea reintentar?");
+                		if(opcion==0) {
+                			nuevo();
+                		}
+                		else if(opcion==1) {
+                			System.exit(0);
+                		}
+                	}
                 }
                 if(e.getKeyCode()==KeyEvent.VK_DOWN){
-                	System.out.println("presiono abajo");
-                	//aca va la funcion que se encarga de la logica
+                	if(tableroDeValores.mover("abajo")) {
+                		actualizarTableroGrafico();
+                	}
+                	else {
+                		int opcion=JOptionPane.showConfirmDialog(ventana,"Fin del juego - Desea reintentar?");
+                		if(opcion==0) {
+                			nuevo();
+                		}
+                		else if(opcion==1) {
+                			System.exit(0);
+                		}
+                	}
                 }
                 if(e.getKeyCode()==KeyEvent.VK_ESCAPE){
+                	//poner antes de salir un msj de advertencia para el usuario u opciones
                     System.exit(0);
                 }
                 
@@ -184,31 +227,36 @@ public class MainFrame{
 		});
 	}
 	
-
-	////////////////////////////////////////////////////////////////////////////////////////
-	public void iniciarTableroGrafico(int i, int j) {
-		//Se recuperan los valores del tablero de negocio
-		String valor=Integer.toString(tableroDeValores.getValor(i, j));
-		//Se actualiza el valor de cada cuadro y su color de fondo
-		actualizarCuadros(cuadros[i][j], valor);
-	}
 	
+	
+	
+	////////////////////////////////////////////////////////////////////////////////////////
+	public void actualizarTableroGrafico() {
+		for(int i=0; i<4; i++) {
+			for(int j=0; j<4; j++) {
+				//Se recuperan los valores del tablero de negocio
+				String valor=Integer.toString(tableroDeValores.getValor(i, j));
+				//Se actualiza el valor de cada cuadro y su color de fondo
+				actualizarCuadros(cuadros[i][j], valor);
+			}
+		}
+	}
 	////////////////////////////////////////////////////////////////////////////////////////
 	public void botonJuegoNuevo() {
 		
-		JButton juegoNuevo = new JButton("Juego nuevo");
+		JButton btnJuegoNuevo = new JButton("Juego nuevo");
 		
 		//se estiliza el botón juegoNuevo y se lo agrega
-		juegoNuevo.setBorder(null);//saca los bordes que vienen por defecto
-		juegoNuevo.setFocusable(false);//evita que se vea un cuadro punteado alrededor del texto del boton
-		juegoNuevo.setBackground(new Color(143,122,102));
-		juegoNuevo.setForeground(new Color(249,246,242));
-		juegoNuevo.setFont(new Font("Tahoma", Font.BOLD, 15));
-		juegoNuevo.setBounds(135, 389, 136, 35);
-		ventana.getContentPane().add(juegoNuevo);
+		btnJuegoNuevo.setBorder(null);//saca los bordes que vienen por defecto
+		btnJuegoNuevo.setFocusable(false);//evita que se vea un cuadro punteado alrededor del texto del boton
+		btnJuegoNuevo.setBackground(new Color(143,122,102));
+		btnJuegoNuevo.setForeground(new Color(249,246,242));
+		btnJuegoNuevo.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnJuegoNuevo.setBounds(135, 389, 136, 35);
+		ventana.getContentPane().add(btnJuegoNuevo);
 		
 		//El botón de juego nuevo esta a la escucha de eventos
-		juegoNuevo.addMouseListener(new MouseAdapter() {
+		btnJuegoNuevo.addMouseListener(new MouseAdapter() {
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -218,27 +266,27 @@ public class MainFrame{
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				juegoNuevo.setBackground(new Color(131,110,90).darker());
+				btnJuegoNuevo.setBackground(new Color(131,110,90).darker());
 			}
 			
 			@Override
 			public void mouseExited(MouseEvent e) {
-				juegoNuevo.setBackground(new Color(143,122,102));
+				btnJuegoNuevo.setBackground(new Color(143,122,102));
 			}
 			
 			public void mousePressed(MouseEvent e) {
-				juegoNuevo.setForeground(new Color(143,122,102).darker());
+				btnJuegoNuevo.setForeground(new Color(143,122,102).darker());
 			}
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				juegoNuevo.setForeground(new Color(249,246,242));
+				btnJuegoNuevo.setForeground(new Color(249,246,242));
 			}
 			
 		});
 		
 		//Despues de reiniciar, se debe indicar de nuevo que escuche eventos de teclado del panel
-		escucharTeclado(null, juegoNuevo);
+		escucharTeclado(null, btnJuegoNuevo);
 		
 	}
 	
@@ -255,13 +303,11 @@ public class MainFrame{
 				cuadros[i][j].setText(null);
 				
 				//Se vuelve a poner el color de fondo inicial
-				cuadros[i][j].setBackground(new Color(205,193,180));
-				
-				//Se obtiene el valor de cada cuadro y se lo setea
-				iniciarTableroGrafico(i, j);
-				
+				cuadros[i][j].setBackground(new Color(205,193,180));				
 			}	
 		}
+		
+		actualizarTableroGrafico();
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////

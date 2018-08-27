@@ -24,13 +24,17 @@ public class Tablero {
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////
-	public void agregarValor() {
-		lugarAleatorio();//busca un lugar aleatorio disponible
-		tablero[fila][columna]=dosOCuatro();//asigna a ese lugar dos o cuatro aleatoriamente
+	public boolean agregarValor() {
+		if(lugarAleatorio()) {
+			//busca un lugar aleatorio disponible
+			tablero[fila][columna]=dosOCuatro();//asigna a ese lugar dos o cuatro aleatoriamente
+			return true;
+		}
+		return false;
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////
-	public void lugarAleatorio() {
+	public boolean lugarAleatorio() {
 		Random r1 = new Random();
 		Random r2 = new Random();
 		
@@ -53,8 +57,10 @@ public class Tablero {
 		if(contador==10) {
 			if(!existeLugarDisponible()){
 				System.out.println("Fin del juego - No existe lugar disponible");
+				return false;
 			}
 		}
+		return true;
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////
@@ -107,8 +113,24 @@ public class Tablero {
 	
 	////////////////////////////////////////////////////////////////////////////////////////
 	
-	public void mover(String direccion) {
-		
+	public boolean mover(String direccion) {
+		if(direccion.equals("derecha")) {
+			System.out.println("derecha");
+			return agregarValor();
+		}
+		if(direccion.equals("izquierda")) {
+			System.out.println("izquierda");
+			return agregarValor();
+		}
+		if(direccion.equals("arriba")) {
+			System.out.println("arriba");
+			return agregarValor();
+		}
+		if(direccion.equals("abajo")) {
+			System.out.println("abajo");
+			return agregarValor();
+		}
+		return false;
 	}
 	
 	
