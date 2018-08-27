@@ -12,19 +12,23 @@ import javax.swing.JTextField;
 import javax.swing.JPanel;
 import java.awt.Color;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.ActionEvent;
 
-public class MainFrame {
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+public class MainFrame{
 
 	private JFrame ventana;
+	private JPanel contenedorDeCuadros;
 	private Tablero tableroDeValores;
 	private JTextField[][] cuadros;
 	private int cuadroPosX;
 	private int cuadroPosY;
 	private int cuadrosTamanio;
+	
 
 
 	//Lanza la aplicacion
@@ -54,7 +58,7 @@ public class MainFrame {
 		
 		//Se crea el tablero de juego
 		tableroDeJuego();
-						
+		
 		//Se crea boton de juego nuevo
 		botonJuegoNuevo();
 	}
@@ -65,7 +69,7 @@ public class MainFrame {
 	////////////////////////////////////////////////////////////////////////////////////////
 	/////////////////////////////////METODOS AUXILIARES/////////////////////////////////////
 	
-	public void ventanaPrincipal() {
+	public void ventanaPrincipal () {
 		ventana = new JFrame();
 		ventana.getContentPane().setBackground(new Color(250, 248, 239));
 		ventana.setTitle("Juego 2048");
@@ -88,19 +92,20 @@ public class MainFrame {
 
 	public void tableroDeJuego() {
 		//Se crea el panel que contiene a los cuadros
-		JPanel contenedorDeCuadros = new JPanel();
+		contenedorDeCuadros = new JPanel();
+		
 		contenedorDeCuadros.setBackground(new Color(187, 173, 160));
 		contenedorDeCuadros.setBounds(56, 71, 290, 290);
 		ventana.getContentPane().add(contenedorDeCuadros);
 		contenedorDeCuadros.setLayout(null);
 		
-		//Se escucha eventos de teclado del panel
+		//Se escuchan eventos de teclado del panel
 		escucharPanel(contenedorDeCuadros);
 		
 		//Se crea un nuevo tablero de valores (negocio)
 		tableroDeValores = new Tablero();
 		
-		//Inicializa el tablero grafico y la posicion de los cuadros
+		//Inicializan variables del tablero grafico y la posicion de los cuadros
 		cuadros=new JTextField[4][4];
 		cuadrosTamanio=60;
 		cuadroPosX=10;
@@ -141,6 +146,7 @@ public class MainFrame {
 		panel.setFocusable(true);
 		panel.addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e){
+				
                 if(e.getKeyCode()==KeyEvent.VK_RIGHT){
                     System.out.println("presiono derecha");
                 }
@@ -156,6 +162,7 @@ public class MainFrame {
                 if(e.getKeyCode()==KeyEvent.VK_ESCAPE){
                     System.exit(0);
                 }
+                
             }
 		});
 	}
@@ -171,10 +178,37 @@ public class MainFrame {
 	
 	////////////////////////////////////////////////////////////////////////////////////////
 	public void botonJuegoNuevo() {
+		
 		JButton juegoNuevo = new JButton("Juego nuevo");
-		juegoNuevo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+		
+		//El botón de juego nuevo esta a la escucha de clicks sobre el
+		juegoNuevo.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				//Si se da el evento click, se crea un juego nuevo a partir del metodo nuevo()
 				nuevo();
+			}
+		});
+		
+		//A partir de que el foco lo tiene el botón se empieza a escuchar desde aquí al teclado
+		juegoNuevo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_RIGHT){
+                    System.out.println("presiono derecha");
+                }
+                if(e.getKeyCode()==KeyEvent.VK_LEFT){
+                    System.out.println("presiono izquierda");
+                }
+                if(e.getKeyCode()==KeyEvent.VK_UP){
+                    System.out.println("presiono arriba");
+                }
+                if(e.getKeyCode()==KeyEvent.VK_DOWN){
+                    System.out.println("presiono abajo");
+                }
+                if(e.getKeyCode()==KeyEvent.VK_ESCAPE){
+                    System.exit(0);
+                }
 			}
 		});
 		
@@ -196,23 +230,24 @@ public class MainFrame {
 		for(int i=0; i<4; i++) {
 			for(int j=0; j<4; j++) {
 				
-				//Se ve que valores tiene el tablero de negocio reiniciado
-				String valor=Integer.toString(tableroDeValores.getValor(i, j));
-				
 				//Se borran los textos de los cuadros del juego anterior
 				cuadros[i][j].setText(null);
 				
 				//Se vuelve a poner el color de fondo inicial
 				cuadros[i][j].setBackground(new Color(205,193,180));
 				
-				//Se actualiza el valor de cada cuadro y su color de fondo
-				actualizarCuadros(cuadros[i][j], valor);
+				//Se obtiene el valor de cada cuadro y se lo setea
+				iniciarTableroGrafico(i, j);
+				
+				ventana.toFront();
+				
 			}	
 		}
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////
 	
+	//Este metodo actualiza la vista grafica del tablero (cuadros), valores y colores
 	public void actualizarCuadros(JTextField cuadro, String valor) {
 		if(!valor.equals("0")) {
 			cuadro.setText(valor);
@@ -251,6 +286,7 @@ public class MainFrame {
 		}
 		
 	}
+
 	
 	////////////////////////////////////////////////////////////////////////////////////////
 	

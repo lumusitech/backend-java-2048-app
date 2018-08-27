@@ -25,6 +25,9 @@ public class Tablero {
 		valorAleatorio();
 		valorInicial2=DosOCuatro;
 		tablero[fila][columna]=valorInicial2;
+		
+		System.out.println();
+		System.out.println();
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////
@@ -62,6 +65,7 @@ public class Tablero {
 	public void reiniciar() {
 		for(int i=0; i<4; i++) {
 			for(int j=0; j<4; j++) {
+				//Pone a todas las posiciones en cero
 				tablero[i][j]=0;
 			}
 		}
@@ -76,6 +80,9 @@ public class Tablero {
 		valorAleatorio();
 		valorInicial2=DosOCuatro;
 		tablero[fila][columna]=valorInicial2;
+		
+		System.out.println();
+		System.out.println();
 		
 	}
 	
