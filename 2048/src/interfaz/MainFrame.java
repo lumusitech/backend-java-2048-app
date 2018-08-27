@@ -78,12 +78,14 @@ public class MainFrame{
 		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ventana.getContentPane().setLayout(null);
 		
+		
 		//Ttulo
 		JLabel titulo = new JLabel("2048");
 		titulo.setBounds(120, 11, 158, 50);
 		titulo.setHorizontalAlignment(SwingConstants.CENTER);
-		titulo.setForeground(new Color(119,110,101));
+		//titulo.setForeground(new Color(119,110,101));
 		titulo.setFont(new Font("Times New Roman", Font.BOLD, 50));
+		titulo.setForeground(new Color(143,122,102));
 		ventana.getContentPane().add(titulo);
 		
 	}
@@ -180,15 +182,42 @@ public class MainFrame{
 	public void botonJuegoNuevo() {
 		
 		JButton juegoNuevo = new JButton("Juego nuevo");
+		//juegoNuevo.setEnabled(true);
+		juegoNuevo.setBorder(null);
+		juegoNuevo.setFocusable(false);
 		
-		//El botón de juego nuevo esta a la escucha de clicks sobre el
+		
+		//El botón de juego nuevo esta a la escucha de eventos sobre el
 		juegoNuevo.addMouseListener(new MouseAdapter() {
+			
 			@Override
-			public void mouseClicked(MouseEvent arg0) {
+			public void mouseClicked(MouseEvent e) {
 				//Si se da el evento click, se crea un juego nuevo a partir del metodo nuevo()
 				nuevo();
 			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				juegoNuevo.setBackground(new Color(131,110,90).darker());
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				juegoNuevo.setBackground(new Color(143,122,102));
+			}
+			
+			public void mousePressed(MouseEvent e) {
+				juegoNuevo.setForeground(new Color(143,122,102).darker());
+			}
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				juegoNuevo.setForeground(new Color(249,246,242));
+			}
+			
+			
 		});
+		
 		
 		//A partir de que el foco lo tiene el botón se empieza a escuchar desde aquí al teclado
 		juegoNuevo.addKeyListener(new KeyAdapter() {
@@ -216,7 +245,7 @@ public class MainFrame{
 		juegoNuevo.setBackground(new Color(143,122,102));
 		juegoNuevo.setForeground(new Color(249,246,242));
 		juegoNuevo.setFont(new Font("Tahoma", Font.BOLD, 15));
-		juegoNuevo.setBounds(142, 389, 136, 35);
+		juegoNuevo.setBounds(135, 389, 136, 35);
 		ventana.getContentPane().add(juegoNuevo);
 		
 	}
