@@ -116,6 +116,7 @@ public class Tablero {
 	public boolean mover(String direccion) {
 		if(direccion.equals("derecha")) {
 			System.out.println("derecha");
+			
 			return agregarValor();
 		}
 		if(direccion.equals("izquierda")) {

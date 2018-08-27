@@ -161,73 +161,55 @@ public class MainFrame{
 		((Component) o).addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e){
 				
-                if(e.getKeyCode()==KeyEvent.VK_RIGHT){
-                	if(tableroDeValores.mover("derecha")) {
-                		actualizarTableroGrafico();
-                	}
-                	else {
-                		int opcion=JOptionPane.showConfirmDialog(ventana,"Fin del juego - Desea reintentar?");
-                		if(opcion==0) {
-                			nuevo();
-                		}
-                		else if(opcion==1) {
-                			System.exit(0);
-                		}
-                	}
-                	
-                }
-                if(e.getKeyCode()==KeyEvent.VK_LEFT){
-                	if(tableroDeValores.mover("izquierda")) {
-                		actualizarTableroGrafico();
-                	}
-                	else {
-                		int opcion=JOptionPane.showConfirmDialog(ventana,"Fin del juego - Desea reintentar?");
-                		if(opcion==0) {
-                			nuevo();
-                		}
-                		else if(opcion==1) {
-                			System.exit(0);
-                		}
-                	}
-                }
-                if(e.getKeyCode()==KeyEvent.VK_UP){
-                	if(tableroDeValores.mover("arriba")) {
-                		actualizarTableroGrafico();
-                	}
-                	else {
-                		int opcion=JOptionPane.showConfirmDialog(ventana,"Fin del juego - Desea reintentar?");
-                		if(opcion==0) {
-                			nuevo();
-                		}
-                		else if(opcion==1) {
-                			System.exit(0);
-                		}
-                	}
-                }
-                if(e.getKeyCode()==KeyEvent.VK_DOWN){
-                	if(tableroDeValores.mover("abajo")) {
-                		actualizarTableroGrafico();
-                	}
-                	else {
-                		int opcion=JOptionPane.showConfirmDialog(ventana,"Fin del juego - Desea reintentar?");
-                		if(opcion==0) {
-                			nuevo();
-                		}
-                		else if(opcion==1) {
-                			System.exit(0);
-                		}
-                	}
-                }
+				//metodo que controla el movimiento de teclas
+				controlDeMovimiento(e);
+
                 if(e.getKeyCode()==KeyEvent.VK_ESCAPE){
-                	//poner antes de salir un msj de advertencia para el usuario u opciones
-                    System.exit(0);
+                	int opcion=JOptionPane.showConfirmDialog(ventana,"Seguro que quieres salir del juego?");
+            		if(opcion==0) {
+            			System.exit(0);
+            		}
                 }
                 
             }
 		});
 	}
 	
-	
+	public void controlDeMovimiento(KeyEvent e) {
+		String tecla="";
+		int codigoTecla=0;
+		if(e.getKeyCode()==KeyEvent.VK_RIGHT) {
+			tecla="derecha";
+			codigoTecla = KeyEvent.VK_RIGHT;
+		}
+		if(e.getKeyCode()==KeyEvent.VK_LEFT) {
+			tecla="izquierda";
+			codigoTecla = KeyEvent.VK_LEFT;
+		}
+		if(e.getKeyCode()==KeyEvent.VK_UP) {
+			tecla="arriba";
+			codigoTecla = KeyEvent.VK_UP;
+		}
+		if(e.getKeyCode()==KeyEvent.VK_DOWN) {
+			tecla="abajo";
+			codigoTecla = KeyEvent.VK_DOWN;
+		}
+		
+		  if(e.getKeyCode()==codigoTecla){
+          	if(tableroDeValores.mover(tecla)) {
+          		actualizarTableroGrafico();
+          	}
+          	else {
+          		int opcion=JOptionPane.showConfirmDialog(ventana,"Fin del juego - Desea reintentar?");
+          		if(opcion==0) {
+          			nuevo();
+          		}
+          		else if(opcion==1) {
+          			System.exit(0);
+          		}
+          	}
+          }
+	}
 	
 	
 	////////////////////////////////////////////////////////////////////////////////////////
