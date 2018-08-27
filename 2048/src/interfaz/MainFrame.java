@@ -11,6 +11,8 @@ import negocio.Tablero;
 import javax.swing.JTextField;
 import javax.swing.JPanel;
 import java.awt.Color;
+import java.awt.Component;
+
 import javax.swing.JButton;
 
 import java.awt.event.KeyAdapter;
@@ -102,7 +104,7 @@ public class MainFrame{
 		contenedorDeCuadros.setLayout(null);
 		
 		//Se escuchan eventos de teclado del panel
-		escucharPanel(contenedorDeCuadros);
+		escucharTeclado(contenedorDeCuadros, null);
 		
 		//Se crea un nuevo tablero de valores (negocio)
 		tableroDeValores = new Tablero();
@@ -144,22 +146,35 @@ public class MainFrame{
 	
 		
 	////////////////////////////////////////////////////////////////////////////////////////
-	public void escucharPanel(JPanel panel){
-		panel.setFocusable(true);
-		panel.addKeyListener(new KeyAdapter() {
+	public void escucharTeclado(JPanel panel, JButton boton){
+		Object o = new Object();
+		if(panel != null) {
+			o = panel;
+			((Component) o).setFocusable(true);
+		}
+		else {
+			o = boton;
+			((Component) o).setFocusable(false);
+		}
+		
+		((Component) o).addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e){
 				
                 if(e.getKeyCode()==KeyEvent.VK_RIGHT){
                     System.out.println("presiono derecha");
+                    //aca va la funcion que se encarga de la logica
                 }
                 if(e.getKeyCode()==KeyEvent.VK_LEFT){
                     System.out.println("presiono izquierda");
+                    //aca va la funcion que se encarga de la logica
                 }
                 if(e.getKeyCode()==KeyEvent.VK_UP){
                     System.out.println("presiono arriba");
+                    //aca va la funcion que se encarga de la logica
                 }
                 if(e.getKeyCode()==KeyEvent.VK_DOWN){
-                    System.out.println("presiono abajo");
+                	System.out.println("presiono abajo");
+                	//aca va la funcion que se encarga de la logica
                 }
                 if(e.getKeyCode()==KeyEvent.VK_ESCAPE){
                     System.exit(0);
@@ -182,12 +197,17 @@ public class MainFrame{
 	public void botonJuegoNuevo() {
 		
 		JButton juegoNuevo = new JButton("Juego nuevo");
-		//juegoNuevo.setEnabled(true);
-		juegoNuevo.setBorder(null);
-		juegoNuevo.setFocusable(false);
 		
+		//se estiliza el botón juegoNuevo y se lo agrega
+		juegoNuevo.setBorder(null);//saca los bordes que vienen por defecto
+		juegoNuevo.setFocusable(false);//evita que se vea un cuadro punteado alrededor del texto del boton
+		juegoNuevo.setBackground(new Color(143,122,102));
+		juegoNuevo.setForeground(new Color(249,246,242));
+		juegoNuevo.setFont(new Font("Tahoma", Font.BOLD, 15));
+		juegoNuevo.setBounds(135, 389, 136, 35);
+		ventana.getContentPane().add(juegoNuevo);
 		
-		//El botón de juego nuevo esta a la escucha de eventos sobre el
+		//El botón de juego nuevo esta a la escucha de eventos
 		juegoNuevo.addMouseListener(new MouseAdapter() {
 			
 			@Override
@@ -215,38 +235,10 @@ public class MainFrame{
 				juegoNuevo.setForeground(new Color(249,246,242));
 			}
 			
-			
 		});
 		
-		
-		//A partir de que el foco lo tiene el botón se empieza a escuchar desde aquí al teclado
-		juegoNuevo.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode()==KeyEvent.VK_RIGHT){
-                    System.out.println("presiono derecha");
-                }
-                if(e.getKeyCode()==KeyEvent.VK_LEFT){
-                    System.out.println("presiono izquierda");
-                }
-                if(e.getKeyCode()==KeyEvent.VK_UP){
-                    System.out.println("presiono arriba");
-                }
-                if(e.getKeyCode()==KeyEvent.VK_DOWN){
-                    System.out.println("presiono abajo");
-                }
-                if(e.getKeyCode()==KeyEvent.VK_ESCAPE){
-                    System.exit(0);
-                }
-			}
-		});
-		
-		//se estiliza el botón juegoNuevo y se lo agrega
-		juegoNuevo.setBackground(new Color(143,122,102));
-		juegoNuevo.setForeground(new Color(249,246,242));
-		juegoNuevo.setFont(new Font("Tahoma", Font.BOLD, 15));
-		juegoNuevo.setBounds(135, 389, 136, 35);
-		ventana.getContentPane().add(juegoNuevo);
+		//Despues de reiniciar, se debe indicar de nuevo que escuche eventos de teclado del panel
+		escucharTeclado(null, juegoNuevo);
 		
 	}
 	
@@ -267,8 +259,6 @@ public class MainFrame{
 				
 				//Se obtiene el valor de cada cuadro y se lo setea
 				iniciarTableroGrafico(i, j);
-				
-				ventana.toFront();
 				
 			}	
 		}
