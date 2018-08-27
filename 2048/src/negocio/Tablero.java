@@ -46,6 +46,10 @@ public class Tablero {
 			System.out.println(columna);
 		}
 		while(tablero[fila][columna]!=0);
+		//NOTA: Se podría hacer un contador para que solo intente encontrar lugares vacios (cero)
+		//hasta una cantidad de veces indicadas y asi evitar el bucle infinito. Despues de eso
+		//se puede pasar a revisar la matriz completa y y devolver la primer posición disponible.
+		//En caso de no haber lugares libres, el juego termina!
 		
 		int valorAleatorio = r3.nextInt(100);
 		if(valorAleatorio<50) {
