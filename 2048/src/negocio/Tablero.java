@@ -4,38 +4,37 @@ import java.util.Random;
 
 public class Tablero {
 	private int [][] tablero;
-	private int valorInicial1;
-	private int valorInicial2;
 	private int fila;
 	private int columna;
-	private int DosOCuatro;
+	
 	
 	
 	public Tablero() {
 		
 		tablero=new int[4][4];
 		
-		valorInicial1=0;
-		valorInicial2=0;
+		//Agrega el 1er valor al tablero (posición y valor aleatorio)
+		agregarValor();
 		
-		valorAleatorio();
-		valorInicial1=DosOCuatro;
-		tablero[fila][columna]=valorInicial1;
-		
-		valorAleatorio();
-		valorInicial2=DosOCuatro;
-		tablero[fila][columna]=valorInicial2;
+		//Agrega el 2do valor al tablero (posición y valor aleatorio)
+		agregarValor();
 		
 		System.out.println();
 		System.out.println();
 	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////
+	public void agregarValor() {
+		lugarAleatorio();//busca un lugar aleatorio disponible
+		tablero[fila][columna]=dosOCuatro();//asigna a ese lugar dos o cuatro aleatoriamente
+	}
 
 	////////////////////////////////////////////////////////////////////////////////////////
-	public void valorAleatorio() {
+	public void lugarAleatorio() {
 		Random r1 = new Random();
 		Random r2 = new Random();
-		Random r3 = new Random();
 		
+		int contador=0;
 		do {
 			System.out.println("posición:");
 			
@@ -44,20 +43,43 @@ public class Tablero {
 			
 			columna = r2.nextInt(4);
 			System.out.println(columna);
+			
+			contador++;
 		}
-		while(tablero[fila][columna]!=0);
-		//NOTA: Se podría hacer un contador para que solo intente encontrar lugares vacios (cero)
-		//hasta una cantidad de veces indicadas y asi evitar el bucle infinito. Despues de eso
-		//se puede pasar a revisar la matriz completa y y devolver la primer posición disponible.
-		//En caso de no haber lugares libres, el juego termina!
+		while(tablero[fila][columna]!=0 && contador<10);
 		
-		int valorAleatorio = r3.nextInt(100);
-		if(valorAleatorio<50) {
-			DosOCuatro=2;
+		//cuando el contador llego a 10 se pasa a recorrer la matriz completa 
+		//en busca de un lugar libre
+		if(contador==10) {
+			if(!existeLugarDisponible()){
+				System.out.println("Fin del juego - No existe lugar disponible");
+			}
 		}
-		else {
-			DosOCuatro=4;
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////
+	public int dosOCuatro() {
+		Random r = new Random();
+		if(r.nextInt(100)<50) {
+			return 2;
 		}
+		return 4;
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////
+	public boolean existeLugarDisponible() {
+		
+		for(int i=0; i<4; i++) {
+			for(int j=0; j<4; j++) {
+				if(tablero[i][j]==0) {
+					//guarda la fila y columna que encontro vacía
+					fila=i;
+					columna=j;
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////
@@ -74,16 +96,9 @@ public class Tablero {
 			}
 		}
 		
-		valorInicial1=0;
-		valorInicial2=0;
+		agregarValor();
 		
-		valorAleatorio();
-		valorInicial1=DosOCuatro;
-		tablero[fila][columna]=valorInicial1;
-		
-		valorAleatorio();
-		valorInicial2=DosOCuatro;
-		tablero[fila][columna]=valorInicial2;
+		agregarValor();
 		
 		System.out.println();
 		System.out.println();
@@ -91,6 +106,10 @@ public class Tablero {
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////
+	
+	public void mover(String direccion) {
+		
+	}
 	
 	
 }
