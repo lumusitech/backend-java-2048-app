@@ -223,6 +223,56 @@ public class MainFrame{
 			}
 		}
 	}
+	
+	
+	////////////////////////////////////////////////////////////////////////////////////////
+		
+	//Este metodo actualiza la vista grafica del tablero (cuadros), valores y colores
+	public void actualizarCuadros(JTextField cuadro, String valor) {
+		if(!valor.equals("0")) {
+		cuadro.setText(valor);
+	
+			//De acuerdo al valor que posse el cuadro, le da un color de texto y de fondo
+			if(cuadro.getText().equals("2")) {
+				cuadro.setBackground(new Color(238,228,218));
+				cuadro.setForeground(new Color(119,110,101));
+			}
+			else if(cuadro.getText().equals("4")){
+				cuadro.setBackground(new Color(237,224,200));
+				cuadro.setForeground(new Color(119,110,101));
+			}
+			
+			//A partir de acá hay que configurar los colores, hacer cuando se halla resuelto la funcion de las teclas
+			else if(cuadro.getText().equals("8")){
+				cuadro.setBackground(new Color(237,224,200));
+				cuadro.setForeground(new Color(205,193,180));
+			}
+			else if(cuadro.getText().equals("16")){
+				cuadro.setBackground(new Color(237,224,200));
+				cuadro.setForeground(new Color(205,193,180));
+			}
+			else if(cuadro.getText().equals("32")){
+				cuadro.setBackground(new Color(237,224,200));
+				cuadro.setForeground(new Color(205,193,180));
+			}
+			else if(cuadro.getText().equals("64")){
+				cuadro.setBackground(new Color(237,224,200));
+				cuadro.setForeground(new Color(205,193,180));
+			}
+			else if(cuadro.getText().equals("128")){
+				cuadro.setBackground(new Color(237,224,200));
+				cuadro.setForeground(new Color(205,193,180));
+			}
+		}
+		//Si es cero
+		else {
+			cuadro.setText(null);
+			cuadro.setBackground(new Color(205,193,180));
+		}
+			
+	}
+
+
 	////////////////////////////////////////////////////////////////////////////////////////
 	public void botonJuegoNuevo() {
 		
@@ -292,48 +342,6 @@ public class MainFrame{
 		actualizarTableroGrafico();
 	}
 	
-	////////////////////////////////////////////////////////////////////////////////////////
-	
-	//Este metodo actualiza la vista grafica del tablero (cuadros), valores y colores
-	public void actualizarCuadros(JTextField cuadro, String valor) {
-		if(!valor.equals("0")) {
-			cuadro.setText(valor);
-			
-			//De acuerdo al valor que posse el cuadro, le da un color de texto y de fondo
-			if(cuadro.getText().equals("2")) {
-				cuadro.setBackground(new Color(238,228,218));
-				cuadro.setForeground(new Color(119,110,101));
-			}
-			else if(cuadro.getText().equals("4")){
-				cuadro.setBackground(new Color(237,224,200));
-				cuadro.setForeground(new Color(119,110,101));
-			}
-			
-			//A partir de acá hay que configurar los colores, hacer cuando se halla resuelto la funcion de las teclas
-			else if(cuadro.getText().equals("8")){
-				cuadro.setBackground(new Color(237,224,200));
-				cuadro.setForeground(new Color(205,193,180));
-			}
-			else if(cuadro.getText().equals("16")){
-				cuadro.setBackground(new Color(237,224,200));
-				cuadro.setForeground(new Color(205,193,180));
-			}
-			else if(cuadro.getText().equals("32")){
-				cuadro.setBackground(new Color(237,224,200));
-				cuadro.setForeground(new Color(205,193,180));
-			}
-			else if(cuadro.getText().equals("64")){
-				cuadro.setBackground(new Color(237,224,200));
-				cuadro.setForeground(new Color(205,193,180));
-			}
-			else if(cuadro.getText().equals("128")){
-				cuadro.setBackground(new Color(237,224,200));
-				cuadro.setForeground(new Color(205,193,180));
-			}
-		}
-		
-	}
-
 	
 	////////////////////////////////////////////////////////////////////////////////////////
 	

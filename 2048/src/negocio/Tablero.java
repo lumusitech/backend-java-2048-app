@@ -47,7 +47,7 @@ public class Tablero {
 			
 			columna = r2.nextInt(4);
 			System.out.println(columna);
-			
+			System.out.println("----------------------------");
 			contador++;
 		}
 		while(tablero[fila][columna]!=0 && contador<10);
@@ -77,7 +77,7 @@ public class Tablero {
 		
 		for(int i=0; i<4; i++) {
 			for(int j=0; j<4; j++) {
-				if(tablero[i][j]==0) {
+				if(getValor(i,j)==0) {
 					//guarda la fila y columna que encontro vacía
 					fila=i;
 					columna=j;
@@ -89,8 +89,12 @@ public class Tablero {
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////
-	public int getValor(int i, int j) {
-		return tablero[i][j];
+	public int getValor(int fila, int columna) {
+		return tablero[fila][columna];
+	}
+	
+	public void setValor(int fila, int columna, int valor) {
+		tablero[fila][columna]=valor;
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////
@@ -98,7 +102,7 @@ public class Tablero {
 		for(int i=0; i<4; i++) {
 			for(int j=0; j<4; j++) {
 				//Pone a todas las posiciones en cero
-				tablero[i][j]=0;
+				setValor(i,j,0);
 			}
 		}
 		
@@ -115,26 +119,62 @@ public class Tablero {
 	
 	public boolean mover(String direccion) {
 		if(direccion.equals("derecha")) {
-			System.out.println("derecha");
-			
-			tablero[2][0]=50;
-			
-			return agregarValor();
+			moverDerecha();
+			return true;
 		}
+		
 		if(direccion.equals("izquierda")) {
-			System.out.println("izquierda");
-			return agregarValor();
+			moverIzquierda();
+			return true;
 		}
+		
 		if(direccion.equals("arriba")) {
-			System.out.println("arriba");
-			return agregarValor();
+			moverArriba();
+			return true;
 		}
+		
 		if(direccion.equals("abajo")) {
-			System.out.println("abajo");
-			return agregarValor();
+			moverAbajo();
+			return true;
 		}
 		return false;
 	}
 	
+	////////////////////////////////////////////////////////////////////////////////////////
+	
+	public void moverDerecha() {
+		System.out.println("derecha");
+		
+		//fila a fila
+		for(int i=0; i<4; i++) {
+			//columna a columna de derecha a izquierda
+			for(int j=3; j>0; j--) {
+				
+				//veo si hay algo en ese
+				if(getValor(i,j)!=0) {
+					
+					
+				}
+			}
+		}
+		agregarValor();
+	}
+	
+	public void moverIzquierda() {
+		System.out.println("izquierda");
+		//agregarValor();
+	}
+	
+	public void moverArriba() {
+		System.out.println("arriba");
+		//agregarValor();
+	}
+	
+	public void moverAbajo() {
+		System.out.println("abajo");
+		//agregarValor();
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////
 	
 }
