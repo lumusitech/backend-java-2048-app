@@ -117,6 +117,8 @@ public class Tablero {
 		if(direccion.equals("derecha")) {
 			System.out.println("derecha");
 			
+			tablero[2][0]=50;
+			
 			return agregarValor();
 		}
 		if(direccion.equals("izquierda")) {

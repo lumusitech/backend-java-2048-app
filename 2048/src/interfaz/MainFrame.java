@@ -130,7 +130,7 @@ public class MainFrame{
 				cuadros[i][j].setFont(new Font("Tahoma", Font.BOLD, 25));
 				cuadros[i][j].setHorizontalAlignment(SwingConstants.CENTER);
 				cuadros[i][j].setEditable(false);
-				cuadros[i][j].setBounds(cuadroPosX, cuadroPosY, cuadrosTamanio, cuadrosTamanio);
+				cuadros[i][j].setBounds(cuadroPosY, cuadroPosX, cuadrosTamanio, cuadrosTamanio);
 				contenedorDeCuadros.add(cuadros[i][j]);
 				cuadros[i][j].setColumns(10);
 				
