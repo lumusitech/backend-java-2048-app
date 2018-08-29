@@ -99,10 +99,10 @@ public class Tablero {
 	
 	////////////////////////////////////////////////////////////////////////////////////////
 	public void reiniciar() {
-		for(int i=0; i<4; i++) {
-			for(int j=0; j<4; j++) {
+		for(int fila=0; fila<4; fila++) {
+			for(int columna=0; columna<4; columna++) {
 				//Pone a todas las posiciones en cero
-				setValor(i,j,0);
+				setValor(fila,columna,0);
 			}
 		}
 		
@@ -119,7 +119,9 @@ public class Tablero {
 	
 	public boolean mover(String direccion) {
 		if(direccion.equals("derecha")) {
+			sumarDerecha();
 			moverDerecha();
+			agregarValor();
 			return true;
 		}
 		
@@ -141,25 +143,71 @@ public class Tablero {
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////
+	public boolean existeValor(int fila, int columna) {
+		return getValor(fila,columna)!=0;
+	}
+	////////////////////////////////////////////////////////////////////////////////////////
 	
-	public void moverDerecha() {
+	public void sumarDerecha() {
 		System.out.println("derecha");
 		
 		//fila a fila
-		for(int i=0; i<4; i++) {
+		for(int fila=0; fila<4; fila++) {
 			//columna a columna de derecha a izquierda
-			for(int j=3; j>0; j--) {
+			for(int columna=3; columna>0; columna--) {
 				
-				//veo si hay algo en ese
-				if(getValor(i,j)!=0) {
-					
-					
+				int columnaActual=columna;
+				int columnaAnterior=(columna-1);
+				
+				//veo si hay algo en la columna actual
+				if(existeValor(fila,columna)) {
+					if(existeValor(fila,columnaAnterior) && (getValor(fila,columnaActual)==getValor(fila,columnaAnterior)) ) {
+						//los sumo
+						setValor(fila,columna,(getValor(fila,columnaActual))+(getValor(fila,columnaAnterior)));
+						//se quita el valor del cuadro anterior poque se sumo en el cuadro actual
+						setValor(fila, columnaAnterior, 0);
+					}
+					//Si no hay nada en el cuadro anterior
+					else if(!existeValor(fila,columnaAnterior)){
+						//me fijo en la columna siguienteAnterior
+						int SigteAnterior=columnaAnterior-1;
+						
+						if(SigteAnterior>=0) {
+							if(existeValor(fila,SigteAnterior) 
+							&& (getValor(fila,columnaActual)==getValor(fila,SigteAnterior))) {
+								//los sumo
+								setValor(fila,columna,(getValor(fila,columnaActual))+(getValor(fila,SigteAnterior)));
+								//se quita el valor del cuadro anterior poque se sumo en el cuadro actual
+								setValor(fila, SigteAnterior, 0);
+							}
+							//si no existe valor en el Siguiente anterior
+							else if(!existeValor(fila,SigteAnterior)){
+								//me fijo en la columna SigteSigteAnterior
+								int SigteSigteAnterior=SigteAnterior-1;
+							
+								if(SigteSigteAnterior>=0) {
+									if(existeValor(fila,SigteSigteAnterior) 
+									&& (getValor(fila,columnaActual)==getValor(fila,SigteSigteAnterior))) {
+										//los sumo
+										setValor(fila,columna,(getValor(fila,columnaActual))+(getValor(fila,SigteSigteAnterior)));
+										//se quita el valor del cuadro anterior poque se sumo en el cuadro actual
+										setValor(fila, SigteSigteAnterior, 0);
+									}
+								}
+							}
+						}
+					}
 				}
 			}
 		}
-		agregarValor();
 	}
 	
+	////////////////////////////////////////////////////////////////////////////////////////
+	public void moverDerecha() {
+		
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////
 	public void moverIzquierda() {
 		System.out.println("izquierda");
 		//agregarValor();

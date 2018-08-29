@@ -244,24 +244,24 @@ public class MainFrame{
 			
 			//A partir de acá hay que configurar los colores, hacer cuando se halla resuelto la funcion de las teclas
 			else if(cuadro.getText().equals("8")){
-				cuadro.setBackground(new Color(237,224,200));
-				cuadro.setForeground(new Color(205,193,180));
+				cuadro.setBackground(new Color(242,177,121));
+				cuadro.setForeground(new Color(249,246,242));
 			}
 			else if(cuadro.getText().equals("16")){
-				cuadro.setBackground(new Color(237,224,200));
-				cuadro.setForeground(new Color(205,193,180));
+				cuadro.setBackground(new Color(242,177,121));
+				cuadro.setForeground(new Color(249,246,242));
 			}
 			else if(cuadro.getText().equals("32")){
-				cuadro.setBackground(new Color(237,224,200));
-				cuadro.setForeground(new Color(205,193,180));
+				cuadro.setBackground(new Color(242,177,121));
+				cuadro.setForeground(new Color(249,246,242));
 			}
 			else if(cuadro.getText().equals("64")){
-				cuadro.setBackground(new Color(237,224,200));
-				cuadro.setForeground(new Color(205,193,180));
+				cuadro.setBackground(new Color(242,177,121));
+				cuadro.setForeground(new Color(249,246,242));
 			}
 			else if(cuadro.getText().equals("128")){
-				cuadro.setBackground(new Color(237,224,200));
-				cuadro.setForeground(new Color(205,193,180));
+				cuadro.setBackground(new Color(242,177,121));
+				cuadro.setForeground(new Color(249,246,242));
 			}
 		}
 		//Si es cero
