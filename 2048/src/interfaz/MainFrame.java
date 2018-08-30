@@ -4,25 +4,16 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.Font;
-
-
 import javax.swing.SwingConstants;
-
 import negocio.Tablero;
-
 import javax.swing.JTextField;
 import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Component;
-
-
 import javax.swing.JButton;
-
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Toolkit;
@@ -42,8 +33,6 @@ public class MainFrame{
 	private JTextField cuadroRecord;
 	private String record;
 	
-
-
 	//Lanza la aplicacion
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -95,8 +84,6 @@ public class MainFrame{
 		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ventana.getContentPane().setLayout(null);
 		
-		
-		
 		//Ttulo
 		JLabel titulo = new JLabel("2048");
 		titulo.setBounds(120, 11, 158, 50);
@@ -105,7 +92,7 @@ public class MainFrame{
 		titulo.setFont(new Font("Times New Roman", Font.BOLD, 50));
 		titulo.setForeground(new Color(143,122,102));
 		ventana.getContentPane().add(titulo);
-		
+
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////
@@ -320,19 +307,39 @@ public class MainFrame{
 				cuadro.setForeground(new Color(249,246,242));
 			}
 			else if(cuadro.getText().equals("16")){
-				cuadro.setBackground(new Color(242,177,121));
+				cuadro.setBackground(new Color(245,149,99));
 				cuadro.setForeground(new Color(249,246,242));
 			}
 			else if(cuadro.getText().equals("32")){
-				cuadro.setBackground(new Color(242,177,121));
+				cuadro.setBackground(new Color(246,124,95));
 				cuadro.setForeground(new Color(249,246,242));
 			}
 			else if(cuadro.getText().equals("64")){
-				cuadro.setBackground(new Color(242,177,121));
+				cuadro.setBackground(new Color(246,94,59));
 				cuadro.setForeground(new Color(249,246,242));
 			}
 			else if(cuadro.getText().equals("128")){
-				cuadro.setBackground(new Color(242,177,121));
+				cuadro.setBackground(new Color(237,207,114));
+				cuadro.setForeground(new Color(249,246,242));
+			}
+			else if(cuadro.getText().equals("256")){
+				cuadro.setBackground(new Color(237,207,114));
+				cuadro.setForeground(new Color(249,246,242));
+			}
+			else if(cuadro.getText().equals("512")){
+				cuadro.setBackground(new Color(236,200,80));
+				cuadro.setForeground(new Color(249,246,242));
+			}
+			else if(cuadro.getText().equals("1024")){
+				cuadro.setBackground(new Color(237,197,63));
+				cuadro.setForeground(new Color(249,246,242));
+			}
+			else if(cuadro.getText().equals("2048")){
+				cuadro.setBackground(new Color(238,194,46));
+				cuadro.setForeground(new Color(249,246,242));
+			}
+			else {
+				cuadro.setBackground(new Color(61,58,51));
 				cuadro.setForeground(new Color(249,246,242));
 			}
 		}
