@@ -6,6 +6,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+
+
 import javax.swing.SwingConstants;
 
 import negocio.Tablero;
@@ -14,6 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Component;
+
 
 import javax.swing.JButton;
 
@@ -89,6 +92,7 @@ public class MainFrame{
 		ventana.setResizable(false);
 		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ventana.getContentPane().setLayout(null);
+		
 		
 		
 		//Ttulo
@@ -171,11 +175,16 @@ public class MainFrame{
 		cuadroPuntaje.setEditable(false);
 		cuadroPuntaje.setBorder(null);
 		cuadroPuntaje.setBackground(new Color(187,173,160));
-		cuadroPuntaje.setForeground(new Color(238,228,218));
-		cuadroPuntaje.setText("Puntaje");
 		cuadroPuntaje.setForeground(Color.WHITE);
 		cuadroPuntaje.setBounds(400, 71, 90, 50);
 		ventana.getContentPane().add(cuadroPuntaje);
+		
+		JLabel lblPuntaje = new JLabel("Puntaje");
+		lblPuntaje.setForeground(new Color(143,122,102));
+		lblPuntaje.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblPuntaje.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPuntaje.setBounds(400, 121, 90, 23);
+		ventana.getContentPane().add(lblPuntaje);
 	}
 	
 	public void record() {
@@ -186,13 +195,18 @@ public class MainFrame{
 		cuadroRecord.setEditable(false);
 		cuadroRecord.setBorder(null);
 		cuadroRecord.setBackground(new Color(187,173,160));
-		cuadroRecord.setForeground(new Color(238,228,218));
-		cuadroRecord.setText("Record");
 		cuadroRecord.setForeground(Color.WHITE);
 		cuadroRecord.setBounds(513, 71, 90, 50);
 		ventana.getContentPane().add(cuadroRecord);
-	}
 		
+		JLabel lblRecord = new JLabel("Record");
+		lblRecord.setForeground(new Color(143,122,102));
+		lblRecord.setHorizontalAlignment(SwingConstants.CENTER);
+		lblRecord.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblRecord.setBounds(513, 121, 90, 23);
+		ventana.getContentPane().add(lblRecord);
+	}
+	
 	////////////////////////////////////////////////////////////////////////////////////////
 	public void escucharTeclado(JPanel panel, JButton boton){
 		Object o = new Object();
@@ -215,6 +229,13 @@ public class MainFrame{
                 	int opcion=JOptionPane.showConfirmDialog(ventana,"Seguro que quieres salir del juego?");
             		if(opcion==0) {
             			System.exit(0);
+            		}
+                }
+                
+                if(e.getKeyCode()==KeyEvent.VK_ENTER){
+                	int opcion=JOptionPane.showConfirmDialog(ventana,"Seguro que quieres reiniciar el juego?");
+            		if(opcion==0) {
+            			nuevo();
             		}
                 }
                 
@@ -368,7 +389,6 @@ public class MainFrame{
 		
 		//Despues de reiniciar, se debe indicar de nuevo que escuche eventos de teclado del panel
 		escucharTeclado(null, btnJuegoNuevo);
-		
 	}
 	
 	
