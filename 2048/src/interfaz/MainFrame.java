@@ -25,6 +25,7 @@ import java.awt.event.KeyEvent;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Toolkit;
 
 public class MainFrame{
 
@@ -86,6 +87,7 @@ public class MainFrame{
 	
 	public void ventanaPrincipal () {
 		ventana = new JFrame();
+		ventana.setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\lucia\\git\\TP1_progra3\\2048\\icon.png"));
 		ventana.getContentPane().setBackground(new Color(250, 248, 239));
 		ventana.setTitle("Juego 2048");
 		ventana.setBounds(100, 100, 640, 480);
