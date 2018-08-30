@@ -7,12 +7,16 @@ public class Tablero {
 	private int tamanio;
 	private int fila;
 	private int columna;
+	private int puntaje;
+	private int record;
 	
 
 	public Tablero() {
 		
 		tamanio=4;
 		tablero=new int[tamanio][tamanio];
+		puntaje=0;
+		record=0;
 		
 		//Agrega el 1er valor al tablero (posición y valor aleatorio)
 		agregarValor();
@@ -102,6 +106,14 @@ public class Tablero {
 		tablero[fila][columna]=valor;
 	}
 	
+	public int getPuntaje() {
+		return puntaje;
+	}
+	
+	public int getRecord() {
+		return record;
+	}
+	
 	////////////////////////////////////////////////////////////////////////////////////////
 	public void reiniciar() {
 
@@ -111,6 +123,14 @@ public class Tablero {
 				setValor(i,j,0);
 			}
 		}
+		
+		//guarda el ultimo puntaje si es mayor al record
+		if(puntaje>record) {
+			record=puntaje;
+		}
+		
+		//resetea el puntaje
+		puntaje=0;
 		
 		//Agrega el 1er valor al tablero (posición y valor aleatorio)
 		agregarValor();
@@ -180,6 +200,8 @@ public class Tablero {
 						setValor(i,j,(getValor(i,actual))+(getValor(i,anterior)));
 						//se quita el valor del cuadro anterior poque se sumo en el cuadro actual
 						setValor(i, anterior, 0);
+						//sumo al puntaje
+						puntaje+=(getValor(i,actual))+(getValor(i,anterior));
 					}
 					//Si no hay nada en el cuadro anterior
 					else if(!existeValor(i,anterior)){
@@ -193,6 +215,8 @@ public class Tablero {
 								setValor(i,j,(getValor(i,actual))+(getValor(i,sigteAnterior)));
 								//se quita el valor del cuadro anterior poque se sumo en el cuadro actual
 								setValor(i, sigteAnterior, 0);
+								//sumo al puntaje
+								puntaje+=(getValor(i,actual))+(getValor(i,anterior));
 							}
 							//si no existe valor en el Siguiente anterior
 							else if(!existeValor(i,sigteAnterior)){
@@ -206,6 +230,8 @@ public class Tablero {
 										setValor(i,j,(getValor(i,actual))+(getValor(i,sigteSigteAnterior)));
 										//se quita el valor del cuadro anterior poque se sumo en el cuadro actual
 										setValor(i, sigteSigteAnterior, 0);
+										//sumo al puntaje
+										puntaje+=(getValor(i,actual))+(getValor(i,anterior));
 									}
 								}
 							}
@@ -283,6 +309,8 @@ public class Tablero {
 							setValor(i,actual,(getValor(i,actual))+(getValor(i,siguiente)));
 							//se quita el valor del cuadro anterior poque se sumo en el cuadro actual
 							setValor(i, siguiente, 0);
+							//sumo al puntaje
+							puntaje+=(getValor(i,actual))+(getValor(i,siguiente));
 						}
 						//Si no hay nada en el cuadro anterior
 						else if(!existeValor(i,siguiente)){
@@ -296,6 +324,8 @@ public class Tablero {
 									setValor(i,actual,(getValor(i,actual))+(getValor(i,siguiente)));
 									//se quita el valor del cuadro anterior poque se sumo en el cuadro actual
 									setValor(i, siguiente, 0);
+									//sumo al puntaje
+									puntaje+=(getValor(i,actual))+(getValor(i,siguiente));
 								}
 								//si no existe valor en el Siguiente anterior
 								else if(!existeValor(i,siguiente)){
@@ -309,6 +339,8 @@ public class Tablero {
 											setValor(i,actual,(getValor(i,actual))+(getValor(i,siguiente)));
 											//se quita el valor del cuadro anterior poque se sumo en el cuadro actual
 											setValor(i, siguiente, 0);
+											//sumo al puntaje
+											puntaje+=(getValor(i,actual))+(getValor(i,siguiente));
 										}
 									}
 								}
@@ -439,6 +471,8 @@ public class Tablero {
 							setValor(actual,j,(getValor(actual,j))+(getValor(siguiente,j)));
 							//se quita el valor del cuadro anterior poque se sumo en el cuadro actual
 							setValor(siguiente, j, 0);
+							//sumo al puntaje
+							puntaje+=(getValor(actual,j))+(getValor(siguiente,j));
 						}
 						//Si no hay nada en el cuadro anterior
 						else if(!existeValor(siguiente,j)){
@@ -452,6 +486,8 @@ public class Tablero {
 									setValor(actual,j,(getValor(actual,j))+(getValor(siguiente,j)));
 									//se quita el valor del cuadro anterior poque se sumo en el cuadro actual
 									setValor(siguiente, j, 0);
+									//sumo al puntaje
+									puntaje+=(getValor(actual,j))+(getValor(siguiente,j));
 								}
 								//si no existe valor en el Siguiente anterior
 								else if(!existeValor(siguiente,j)){
@@ -465,6 +501,8 @@ public class Tablero {
 											setValor(actual,j,(getValor(actual,j))+(getValor(siguiente,j)));
 											//se quita el valor del cuadro anterior poque se sumo en el cuadro actual
 											setValor(siguiente, j, 0);
+											//sumo al puntaje
+											puntaje+=(getValor(actual,j))+(getValor(siguiente,j));
 										}
 									}
 								}
@@ -544,6 +582,8 @@ public class Tablero {
 						setValor(actual,j,(getValor(actual,j))+(getValor(anterior,j)));
 						//se quita el valor del cuadro anterior poque se sumo en el cuadro actual
 						setValor(anterior, j, 0);
+						//sumo al puntaje
+						puntaje+=(getValor(actual,j))+(getValor(anterior,j));
 					}
 					//Si no hay nada en el cuadro anterior
 					else if(!existeValor(anterior,j)){
@@ -557,6 +597,8 @@ public class Tablero {
 								setValor(actual,j,(getValor(actual,j))+(getValor(anterior,j)));
 								//se quita el valor del cuadro anterior poque se sumo en el cuadro actual
 								setValor(anterior, j, 0);
+								//sumo al puntaje
+								puntaje+=(getValor(actual,j))+(getValor(anterior,j));
 							}
 							//si no existe valor en el Siguiente anterior
 							else if(!existeValor(anterior,j)){
@@ -570,6 +612,8 @@ public class Tablero {
 										setValor(actual,j,(getValor(actual,j))+(getValor(anterior,j)));
 										//se quita el valor del cuadro anterior poque se sumo en el cuadro actual
 										setValor(anterior, j, 0);
+										//sumo al puntaje
+										puntaje+=(getValor(actual,j))+(getValor(anterior,j));
 									}
 								}
 							}

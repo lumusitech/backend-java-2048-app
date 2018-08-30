@@ -32,6 +32,11 @@ public class MainFrame{
 	private int cuadroPosX;
 	private int cuadroPosY;
 	private int cuadrosTamanio;
+	private JPanel contenedorDePuntajes;
+	private JTextField cuadroPuntaje;
+	private String puntaje;
+	private JTextField cuadroRecord;
+	private String record;
 	
 
 
@@ -63,12 +68,15 @@ public class MainFrame{
 		//Se crea el tablero de juego
 		tableroDeJuego();
 		
+		//Se inicia puntaje
+		puntaje();
+		actualizarPuntaje();
+		record();
+		actualizarRecord();
 		//Se crea boton de juego nuevo
 		botonJuegoNuevo();
 	}
 
-	
-	
 	
 	////////////////////////////////////////////////////////////////////////////////////////
 	/////////////////////////////////METODOS AUXILIARES/////////////////////////////////////
@@ -145,6 +153,45 @@ public class MainFrame{
 		
 	}
 	
+	////////////////////////////////////////////////////////////////////////////////////////
+	public void contenedorPuntaje() {
+		//Se crea el panel que contiene a los cuadros
+		contenedorDePuntajes = new JPanel();
+		contenedorDePuntajes.setBackground(new Color(187,173,160));
+		contenedorDePuntajes.setBounds(400, 70, 290, 110);
+		ventana.getContentPane().add(contenedorDePuntajes);
+		contenedorDePuntajes.setLayout(null);
+	}
+	
+	public void puntaje() {
+		cuadroPuntaje = new JTextField();
+		cuadroPuntaje.setFont(new Font("Tahoma", Font.BOLD, 25));
+		cuadroPuntaje.setHorizontalAlignment(SwingConstants.RIGHT);
+		cuadroPuntaje.setFocusable(false);
+		cuadroPuntaje.setEditable(false);
+		cuadroPuntaje.setBorder(null);
+		cuadroPuntaje.setBackground(new Color(187,173,160));
+		cuadroPuntaje.setForeground(new Color(238,228,218));
+		cuadroPuntaje.setText("Puntaje");
+		cuadroPuntaje.setForeground(Color.WHITE);
+		cuadroPuntaje.setBounds(400, 71, 90, 50);
+		ventana.getContentPane().add(cuadroPuntaje);
+	}
+	
+	public void record() {
+		cuadroRecord = new JTextField();
+		cuadroRecord.setFont(new Font("Tahoma", Font.BOLD, 25));
+		cuadroRecord.setHorizontalAlignment(SwingConstants.RIGHT);
+		cuadroRecord.setFocusable(false);
+		cuadroRecord.setEditable(false);
+		cuadroRecord.setBorder(null);
+		cuadroRecord.setBackground(new Color(187,173,160));
+		cuadroRecord.setForeground(new Color(238,228,218));
+		cuadroRecord.setText("Record");
+		cuadroRecord.setForeground(Color.WHITE);
+		cuadroRecord.setBounds(513, 71, 90, 50);
+		ventana.getContentPane().add(cuadroRecord);
+	}
 		
 	////////////////////////////////////////////////////////////////////////////////////////
 	public void escucharTeclado(JPanel panel, JButton boton){
@@ -198,6 +245,8 @@ public class MainFrame{
 		  if(e.getKeyCode()==codigoTecla){
           	if(tableroDeValores.mover(tecla)) {
           		actualizarTableroGrafico();
+          		
+          		actualizarPuntaje();
           	}
           	else {
           		int opcion=JOptionPane.showConfirmDialog(ventana,"Fin del juego - Desea reintentar?");
@@ -339,10 +388,17 @@ public class MainFrame{
 			}	
 		}
 		
+		actualizarPuntaje();
+		actualizarRecord();
 		actualizarTableroGrafico();
 	}
-	
-	
-	////////////////////////////////////////////////////////////////////////////////////////
-	
+
+	public void actualizarPuntaje() {
+		puntaje = Integer.toString(tableroDeValores.getPuntaje());
+		cuadroPuntaje.setText(puntaje);
+	}
+	public void actualizarRecord() {
+		record = Integer.toString(tableroDeValores.getRecord());
+		cuadroRecord.setText(record);
+	}
 }
