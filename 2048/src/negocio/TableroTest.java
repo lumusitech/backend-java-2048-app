@@ -853,6 +853,22 @@ class TableroTest {
 	}
 	
 	@Test
+	public void sumarAbajo1ValorEnFila2SinOtrosValoresTest() {
+		
+		//setup
+		Tablero tablero = new Tablero();
+		
+		//excercise
+		tablero.vaciarTablero();
+		setFilaCompletaConValor(tablero, 2, 2);
+		tablero.sumarAbajo();
+		
+		//verify
+		assertTrue(verificarValoresEnFilaCompleta(tablero, 3, 0));
+		
+	}
+	
+	@Test
 	public void sumarAbajoFila0Fila1Test() {
 		
 		//setup
@@ -1070,6 +1086,23 @@ class TableroTest {
 		
 		//verify
 		assertTrue(verificarValoresEnFilaCompleta(tablero, 3, 2));
+	}
+	
+	@Test
+	public void sumarAbajoFila3Fila0ValoresDistintosTest() {
+		
+		//setup
+		Tablero tablero = new Tablero();
+		
+		//excercise
+		tablero.vaciarTablero();
+		setFilaCompletaConValor(tablero, 0, 4);
+		setColumnaCompletaConValor(tablero, 3, 4);
+		tablero.sumarAbajo();
+		
+		//verify
+		assertTrue(verificarValoresEnFilaCompleta(tablero, 3, 8));
+		
 	}
 	
 	
@@ -1845,6 +1878,20 @@ class TableroTest {
 	}
 	
 	@Test 
+	public void moverArribaFila1Test() {
+		//setup
+		Tablero tablero = new Tablero();
+		
+		//excercise
+		tablero.vaciarTablero();
+		setFilaCompletaConValor(tablero, 3, 2);
+		tablero.moverArriba();
+		
+		//verify
+		assertTrue(verificarValoresEnFilaCompleta(tablero, 0, 2));
+	}
+	
+	@Test 
 	public void moverArriba2FilasVaciasTest() {
 		//setup
 		Tablero tablero = new Tablero();
@@ -2056,12 +2103,12 @@ class TableroTest {
 		//excercise
 		tablero.vaciarTablero();
 		setFilaCompletaConValor(tablero, 0, 4);
-		setFilaCompletaConValor(tablero, 1, 2);
+		setFilaCompletaConValor(tablero, 1, 4);
 		setFilaCompletaConValor(tablero, 2, 2);
 		tablero.moverAbajo();
 		
 		//verify
-		assertTrue(verificarValoresEnFilaCompleta(tablero, 1, 4));
+		assertTrue(verificarValoresEnFilaCompleta(tablero, 3, 2));
 	}
 	
 	@Test
@@ -2122,8 +2169,8 @@ class TableroTest {
 		
 		//excercise
 		tablero.vaciarTablero();
-		setFilaCompletaConValor(tablero, 1, 2);
-		setFilaCompletaConValor(tablero, 2, 4);
+		setFilaCompletaConValor(tablero, 0, 2);
+		setFilaCompletaConValor(tablero, 1, 4);
 		tablero.moverAbajo();
 		
 		//verify
@@ -2138,12 +2185,10 @@ class TableroTest {
 		//excercise
 		tablero.vaciarTablero();
 		setFilaCompletaConValor(tablero, 0, 2);
-		setFilaCompletaConValor(tablero, 1, 2);
-		setFilaCompletaConValor(tablero, 2, 4);
 		tablero.moverAbajo();
 		
 		//verify
-		assertTrue(verificarValoresEnFilaCompleta(tablero, 3, 4));
+		assertTrue(verificarValoresEnFilaCompleta(tablero, 3, 2));
 	}
 	
 	@Test 
@@ -2153,21 +2198,98 @@ class TableroTest {
 		
 		//excercise
 		tablero.vaciarTablero();
-		setFilaCompletaConValor(tablero, 0, 2);
-		setFilaCompletaConValor(tablero, 1, 4);
-		setFilaCompletaConValor(tablero, 2, 8);
-		setFilaCompletaConValor(tablero, 3, 16);
 		tablero.moverAbajo();
 		
 		//verify
-		assertTrue(verificarValoresEnFilaCompleta(tablero, 3, 16));
+		assertTrue(verificarValoresEnFilaCompleta(tablero, 3, 0));
 	}
 	
 	
 	
 	
+	@Test
+	public void moverParametroDerechaTest() {
+		
+		//setup
+		Tablero tablero = new Tablero();
+		
+		//excercise
+		tablero.vaciarTablero();
+		setColumnaCompletaConValor(tablero, 0, 2);
+		setColumnaCompletaConValor(tablero, 1, 2);
+		tablero.mover("derecha");
+		
+		//verify
+		assertTrue(verificarValoresEnColumnaCompleta(tablero, 3, 4));
+	}
+	
+	@Test
+	public void moverParametroIzquierdaTest() {
+		
+		//setup
+		Tablero tablero = new Tablero();
+		
+		//excercise
+		tablero.vaciarTablero();
+		setColumnaCompletaConValor(tablero, 2, 2);
+		setColumnaCompletaConValor(tablero, 3, 2);
+		tablero.mover("izquierda");
+		
+		//verify
+		assertTrue(verificarValoresEnColumnaCompleta(tablero, 0, 4));
+	}
+	
+	@Test
+	public void moverParametroArribaTest() {
+		
+		//setup
+		Tablero tablero = new Tablero();
+		
+		//excercise
+		tablero.vaciarTablero();
+		setFilaCompletaConValor(tablero, 2, 2);
+		setFilaCompletaConValor(tablero, 3, 2);
+		tablero.mover("arriba");
+		
+		//verify
+		assertTrue(verificarValoresEnFilaCompleta(tablero, 0, 4));
+	}
+	
+	@Test
+	public void moverParametroAbajoTest() {
+		
+		//setup
+		Tablero tablero = new Tablero();
+		
+		//excercise
+		tablero.vaciarTablero();
+		setFilaCompletaConValor(tablero, 0, 2);
+		setFilaCompletaConValor(tablero, 1, 2);
+		tablero.mover("abajo");
+		
+		//verify
+		assertTrue(verificarValoresEnFilaCompleta(tablero, 3, 4));
+	}
+	
+	@Test
+	public void moverParametroVacioTest() {
+		
+		//setup
+		Tablero tablero = new Tablero();
+		
+		//excercise
+		tablero.vaciarTablero();
+		setFilaCompletaConValor(tablero, 2, 2);
+		setFilaCompletaConValor(tablero, 3, 2);
+		tablero.mover("");
+		
+		//verify
+		assertTrue(verificarValoresEnFilaCompleta(tablero, 0, 0));
+	}
+	
 	///////////////////////////////////////////////////////////////////////////
 	
+
 	public int contarValoresDelTablero(Tablero tablero) {
 		int cont=0;
 		for(int i=0; i<4; i++) {

@@ -595,36 +595,36 @@ public class Tablero {
 				int moverAFila=0;
 				int moverAColumna=0;
 				
-				if(!existeValor(actual, j)) {
+				if(!existeValor(actual, j)) {//3
 					//guardo la posicion del cuadro libre donde voy a mover y cuento +1
 					moverAFila=actual;
 					moverAColumna=j;
 					
-					if(!existeValor(anterior, j)) {
+					if(!existeValor(anterior, j)) {//2
 						
 						//actualizo el anterior
 						anterior=anterior-1;
 						//verifico si esta en rango
 						if(anterior>=0) {
 							//ahora veo si esta vacio
-							if(!existeValor(anterior, j)) {
+							if(!existeValor(anterior, j)) {//1
 								//actualizo el anterior
 								anterior=anterior-1;
 								//verifico si esta en rango
 								if(anterior>=0) {
 									//ahora veo si esta vacio
-									if(existeValor(anterior, j)) {
+									if(existeValor(anterior, j)) {//0
 										moverCuadro(anterior,j,moverAFila,moverAColumna);
 									}
 								}
 							}
-							else {
+							else {//1
 								moverCuadro(anterior,j,moverAFila,moverAColumna);
 							}
 						}
 					}
 					//si existe, lo muevo al cuadro vacio que guarde
-					else {
+					else {//2
 						moverCuadro(anterior,j,moverAFila,moverAColumna);
 					}
 					
