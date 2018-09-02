@@ -1809,7 +1809,6 @@ class TableroTest {
 		assertTrue(verificarValoresEnFilaCompleta(tablero, 3, 0));
 	}
 	
-	
 	@Test
 	public void moverArribaFila2Fila3Libre() {
 		
@@ -1826,6 +1825,7 @@ class TableroTest {
 		//verify
 		assertTrue(verificarValoresEnFilaCompleta(tablero, 2, 2));
 	}
+	
 	
 	@Test
 	public void moverArribaSinMovimientoTest() {
@@ -1892,14 +1892,19 @@ class TableroTest {
 	
 	
 	
+	
+	
 	@Test
-	public void moverAbajoOrigen() {
+	public void moverAbajoFila0Fila1Origen() {
+		
 		//setup
 		Tablero tablero = new Tablero();
 		
 		//excercise
 		tablero.vaciarTablero();
-		setFilaCompletaConValor(tablero, 0, 2);
+		setFilaCompletaConValor(tablero, 0, 4);
+		setFilaCompletaConValor(tablero, 2, 4);
+		setFilaCompletaConValor(tablero, 3, 2);
 		tablero.moverAbajo();
 		
 		//verify
@@ -1907,32 +1912,256 @@ class TableroTest {
 	}
 	
 	@Test
-	public void moverAbajoDestino() {
+	public void moverAbajoFila0Fila1Libre() {
+		
 		//setup
 		Tablero tablero = new Tablero();
 		
 		//excercise
 		tablero.vaciarTablero();
+		setFilaCompletaConValor(tablero, 0, 4);
+		setFilaCompletaConValor(tablero, 2, 4);
 		setFilaCompletaConValor(tablero, 3, 2);
 		tablero.moverAbajo();
 		
 		//verify
-		assertTrue(verificarValoresEnFilaCompleta(tablero, 3, 2));
+		assertTrue(verificarValoresEnFilaCompleta(tablero, 1, 4));
+	}
+
+	@Test
+	public void moverAbajoFila0Fila2Origen() {
+		
+		//setup
+		Tablero tablero = new Tablero();
+		
+		//excercise
+		tablero.vaciarTablero();
+		setFilaCompletaConValor(tablero, 0, 4);
+		setFilaCompletaConValor(tablero, 1, 2);
+		setFilaCompletaConValor(tablero, 3, 2);
+		tablero.moverAbajo();
+		
+		//verify
+		assertTrue(verificarValoresEnFilaCompleta(tablero, 0, 0));
 	}
 	
+	@Test
+	public void moverAbajoFila0Fila2Libre() {
+		
+		//setup
+		Tablero tablero = new Tablero();
+		
+		//excercise
+		tablero.vaciarTablero();
+		setFilaCompletaConValor(tablero, 0, 4);
+		setFilaCompletaConValor(tablero, 1, 2);
+		setFilaCompletaConValor(tablero, 3, 2);
+		tablero.moverAbajo();
+		
+		//verify
+		assertTrue(verificarValoresEnFilaCompleta(tablero, 1, 4));
+	}
 	
+	@Test
+	public void moverAbajoFila0Fila3Origen() {
+		
+		//setup
+		Tablero tablero = new Tablero();
+		
+		//excercise
+		tablero.vaciarTablero();
+		setFilaCompletaConValor(tablero, 0, 4);
+		setFilaCompletaConValor(tablero, 1, 2);
+		setFilaCompletaConValor(tablero, 2, 2);
+		tablero.moverAbajo();
+		
+		//verify
+		assertTrue(verificarValoresEnFilaCompleta(tablero, 0, 0));
+	}
 	
+	@Test
+	public void moverAbajoFila0Fila3Libre() {
+		
+		//setup
+		Tablero tablero = new Tablero();
+		
+		//excercise
+		tablero.vaciarTablero();
+		setFilaCompletaConValor(tablero, 0, 4);
+		setFilaCompletaConValor(tablero, 1, 4);
+		setFilaCompletaConValor(tablero, 2, 2);
+		tablero.moverAbajo();
+		
+		//verify
+		assertTrue(verificarValoresEnFilaCompleta(tablero, 1, 4));
+	}
 	
+	@Test
+	public void moverAbajoFila1Fila2Origen() {
+		
+		//setup
+		Tablero tablero = new Tablero();
+		
+		//excercise
+		tablero.vaciarTablero();
+		setFilaCompletaConValor(tablero, 0, 4);
+		setFilaCompletaConValor(tablero, 1, 2);
+		setFilaCompletaConValor(tablero, 3, 2);
+		tablero.moverAbajo();
+		
+		//verify
+		assertTrue(verificarValoresEnFilaCompleta(tablero, 0, 0));
+	}
 	
+	@Test
+	public void moverAbajoFila1Fila2Libre() {
+		
+		//setup
+		Tablero tablero = new Tablero();
+		
+		//excercise
+		tablero.vaciarTablero();
+		setFilaCompletaConValor(tablero, 0, 4);
+		setFilaCompletaConValor(tablero, 1, 2);
+		setFilaCompletaConValor(tablero, 3, 2);
+		tablero.moverAbajo();
+		
+		//verify
+		assertTrue(verificarValoresEnFilaCompleta(tablero, 1, 4));
+	}
 	
+	@Test
+	public void moverAbajoFila1Fila3Origen() {
+		
+		//setup
+		Tablero tablero = new Tablero();
+		
+		//excercise
+		tablero.vaciarTablero();
+		setFilaCompletaConValor(tablero, 0, 4);
+		setFilaCompletaConValor(tablero, 1, 2);
+		setFilaCompletaConValor(tablero, 2, 2);
+		tablero.moverAbajo();
+		
+		//verify
+		assertTrue(verificarValoresEnFilaCompleta(tablero, 0, 0));
+	}
 	
+	@Test
+	public void moverAbajoFila1Fila3Libre() {
+		
+		//setup
+		Tablero tablero = new Tablero();
+		
+		//excercise
+		tablero.vaciarTablero();
+		setFilaCompletaConValor(tablero, 0, 4);
+		setFilaCompletaConValor(tablero, 1, 2);
+		setFilaCompletaConValor(tablero, 2, 2);
+		tablero.moverAbajo();
+		
+		//verify
+		assertTrue(verificarValoresEnFilaCompleta(tablero, 1, 4));
+	}
 	
+	@Test
+	public void moverAbajoFila2Fila3Origen() {
+		
+		//setup
+		Tablero tablero = new Tablero();
+		
+		//excercise
+		tablero.vaciarTablero();
+		setFilaCompletaConValor(tablero, 0, 4);
+		setFilaCompletaConValor(tablero, 1, 2);
+		setFilaCompletaConValor(tablero, 2, 2);
+		tablero.moverAbajo();
+		
+		//verify
+		assertTrue(verificarValoresEnFilaCompleta(tablero, 0, 0));
+	}
 	
+	@Test
+	public void moverAbajoFila2Fila3Libre() {
+		
+		//setup
+		Tablero tablero = new Tablero();
+		
+		//excercise
+		tablero.vaciarTablero();
+		setFilaCompletaConValor(tablero, 0, 4);
+		setFilaCompletaConValor(tablero, 1, 2);
+		setFilaCompletaConValor(tablero, 2, 2);
+		tablero.moverAbajo();
+		
+		//verify
+		assertTrue(verificarValoresEnFilaCompleta(tablero, 1, 4));
+	}
 	
+	@Test
+	public void moverAbajoSinMovimientoTest() {
+		//setup
+		Tablero tablero = new Tablero();
+		
+		//excercise
+		tablero.vaciarTablero();
+		setFilaCompletaConValor(tablero, 0, 2);
+		setFilaCompletaConValor(tablero, 1, 4);
+		setFilaCompletaConValor(tablero, 2, 8);
+		setFilaCompletaConValor(tablero, 3, 16);
+		tablero.moverAbajo();
+		
+		//verify
+		assertTrue(verificarValoresEnFilaCompleta(tablero, 2, 8));
+	}
 	
+	@Test 
+	public void moverAbajo2FilasVaciasTest() {
+		//setup
+		Tablero tablero = new Tablero();
+		
+		//excercise
+		tablero.vaciarTablero();
+		setFilaCompletaConValor(tablero, 1, 2);
+		setFilaCompletaConValor(tablero, 2, 4);
+		tablero.moverAbajo();
+		
+		//verify
+		assertTrue(verificarValoresEnFilaCompleta(tablero, 3, 4));
+	}
 	
+	@Test 
+	public void moverAbajo3FilasVaciasTest() {
+		//setup
+		Tablero tablero = new Tablero();
+		
+		//excercise
+		tablero.vaciarTablero();
+		setFilaCompletaConValor(tablero, 0, 2);
+		setFilaCompletaConValor(tablero, 1, 2);
+		setFilaCompletaConValor(tablero, 2, 4);
+		tablero.moverAbajo();
+		
+		//verify
+		assertTrue(verificarValoresEnFilaCompleta(tablero, 3, 4));
+	}
 	
-	
+	@Test 
+	public void moverAbajo4FilasVaciasTest() {
+		//setup
+		Tablero tablero = new Tablero();
+		
+		//excercise
+		tablero.vaciarTablero();
+		setFilaCompletaConValor(tablero, 0, 2);
+		setFilaCompletaConValor(tablero, 1, 4);
+		setFilaCompletaConValor(tablero, 2, 8);
+		setFilaCompletaConValor(tablero, 3, 16);
+		tablero.moverAbajo();
+		
+		//verify
+		assertTrue(verificarValoresEnFilaCompleta(tablero, 3, 16));
+	}
 	
 	
 	
