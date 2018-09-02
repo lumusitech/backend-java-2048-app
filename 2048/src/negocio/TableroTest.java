@@ -1828,6 +1828,71 @@ class TableroTest {
 	}
 	
 	@Test
+	public void moverArribaSinMovimientoTest() {
+		//setup
+		Tablero tablero = new Tablero();
+		
+		//excercise
+		tablero.vaciarTablero();
+		setFilaCompletaConValor(tablero, 0, 2);
+		setFilaCompletaConValor(tablero, 1, 4);
+		setFilaCompletaConValor(tablero, 2, 8);
+		setFilaCompletaConValor(tablero, 3, 16);
+		tablero.moverArriba();
+		
+		//verify
+		assertTrue(verificarValoresEnFilaCompleta(tablero, 2, 8));
+	}
+	
+	@Test 
+	public void moverArriba2FilasVaciasTest() {
+		//setup
+		Tablero tablero = new Tablero();
+		
+		//excercise
+		tablero.vaciarTablero();
+		setFilaCompletaConValor(tablero, 2, 2);
+		setFilaCompletaConValor(tablero, 3, 4);
+		tablero.moverArriba();
+		
+		//verify
+		assertTrue(verificarValoresEnFilaCompleta(tablero, 0, 2));
+	}
+	
+	@Test 
+	public void moverArriba3FilasVaciasTest() {
+		//setup
+		Tablero tablero = new Tablero();
+		
+		//excercise
+		tablero.vaciarTablero();
+		setFilaCompletaConValor(tablero, 1, 2);
+		setFilaCompletaConValor(tablero, 2, 4);
+		setFilaCompletaConValor(tablero, 3, 8);
+		tablero.moverArriba();
+		
+		//verify
+		assertTrue(verificarValoresEnFilaCompleta(tablero, 0, 2));
+	}
+	
+	@Test 
+	public void moverArriba4FilasVaciasTest() {
+		//setup
+		Tablero tablero = new Tablero();
+		
+		//excercise
+		tablero.vaciarTablero();
+		tablero.moverArriba();
+		
+		//verify
+		assertTrue(verificarValoresEnTableroCompleto(tablero, 0));
+	}
+	
+	
+	
+	
+	
+	@Test
 	public void moverAbajoOrigen() {
 		//setup
 		Tablero tablero = new Tablero();
@@ -1857,22 +1922,7 @@ class TableroTest {
 	
 	
 	
-	@Test
-	public void moverArribaSinMovimientoTest() {
-		//setup
-		Tablero tablero = new Tablero();
-		
-		//excercise
-		tablero.vaciarTablero();
-		setColumnaCompletaConValor(tablero, 0, 2);
-		setColumnaCompletaConValor(tablero, 1, 4);
-		setColumnaCompletaConValor(tablero, 2, 8);
-		setColumnaCompletaConValor(tablero, 3, 16);
-		tablero.moverArriba();
-		
-		//verify
-		assertTrue(verificarValoresEnColumnaCompleta(tablero, 2, 8));
-	}
+	
 	
 	
 	
