@@ -161,16 +161,16 @@ public class Tablero {
 	public boolean mover(String direccion) {
 		if(direccion.equals("derecha")) {
 	
-			sumarDerecha();//funciona sin problemas
-			moverDerecha();//funcion casi completa
+			sumarDerecha();
+			moverDerecha();
 			//si logra agregar devuelve true
 			return agregarValorRandom();
 		}
 		
 		if(direccion.equals("izquierda")) {
 			
-			sumarIzquierda();//funciona sin problemas
-			moverIzquierda();//funcion casi completa
+			sumarIzquierda();
+			moverIzquierda();
 			//si logra agregar, devuelve true
 			return agregarValorRandom();
 		}
@@ -178,12 +178,14 @@ public class Tablero {
 		if(direccion.equals("arriba")) {
 			sumarArriba();
 			moverArriba();
+			//si logra agregar devuelve true
 			return agregarValorRandom();
 		}
 		
 		if(direccion.equals("abajo")) {
 			sumarAbajo();
 			moverAbajo();
+			//si logra agregar devuelve true
 			return agregarValorRandom();
 		}
 		return false;
@@ -214,30 +216,30 @@ public class Tablero {
 					//Si no hay nada en el cuadro anterior
 					else if(!existeValor(i,anterior)){
 						//me fijo en la columna siguienteAnterior
-						int sigteAnterior=anterior-1;
+						anterior=anterior-1;
 						//Me aseguro que este dentro del rango de valores posibles
-						if(sigteAnterior>=0) {
-							if(existeValor(i,sigteAnterior) 
-							&& (getValor(i,actual)==getValor(i,sigteAnterior))) {
+						if(anterior>=0) {
+							if(existeValor(i,anterior) 
+							&& (getValor(i,actual)==getValor(i,anterior))) {
 								//los sumo
-								setValor(i,j,(getValor(i,actual))+(getValor(i,sigteAnterior)));
+								setValor(i,j,(getValor(i,actual))+(getValor(i,anterior)));
 								//se quita el valor del cuadro anterior poque se sumo en el cuadro actual
-								setValor(i, sigteAnterior, 0);
+								setValor(i, anterior, 0);
 								//sumo al puntaje
 								puntaje+=(getValor(i,actual))+(getValor(i,anterior));
 							}
 							//si no existe valor en el Siguiente anterior
-							else if(!existeValor(i,sigteAnterior)){
+							else if(!existeValor(i,anterior)){
 								//me fijo en la columna SigteSigteAnterior
-								int sigteSigteAnterior=sigteAnterior-1;
+								anterior=anterior-1;
 							
-								if(sigteSigteAnterior>=0) {
-									if(existeValor(i,sigteSigteAnterior) 
-									&& (getValor(i,actual)==getValor(i,sigteSigteAnterior))) {
+								if(anterior>=0) {
+									if(existeValor(i,anterior) 
+									&& (getValor(i,actual)==getValor(i,anterior))) {
 										//los sumo
-										setValor(i,j,(getValor(i,actual))+(getValor(i,sigteSigteAnterior)));
+										setValor(i,j,(getValor(i,actual))+(getValor(i,anterior)));
 										//se quita el valor del cuadro anterior poque se sumo en el cuadro actual
-										setValor(i, sigteSigteAnterior, 0);
+										setValor(i, anterior, 0);
 										//sumo al puntaje
 										puntaje+=(getValor(i,actual))+(getValor(i,anterior));
 									}
@@ -410,55 +412,6 @@ public class Tablero {
 				}
 			}
 		}
-	}
-	
-	public void moverIzquierda2() {
-        //fila a fila
-        for(int fila=0; fila<4; fila++) {
-            //columna a columna
-            for(int columna=3; columna>=0; columna--) {
-                
-                //me fijo si existe un valor en la columna actual
-                int actual=columna;
-                if(existeValor(fila, actual)) {
-                    //veo en la columna anterior
-                    int anterior=actual-1;
-                    //me aseguro que este dentro del rango
-                    if(anterior>=0) {
-                        //Si no existe valor
-                        if(!existeValor(fila, anterior)) {
-                            //lo muevo ahi
-                            setValor(fila,anterior,getValor(fila,actual));
-                            setValor(fila, actual, 0);
-                            //actualizo el nuevo actual y el nuevo anterior
-                            actual=anterior;
-                            anterior=anterior-1;
-                            //me aseguro que este dentro del rango
-                            if(anterior>=0) {
-                                //Si no existe valor
-                                if(!existeValor(fila, anterior)) {
-                                    //lo muevo ahi
-                                    setValor(fila,anterior,getValor(fila,actual));
-                                    setValor(fila, actual, 0);
-                                    //actualizo el nuevo actual y el nuevo anterior
-                                    actual=anterior;
-                                    anterior=anterior-1;
-                                    //me aseguro que este dentro del rango
-                                    if(anterior>=0) {
-                                        //Si no existe valor
-                                        if(!existeValor(fila, anterior)) {
-                                            //lo muevo ahi
-                                            setValor(fila,anterior,getValor(fila,actual));
-                                            setValor(fila, actual, 0);
-                                        }
-                                    }
-                                }                        
-                            }
-                        }                        
-                    }
-                }
-            }
-        }
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////	
