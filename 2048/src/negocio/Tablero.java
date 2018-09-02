@@ -18,35 +18,23 @@ public class Tablero {
 		puntaje=0;
 		record=0;
 		
-		//Agrega el 1er valor al tablero (posición y valor aleatorio)
-		agregarValor();
-		int filaPrimerValor=fila;
-		int columnaPrimerValor=columna;
-	
-		//Agrega el 2do valor al tablero (posición y valor aleatorio)
-		agregarValor();
-		int filaSegundoValor=fila;
-		int columnaSegundoValor=columna;
-		
-		//codigo de control
-		System.out.println("Primer Cuadro--->posición("+filaPrimerValor+", "+columnaPrimerValor+")");
-		System.out.println("Segundo Cuadro--->posición("+filaSegundoValor+", "+columnaSegundoValor+")");
-		System.out.println();
+		agregarValoresIniciales();
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////
-	public boolean agregarValor() {
+	public boolean agregarValorRandom() {
 		if(lugarAleatorio()) {
 			//busca un lugar aleatorio disponible
 			setValor(fila, columna, dosOCuatro());//asigna a ese lugar dos o cuatro aleatoriamente
 			System.out.println("se agrega el cuadro aleatorio: ("+fila+","+columna+")");
 			return true;
 		}
+		System.out.println("No se puede agregar valor! Tablero completo");
 		return false;
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////
-	public boolean lugarAleatorio() {
+	private boolean lugarAleatorio() {
 		Random r1 = new Random();
 		Random r2 = new Random();
 		
@@ -73,7 +61,7 @@ public class Tablero {
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////
-	public int dosOCuatro() {
+	private int dosOCuatro() {
 		Random r = new Random();
 		if(r.nextInt(100)<50) {
 			return 2;
@@ -114,16 +102,38 @@ public class Tablero {
 		return record;
 	}
 	
+	public int getTamanio() {
+		return tamanio;
+	}
+	
 	////////////////////////////////////////////////////////////////////////////////////////
 	public void reiniciar() {
 
-		for(int i=0; i<tamanio; i++) {
-			for(int j=0; j<tamanio; j++) {
-				//Pone a todas las posiciones en cero
-				setValor(i,j,0);
-			}
-		}
+		vaciarTablero();
 		
+		controlDePuntajes();
+		
+		agregarValoresIniciales();
+		
+	}
+
+	public void agregarValoresIniciales() {
+		//Agrega el 1er valor al tablero (posición y valor aleatorio)
+		agregarValorRandom();
+		int filaPrimerValor=fila;
+		int columnaPrimerValor=columna;
+	
+		//Agrega el 2do valor al tablero (posición y valor aleatorio)
+		agregarValorRandom();
+		int filaSegundoValor=fila;
+		int columnaSegundoValor=columna;
+		
+		System.out.println("Primer Cuadro--->posición("+filaPrimerValor+", "+columnaPrimerValor+")");
+		System.out.println("Segundo Cuadro--->posición("+filaSegundoValor+", "+columnaSegundoValor+")");
+		System.out.println();
+	}
+
+	public void controlDePuntajes() {
 		//guarda el ultimo puntaje si es mayor al record
 		if(puntaje>record) {
 			record=puntaje;
@@ -131,21 +141,19 @@ public class Tablero {
 		
 		//resetea el puntaje
 		puntaje=0;
-		
-		//Agrega el 1er valor al tablero (posición y valor aleatorio)
-		agregarValor();
-		int filaPrimerValor=fila;
-		int columnaPrimerValor=columna;
+	}
+
+	public void vaciarTablero() {
+		for(int i=0; i<tamanio; i++) {
+			for(int j=0; j<tamanio; j++) {
+				//Pone a todas las posiciones en cero
+				setValor(i,j,0);
+			}
+		}
+	}
 	
-		//Agrega el 2do valor al tablero (posición y valor aleatorio)
-		agregarValor();
-		int filaSegundoValor=fila;
-		int columnaSegundoValor=columna;
-		
-		System.out.println("Primer Cuadro--->posición("+filaPrimerValor+", "+columnaPrimerValor+")");
-		System.out.println("Segundo Cuadro--->posición("+filaSegundoValor+", "+columnaSegundoValor+")");
-		System.out.println();
-		
+	public void setPuntaje(int puntaje) {
+		this.puntaje=puntaje;
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////
@@ -156,7 +164,7 @@ public class Tablero {
 			sumarDerecha();//funciona sin problemas
 			moverDerecha();//funcion casi completa
 			//si logra agregar devuelve true
-			return agregarValor();
+			return agregarValorRandom();
 		}
 		
 		if(direccion.equals("izquierda")) {
@@ -164,19 +172,19 @@ public class Tablero {
 			sumarIzquierda();//funciona sin problemas
 			moverIzquierda();//funcion casi completa
 			//si logra agregar, devuelve true
-			return agregarValor();
+			return agregarValorRandom();
 		}
 		
 		if(direccion.equals("arriba")) {
 			sumarArriba();
 			moverArriba();
-			return agregarValor();
+			return agregarValorRandom();
 		}
 		
 		if(direccion.equals("abajo")) {
 			sumarAbajo();
 			moverAbajo();
-			return agregarValor();
+			return agregarValorRandom();
 		}
 		return false;
 	}

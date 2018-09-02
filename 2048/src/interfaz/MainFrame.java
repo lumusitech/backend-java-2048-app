@@ -283,7 +283,6 @@ public class MainFrame{
 		}
 	}
 	
-	
 	////////////////////////////////////////////////////////////////////////////////////////
 		
 	//Este metodo actualiza la vista grafica del tablero (cuadros), valores y colores
