@@ -3,7 +3,6 @@ package negocio;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 
 class TableroTest {
@@ -2371,7 +2370,7 @@ class TableroTest {
 	@Test
 	public void puntajeTest() {
 		// setup
-		Tablero tablero = new Tablero();
+		Tablero tablero = new Tablero(); 
 
 		// excercise
 		tablero.reiniciar();

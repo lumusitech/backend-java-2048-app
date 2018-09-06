@@ -100,7 +100,6 @@ public class MainFrame{
 	public void tableroDeJuego() {
 		//Se crea el panel que contiene a los cuadros
 		contenedorDeCuadros = new JPanel();
-		
 		contenedorDeCuadros.setBackground(new Color(187, 173, 160));
 		contenedorDeCuadros.setBounds(56, 71, 290, 290);
 		ventana.getContentPane().add(contenedorDeCuadros);
@@ -112,18 +111,22 @@ public class MainFrame{
 		//Se crea un nuevo tablero de valores (negocio)
 		tableroDeValores = new Tablero();
 		
+		int tamanio= tableroDeValores.getTamanio();
 		//Inicializan variables del tablero grafico y la posicion de los cuadros
-		cuadros=new JTextField[4][4];
+		cuadros=new JTextField[tamanio][tamanio]; 
 		cuadrosTamanio=60;
 		cuadroPosX=10;
 		cuadroPosY=10;
+		int tamanioDeCuadro=70;
+		int posicionYInicial=10;
+		
 		
 		//Se crean los cuadros y se los ordena en el panel
-		for(int i=0; i<4; i++) {
-			for(int j=0; j<4; j++) {
+		for(int i=0; i<tamanio; i++) {
+			for(int j=0; j<tamanio; j++) {
 				
-				if(j!=0 && j<4) {
-					cuadroPosY+=70;
+				if(j!=0 && j<tamanio) {
+					cuadroPosY+=tamanioDeCuadro;
 				}
 				cuadros[i][j]=new JTextField();
 				cuadros[i][j].setBorder(null);
@@ -135,9 +138,9 @@ public class MainFrame{
 				contenedorDeCuadros.add(cuadros[i][j]);
 				cuadros[i][j].setColumns(10);
 				
-				if(j==3) {
-					cuadroPosX+=70;
-					cuadroPosY=10;
+				if(j==tamanio-1) {
+					cuadroPosX+=tamanioDeCuadro;
+					cuadroPosY=posicionYInicial;
 				}
 			}
 		}

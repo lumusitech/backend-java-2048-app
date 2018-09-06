@@ -3,6 +3,7 @@ package negocio;
 import java.util.Random;
 
 public class Tablero {
+	private int prueba;
 	private int[][] tablero;
 	private int tamanio;
 	private int fila;
@@ -230,7 +231,7 @@ public class Tablero {
 			sumarDerecha();
 			moverDerecha();
 			// si logra agregar devuelve true
-			return agregarValorRandom();
+			return agregarValorRandom(); 
 		}
 
 		if (direccion.equals("izquierda")) {
