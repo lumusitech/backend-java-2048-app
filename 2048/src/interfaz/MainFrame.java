@@ -255,22 +255,22 @@ public class MainFrame{
 			codigoTecla = KeyEvent.VK_DOWN;
 		}
 		
-		  if(e.getKeyCode()==codigoTecla){
-          	if(tableroDeValores.mover(tecla)) {
-          		actualizarTableroGrafico();
-          		
-          		actualizarPuntaje();
-          	}
-          	else {
-          		int opcion=JOptionPane.showConfirmDialog(ventana,"Fin del juego - Desea reintentar?");
-          		if(opcion==0) {
-          			nuevo();
-          		}
-          		else if(opcion==1) {
-          			System.exit(0);
-          		}
-          	}
-          }
+	    if(e.getKeyCode()==codigoTecla){
+	    	if(tableroDeValores.mover(tecla)) {
+	    		actualizarTableroGrafico();
+      		
+	    		actualizarPuntaje();
+	    	}
+//	      	else {
+//		  		int opcion=JOptionPane.showConfirmDialog(ventana,"Fin del juego - Desea reintentar?");
+//		  		if(opcion==0) {
+//		  			nuevo();
+//		  		}
+//		  		else if(opcion==1) {
+//		  			System.exit(0);
+//		  		}
+//	      	}
+	    }
 	}
 	
 	
@@ -303,7 +303,7 @@ public class MainFrame{
 				cuadro.setForeground(new Color(119,110,101));
 			}
 			
-			//A partir de acá hay que configurar los colores, hacer cuando se halla resuelto la funcion de las teclas
+			//A partir de acï¿½ hay que configurar los colores, hacer cuando se halla resuelto la funcion de las teclas
 			else if(cuadro.getText().equals("8")){
 				cuadro.setBackground(new Color(242,177,121));
 				cuadro.setForeground(new Color(249,246,242));
@@ -359,7 +359,7 @@ public class MainFrame{
 		
 		JButton btnJuegoNuevo = new JButton("Juego nuevo");
 		
-		//se estiliza el botón juegoNuevo y se lo agrega
+		//se estiliza el botï¿½n juegoNuevo y se lo agrega
 		btnJuegoNuevo.setBorder(null);//saca los bordes que vienen por defecto
 		btnJuegoNuevo.setFocusable(false);//evita que se vea un cuadro punteado alrededor del texto del boton
 		btnJuegoNuevo.setBackground(new Color(143,122,102));
@@ -368,7 +368,7 @@ public class MainFrame{
 		btnJuegoNuevo.setBounds(135, 389, 136, 35);
 		ventana.getContentPane().add(btnJuegoNuevo);
 		
-		//El botón de juego nuevo esta a la escucha de eventos
+		//El botï¿½n de juego nuevo esta a la escucha de eventos
 		btnJuegoNuevo.addMouseListener(new MouseAdapter() {
 			
 			@Override

@@ -83,7 +83,7 @@ class TableroTest {
 	}
 
 	@Test
-	public void moverCuadroPosiciónDestinoTest() {
+	public void moverCuadroPosicionDestinoTest() {
 
 		// setup
 		Tablero tablero = new Tablero();

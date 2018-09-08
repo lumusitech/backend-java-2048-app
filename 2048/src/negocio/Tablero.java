@@ -3,7 +3,6 @@ package negocio;
 import java.util.Random;
 
 public class Tablero {
-	private int prueba;
 	private int[][] tablero;
 	private int tamanio;
 	private int fila;
@@ -74,7 +73,7 @@ public class Tablero {
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
 				if (!existeValor(i, j)) {
-					// guarda la fila y columna que encontro vacía
+					// guarda la fila y columna que encontro vacï¿½a
 					fila = i;
 					columna = j;
 					return true;
@@ -182,18 +181,18 @@ public class Tablero {
 	}
 
 	public void agregarValoresIniciales() {
-		// Agrega el 1er valor al tablero (posición y valor aleatorio)
+		// Agrega el 1er valor al tablero (posiciï¿½n y valor aleatorio)
 		agregarValorRandom();
 		int filaPrimerValor = fila;
 		int columnaPrimerValor = columna;
 
-		// Agrega el 2do valor al tablero (posición y valor aleatorio)
+		// Agrega el 2do valor al tablero (posiciï¿½n y valor aleatorio)
 		agregarValorRandom();
 		int filaSegundoValor = fila;
 		int columnaSegundoValor = columna;
 
-		System.out.println("Primer Cuadro--->posición(" + filaPrimerValor + ", " + columnaPrimerValor + ")");
-		System.out.println("Segundo Cuadro--->posición(" + filaSegundoValor + ", " + columnaSegundoValor + ")");
+		System.out.println("Primer Cuadro--->posiciï¿½n(" + filaPrimerValor + ", " + columnaPrimerValor + ")");
+		System.out.println("Segundo Cuadro--->posiciï¿½n(" + filaSegundoValor + ", " + columnaSegundoValor + ")");
 		System.out.println();
 	}
 
@@ -228,40 +227,41 @@ public class Tablero {
 	public boolean mover(String direccion) {
 		if (direccion.equals("derecha")) {
 
-			sumarDerecha();
-			moverDerecha();
-			// si logra agregar devuelve true
-			return agregarValorRandom(); 
+			if(sumarDerecha() || moverDerecha()) {
+				// si logra agregar devuelve true
+				return agregarValorRandom();
+			}
+			 
 		}
 
 		if (direccion.equals("izquierda")) {
 
-			sumarIzquierda();
-			moverIzquierda();
-			// si logra agregar, devuelve true
-			return agregarValorRandom();
+			if(sumarIzquierda() || moverIzquierda()) {
+				// si logra agregar devuelve true
+				return agregarValorRandom();
+			}
 		}
 
 		if (direccion.equals("arriba")) {
-			sumarArriba();
-			moverArriba();
-			// si logra agregar devuelve true
-			return agregarValorRandom();
+			if(sumarArriba() || moverArriba()) {
+				// si logra agregar devuelve true
+				return agregarValorRandom();
+			}
 		}
 
 		if (direccion.equals("abajo")) {
-			sumarAbajo();
-			moverAbajo();
-			// si logra agregar devuelve true
-			return agregarValorRandom();
+			if(sumarAbajo() || moverAbajo()) {
+				// si logra agregar devuelve true
+				return agregarValorRandom();
+			}
 		}
 		return false;
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////
 
-	public void sumarDerecha() {
-
+	public boolean sumarDerecha() {
+		boolean ret = false;
 		// fila a fila
 		for (int i = 0; i < 4; i++) {
 			// columna a columna de derecha a izquierda
@@ -279,6 +279,8 @@ public class Tablero {
 						setValor(i, anterior, 0);
 						// sumo al puntaje
 						puntaje += (getValor(i, actual)) + (getValor(i, anterior));
+						//avisa que que se pudo sumar
+						ret =  true;
 					}
 					// Si no hay nada en el cuadro anterior
 					else if (!existeValor(i, anterior)) {
@@ -293,6 +295,8 @@ public class Tablero {
 								setValor(i, anterior, 0);
 								// sumo al puntaje
 								puntaje += (getValor(i, actual)) + (getValor(i, anterior));
+								//avisa que que se pudo sumar
+								ret =  true;
 							}
 							// si no existe valor en el Siguiente anterior
 							else if (!existeValor(i, anterior)) {
@@ -307,6 +311,8 @@ public class Tablero {
 										setValor(i, anterior, 0);
 										// sumo al puntaje
 										puntaje += (getValor(i, actual)) + (getValor(i, anterior));
+										//avisa que que se pudo sumar
+										ret =  true;
 									}
 								}
 							}
@@ -315,10 +321,14 @@ public class Tablero {
 				}
 			}
 		}
+		//avisa que que NO se pudo sumar
+		return ret;
+		
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////
-	public void moverDerecha() {
+	public boolean moverDerecha() {
+		boolean ret = false;
 		for (int i = 0; i < tamanio; i++) {
 			for (int j = tamanio - 1; j > 0; j--) {
 
@@ -347,26 +357,35 @@ public class Tablero {
 									// ahora veo si esta vacio
 									if (existeValor(i, anterior)) {
 										moverCuadro(i, anterior, moverAFila, moverAColumna);
+										//avisa que se pudo mover
+										ret =  true;
 									}
 								}
 							} else {
 								moverCuadro(i, anterior, moverAFila, moverAColumna);
+								//avisa que se pudo mover
+								ret =  true;
 							}
 						}
 					}
 					// si existe, lo muevo al cuadro vacio que guarde
 					else {
 						moverCuadro(i, anterior, moverAFila, moverAColumna);
+						//avisa que se pudo mover
+						ret =  true;
 					}
 
 				}
 			}
 		}
+		
+		//avisa que se NO pudo mover
+		return ret;
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////
-	public void sumarIzquierda() {
-
+	public boolean sumarIzquierda() {
+		boolean ret = false;
 		// fila a fila
 		for (int i = 0; i < 4; i++) {
 			// columna a columna de derecha a izquierda
@@ -385,6 +404,8 @@ public class Tablero {
 							setValor(i, siguiente, 0);
 							// sumo al puntaje
 							puntaje += (getValor(i, actual)) + (getValor(i, siguiente));
+							//avisa que que se pudo sumar
+							ret =  true;
 						}
 						// Si no hay nada en el cuadro anterior
 						else if (!existeValor(i, siguiente)) {
@@ -399,6 +420,8 @@ public class Tablero {
 									setValor(i, siguiente, 0);
 									// sumo al puntaje
 									puntaje += (getValor(i, actual)) + (getValor(i, siguiente));
+									//avisa que que se pudo sumar
+									ret =  true;
 								}
 								// si no existe valor en el Siguiente anterior
 								else if (!existeValor(i, siguiente)) {
@@ -414,6 +437,8 @@ public class Tablero {
 											setValor(i, siguiente, 0);
 											// sumo al puntaje
 											puntaje += (getValor(i, actual)) + (getValor(i, siguiente));
+											//avisa que que se pudo sumar
+											ret =  true;
 										}
 									}
 								}
@@ -423,11 +448,14 @@ public class Tablero {
 				}
 			}
 		}
+		//avisa que que se NO pudo sumar
+		return ret;
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////
 
-	public void moverIzquierda() {
+	public boolean moverIzquierda() {
+		boolean ret = false;
 		for (int i = 0; i < tamanio; i++) {
 			for (int j = 0; j < tamanio; j++) {
 
@@ -459,25 +487,34 @@ public class Tablero {
 										// ahora veo si esta vacio
 										if (existeValor(i, siguiente)) {
 											moverCuadro(i, siguiente, moverAFila, moverAColumna);
+											//avisa que se pudo mover
+											ret =  true;
 										}
 									}
 								} else {
 									moverCuadro(i, siguiente, moverAFila, moverAColumna);
+									//avisa que se pudo mover
+									ret =  true;
 								}
 							}
 						}
 						// si existe, lo muevo al cuadro vacio que guarde
 						else {
 							moverCuadro(i, siguiente, moverAFila, moverAColumna);
+							//avisa que se pudo mover
+							ret =  true;
 						}
 					}
 				}
 			}
 		}
+		//avisa que se NO pudo mover
+		return ret;
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////
-	public void sumarArriba() {
+	public boolean sumarArriba() {
+		boolean ret = false;
 		// fila a fila
 		for (int j = 0; j < 4; j++) {
 			// columna a columna de derecha a izquierda
@@ -496,6 +533,8 @@ public class Tablero {
 							setValor(siguiente, j, 0);
 							// sumo al puntaje
 							puntaje += (getValor(actual, j)) + (getValor(siguiente, j));
+							//avisa que que se pudo sumar
+							ret =  true;
 						}
 						// Si no hay nada en el cuadro anterior
 						else if (!existeValor(siguiente, j)) {
@@ -510,6 +549,8 @@ public class Tablero {
 									setValor(siguiente, j, 0);
 									// sumo al puntaje
 									puntaje += (getValor(actual, j)) + (getValor(siguiente, j));
+									//avisa que que se pudo sumar
+									ret =  true;
 								}
 								// si no existe valor en el Siguiente anterior
 								else if (!existeValor(siguiente, j)) {
@@ -525,6 +566,8 @@ public class Tablero {
 											setValor(siguiente, j, 0);
 											// sumo al puntaje
 											puntaje += (getValor(actual, j)) + (getValor(siguiente, j));
+											//avisa que que se pudo sumar
+											ret =  true;
 										}
 									}
 								}
@@ -534,10 +577,14 @@ public class Tablero {
 				}
 			}
 		}
+		
+		//avisa que que NO se pudo sumar
+		return ret;
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////
-	public void moverArriba() {
+	public boolean moverArriba() {
+		boolean ret = false;
 		for (int j = 0; j < tamanio; j++) {
 			for (int i = 0; i < tamanio; i++) {
 
@@ -569,25 +616,35 @@ public class Tablero {
 										// ahora veo si esta vacio
 										if (existeValor(siguiente, j)) {
 											moverCuadro(siguiente, j, moverAFila, moverAColumna);
+											//avisa que se pudo mover
+											ret =  true;
 										}
 									}
 								} else {
 									moverCuadro(siguiente, j, moverAFila, moverAColumna);
+									//avisa que se pudo mover
+									ret =  true;
 								}
 							}
 						}
 						// si existe, lo muevo al cuadro vacio que guarde
 						else {
 							moverCuadro(siguiente, j, moverAFila, moverAColumna);
+							//avisa que se pudo mover
+							ret =  true;
 						}
 					}
 				}
 			}
 		}
+		
+		//avisa que NO se pudo mover
+		return ret;
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////
-	public void sumarAbajo() {
+	public boolean sumarAbajo() {
+		boolean ret = false;
 		// fila a fila
 		for (int j = 0; j < 4; j++) {
 			// columna a columna de derecha a izquierda
@@ -605,6 +662,8 @@ public class Tablero {
 						setValor(anterior, j, 0);
 						// sumo al puntaje
 						puntaje += (getValor(actual, j)) + (getValor(anterior, j));
+						//avisa que que se pudo sumar
+						ret =  true;
 					}
 					// Si no hay nada en el cuadro anterior
 					else if (!existeValor(anterior, j)) {
@@ -619,6 +678,8 @@ public class Tablero {
 								setValor(anterior, j, 0);
 								// sumo al puntaje
 								puntaje += (getValor(actual, j)) + (getValor(anterior, j));
+								//avisa que que se pudo sumar
+								ret =  true;
 							}
 							// si no existe valor en el Siguiente anterior
 							else if (!existeValor(anterior, j)) {
@@ -633,6 +694,8 @@ public class Tablero {
 										setValor(anterior, j, 0);
 										// sumo al puntaje
 										puntaje += (getValor(actual, j)) + (getValor(anterior, j));
+										//avisa que que se pudo sumar
+										ret =  true;
 									}
 								}
 							}
@@ -641,10 +704,14 @@ public class Tablero {
 				}
 			}
 		}
+		
+		//avisa que que NO se pudo sumar
+		return ret;
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////
-	public void moverAbajo() {
+	public boolean moverAbajo() {
+		boolean ret = false;
 		for (int j = 0; j < tamanio; j++) {
 			for (int i = tamanio - 1; i > 0; i--) {
 
@@ -673,21 +740,30 @@ public class Tablero {
 									// ahora veo si esta vacio
 									if (existeValor(anterior, j)) {// 0
 										moverCuadro(anterior, j, moverAFila, moverAColumna);
+										//avisa que se pudo mover
+										ret =  true;
 									}
 								}
 							} else {// 1
 								moverCuadro(anterior, j, moverAFila, moverAColumna);
+								//avisa que se pudo mover
+								ret =  true;
 							}
 						}
 					}
 					// si existe, lo muevo al cuadro vacio que guarde
 					else {// 2
 						moverCuadro(anterior, j, moverAFila, moverAColumna);
+						//avisa que se pudo mover
+						ret =  true;
 					}
 
 				}
 			}
 		}
+		
+		//avisa que NO se pudo mover
+		return ret;
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////
