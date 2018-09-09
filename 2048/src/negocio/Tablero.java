@@ -10,14 +10,14 @@ public class Tablero {
 	private int puntaje;
 	private int record;
 	
-	private boolean sumaDerechaHabilitado;
-	private boolean sumaIzquierdaHabilitado;
-	private boolean sumaArribaHabilitado;
-	private boolean sumaAbajoHabilitado;
-	private boolean movDerechaHabilitado;
-	private boolean movIzquierdaHabilitado;
-	private boolean movArribaHabilitado;
-	private boolean movAbajoHabilitado;
+	private boolean sumaDerechaEfectuada;
+	private boolean sumaIzquierdaEfectuada;
+	private boolean sumaArribaEfectuada;
+	private boolean sumaAbajoEfectuada;
+	private boolean movDerechaEfectuado;
+	private boolean movIzquierdaEfectuado;
+	private boolean movArribaEfectuado;
+	private boolean movAbajoEfectuado;
 
 	public Tablero() {
 
@@ -26,14 +26,14 @@ public class Tablero {
 		puntaje = 0;
 		record = 0;
 		
-		sumaDerechaHabilitado = true;
-		sumaIzquierdaHabilitado = true;
-		sumaArribaHabilitado = true;
-		sumaAbajoHabilitado = true;
-		movDerechaHabilitado = true;
-		movIzquierdaHabilitado = true;
-		movArribaHabilitado = true;
-		movAbajoHabilitado = true;
+		sumaDerechaEfectuada = true;
+		sumaIzquierdaEfectuada = true;
+		sumaArribaEfectuada = true;
+		sumaAbajoEfectuada = true;
+		movDerechaEfectuado = true;
+		movIzquierdaEfectuado = true;
+		movArribaEfectuado = true;
+		movAbajoEfectuado = true;
 		
 
 		agregarValoresIniciales();
@@ -70,7 +70,7 @@ public class Tablero {
 		// en busca de un lugar libre
 		if (contador == 10) {
 			if (!existeLugarDisponible()) {
-				System.out.println("Fin del juego - No existe lugar disponible");
+				System.out.println("No existe lugar disponible");
 				return false;
 			}
 		}
@@ -122,6 +122,39 @@ public class Tablero {
 	public int getTamanio() {
 		return tamanio;
 	}
+	
+	public boolean getSumaDerechaEfectuada() {
+		return sumaDerechaEfectuada;
+	}
+	
+	public boolean getMovDerechaEfectuado() {
+		return movDerechaEfectuado;
+	}
+	
+	public boolean getSumaIzquierdaEfectuada() {
+		return sumaIzquierdaEfectuada;
+	}
+	
+	public boolean getMovIzquierdaEfectuado() {
+		return movIzquierdaEfectuado;
+	}
+	
+	public boolean getSumaArribaEfectuada() {
+		return sumaArribaEfectuada;
+	}
+	
+	public boolean getMovArribaEfectuado() {
+		return movArribaEfectuado;
+	}
+	
+	public boolean getSumaAbajoEfectuada() {
+		return sumaAbajoEfectuada;
+	}
+	
+	public boolean getMovAbajoEfectuado() {
+		return movAbajoEfectuado;
+	}
+
 
 	public void setPuntaje(int puntaje) {
 		this.puntaje = puntaje;
@@ -195,14 +228,14 @@ public class Tablero {
 
 		controlDePuntajes();
 		
-		sumaDerechaHabilitado = true;
-		sumaIzquierdaHabilitado = true;
-		sumaArribaHabilitado = true;
-		sumaAbajoHabilitado = true;
-		movDerechaHabilitado = true;
-		movIzquierdaHabilitado = true;
-		movArribaHabilitado = true;
-		movAbajoHabilitado = true;
+		sumaDerechaEfectuada = true;
+		sumaIzquierdaEfectuada = true;
+		sumaArribaEfectuada = true;
+		sumaAbajoEfectuada = true;
+		movDerechaEfectuado = true;
+		movIzquierdaEfectuado = true;
+		movArribaEfectuado = true;
+		movAbajoEfectuado = true;
 
 		agregarValoresIniciales();
 
@@ -257,19 +290,19 @@ public class Tablero {
 		if (direccion.equals("derecha")) {
 
 			if(sumarDerecha()) {
-				sumaDerechaHabilitado = true;
+				sumaDerechaEfectuada = true;
 			}
 			else {
-				sumaDerechaHabilitado = false;
+				sumaDerechaEfectuada = false;
 			}
 			if(moverDerecha()) {
 				// si logra agregar devuelve true
-				movDerechaHabilitado = true;
+				movDerechaEfectuado = true;
 			}
 			else {
-				movDerechaHabilitado = false;
+				movDerechaEfectuado = false;
 			}
-			if(movDerechaHabilitado || sumaDerechaHabilitado) {
+			if(movDerechaEfectuado || sumaDerechaEfectuada) {
 				agregarValorRandom();
 			}
 			 
@@ -279,19 +312,19 @@ public class Tablero {
 
 			if(sumarIzquierda()) {
 				// si logra agregar devuelve true
-				sumaIzquierdaHabilitado = true;
+				sumaIzquierdaEfectuada = true;
 			}
 			else {
-				sumaIzquierdaHabilitado = false;
+				sumaIzquierdaEfectuada = false;
 			}
 			if(moverIzquierda()) {
 				// si logra agregar devuelve true
-				movIzquierdaHabilitado = true;
+				movIzquierdaEfectuado = true;
 			}
 			else {
-				movIzquierdaHabilitado = false;
+				movIzquierdaEfectuado = false;
 			}
-			if(movIzquierdaHabilitado || sumaIzquierdaHabilitado) {
+			if(movIzquierdaEfectuado || sumaIzquierdaEfectuada) {
 				agregarValorRandom();
 			}
 		}
@@ -299,19 +332,19 @@ public class Tablero {
 		if (direccion.equals("arriba")) {
 			if(sumarArriba()) {
 				// si logra agregar devuelve true
-				sumaArribaHabilitado = true;
+				sumaArribaEfectuada = true;
 			}
 			else {
-				sumaArribaHabilitado = false;
+				sumaArribaEfectuada = false;
 			}
 			if(moverArriba()) {
 				// si logra agregar devuelve true
-				movArribaHabilitado = true;
+				movArribaEfectuado = true;
 			}
 			else {
-				movArribaHabilitado = false;
+				movArribaEfectuado = false;
 			}
-			if(movArribaHabilitado || sumaArribaHabilitado) {
+			if(movArribaEfectuado || sumaArribaEfectuada) {
 				agregarValorRandom();
 			}
 		}
@@ -319,24 +352,25 @@ public class Tablero {
 		if (direccion.equals("abajo")) {
 			if(sumarAbajo()) {
 				// si logra agregar devuelve true
-				sumaAbajoHabilitado = true;
+				sumaAbajoEfectuada = true;
 			}
 			else {
-				sumaAbajoHabilitado = false;
+				sumaAbajoEfectuada = false;
 			}
 			if(moverAbajo()) {
 				// si logra agregar devuelve true
-				movAbajoHabilitado = true;
+				movAbajoEfectuado = true;
 			}
 			else {
-				movAbajoHabilitado = false;
+				movAbajoEfectuado = false;
 			}
-			if(movAbajoHabilitado || sumaAbajoHabilitado) {
+			if(movAbajoEfectuado || sumaAbajoEfectuada) {
 				agregarValorRandom();
 			}
 		}
 		
-		if(!movDerechaHabilitado && !movIzquierdaHabilitado && !movArribaHabilitado && !movAbajoHabilitado) {
+		if( (!sumaDerechaEfectuada && !movDerechaEfectuado) && ( !sumaIzquierdaEfectuada && !movIzquierdaEfectuado)
+		&&  (!sumaArribaEfectuada && !movArribaEfectuado) && (!sumaAbajoEfectuada && !movAbajoEfectuado) ) {
 			return false;
 		}
 		

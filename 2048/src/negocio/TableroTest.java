@@ -14,12 +14,12 @@ class TableroTest {
 		Tablero tablero = new Tablero();
 
 		// excercise
-		tablero.agregarValoresRandom(14);
+		tablero.vaciarTablero();
+		tablero.agregarValoresRandom(16);//(tablero 4x4)
 
 		// verify
 		assertFalse(tablero.agregarValorRandom());
-		// 2 valores iniciales + 14 agregados + 1 que no se agrega por estar completo
-		// (tablero 4x4)
+		
 	}
 
 	@Test
@@ -2170,9 +2170,63 @@ class TableroTest {
 		// verify
 		assertTrue(tablero.verificarValoresEnFilaCompleta(3, 0));
 	}
+	
+	///////////////////////////////////////////////////////////////////////////////
 
 	@Test
-	public void moverParametroDerechaTest() {
+	public void moverParametroDerecha_sumaFalseMovFalse_Test() {
+
+		// setup
+		Tablero tablero = new Tablero();
+
+		// excercise
+		tablero.vaciarTablero();
+		tablero.setColumnaCompletaConValor(0, 2);
+		tablero.setColumnaCompletaConValor(1, 4);
+		tablero.setColumnaCompletaConValor(2, 2);
+		tablero.setColumnaCompletaConValor(3, 4);
+		tablero.mover("derecha");
+		
+
+		// verify
+		assertFalse(tablero.getSumaDerechaEfectuada() && tablero.getMovDerechaEfectuado());
+	}
+	
+	@Test
+	public void moverParametroDerecha_sumaTrueMovFalse_Test() {
+
+		// setup
+		Tablero tablero = new Tablero();
+
+		// excercise
+		tablero.vaciarTablero();
+		tablero.setColumnaCompletaConValor(2, 2);
+		tablero.setColumnaCompletaConValor(3, 2);
+		tablero.mover("derecha");
+		
+
+		// verify
+		assertFalse(tablero.getSumaDerechaEfectuada() && tablero.getMovDerechaEfectuado());
+	}
+	
+	@Test
+	public void moverParametroDerecha_sumaFalseMovTrue_Test() {
+
+		// setup
+		Tablero tablero = new Tablero();
+
+		// excercise
+		tablero.vaciarTablero();
+		tablero.setColumnaCompletaConValor(0, 2);
+		tablero.mover("derecha");
+		
+
+		// verify
+		assertFalse(tablero.getSumaDerechaEfectuada() && tablero.getMovDerechaEfectuado());
+	}
+	
+	@Test
+	public void moverParametroDerecha_sumaTrueMovTrue_Test() {
 
 		// setup
 		Tablero tablero = new Tablero();
@@ -2182,13 +2236,66 @@ class TableroTest {
 		tablero.setColumnaCompletaConValor(0, 2);
 		tablero.setColumnaCompletaConValor(1, 2);
 		tablero.mover("derecha");
+		
 
 		// verify
-		assertTrue(tablero.verificarValoresEnColumnaCompleta(3, 4));
+		assertTrue(tablero.getSumaDerechaEfectuada() && tablero.getMovDerechaEfectuado());
 	}
 
 	@Test
-	public void moverParametroIzquierdaTest() {
+	public void moverParametroIzquierda_sumaFalseMovFalse_Test() {
+
+		// setup
+		Tablero tablero = new Tablero();
+
+		// excercise
+		tablero.vaciarTablero();
+		tablero.setColumnaCompletaConValor(0, 2);
+		tablero.setColumnaCompletaConValor(1, 4);
+		tablero.setColumnaCompletaConValor(2, 2);
+		tablero.setColumnaCompletaConValor(3, 4);
+		tablero.mover("izquierda");
+		
+
+		// verify
+		assertFalse(tablero.getSumaIzquierdaEfectuada() && tablero.getMovIzquierdaEfectuado());
+	}
+	
+	@Test
+	public void moverParametroIzquierda_sumaTrueMovFalse_Test() {
+
+		// setup
+		Tablero tablero = new Tablero();
+
+		// excercise
+		tablero.vaciarTablero();
+		tablero.setColumnaCompletaConValor(0, 2);
+		tablero.setColumnaCompletaConValor(1, 2);
+		tablero.mover("izquierda");
+		
+
+		// verify
+		assertFalse(tablero.getSumaIzquierdaEfectuada() && tablero.getMovIzquierdaEfectuado());
+	}
+	
+	@Test
+	public void moverParametroIzquierda_sumaFalseMovTrue_Test() {
+
+		// setup
+		Tablero tablero = new Tablero();
+
+		// excercise
+		tablero.vaciarTablero();
+		tablero.setColumnaCompletaConValor(3, 2);
+		tablero.mover("izquierda");
+		
+
+		// verify
+		assertFalse(tablero.getSumaIzquierdaEfectuada() && tablero.getMovIzquierdaEfectuado());
+	}
+	
+	@Test
+	public void moverParametroIzquierda_sumaTrueMovTrue_Test() {
 
 		// setup
 		Tablero tablero = new Tablero();
@@ -2198,13 +2305,68 @@ class TableroTest {
 		tablero.setColumnaCompletaConValor(2, 2);
 		tablero.setColumnaCompletaConValor(3, 2);
 		tablero.mover("izquierda");
+		
 
 		// verify
-		assertTrue(tablero.verificarValoresEnColumnaCompleta(0, 4));
+		assertTrue(tablero.getSumaIzquierdaEfectuada() && tablero.getMovIzquierdaEfectuado());
 	}
+	
+	//****************************************
 
 	@Test
-	public void moverParametroArribaTest() {
+	public void moverParametroArriba_sumaFalseMovFalse_Test() {
+
+		// setup
+		Tablero tablero = new Tablero();
+
+		// excercise
+		tablero.vaciarTablero();
+		tablero.setFilaCompletaConValor(0, 2);
+		tablero.setFilaCompletaConValor(1, 4);
+		tablero.setFilaCompletaConValor(2, 2);
+		tablero.setFilaCompletaConValor(3, 4);
+		tablero.mover("arriba");
+		
+
+		// verify
+		assertFalse(tablero.getSumaArribaEfectuada() && tablero.getMovArribaEfectuado());
+	}
+	
+	@Test
+	public void moverParametroArriba_sumaTrueMovFalse_Test() {
+
+		// setup
+		Tablero tablero = new Tablero();
+
+		// excercise
+		tablero.vaciarTablero();
+		tablero.setFilaCompletaConValor(0, 2);
+		tablero.setFilaCompletaConValor(1, 2);
+		tablero.mover("arriba");
+		
+
+		// verify
+		assertFalse(tablero.getSumaArribaEfectuada() && tablero.getMovArribaEfectuado());
+	}
+	
+	@Test
+	public void moverParametroArriba_sumaFalseMovTrue_Test() {
+
+		// setup
+		Tablero tablero = new Tablero();
+
+		// excercise
+		tablero.vaciarTablero();
+		tablero.setFilaCompletaConValor(3, 2);
+		tablero.mover("arriba");
+		
+
+		// verify
+		assertFalse(tablero.getSumaArribaEfectuada() && tablero.getMovArribaEfectuado());
+	}
+	
+	@Test
+	public void moverParametroArriba_sumaTrueMovTrue_Test() {
 
 		// setup
 		Tablero tablero = new Tablero();
@@ -2214,13 +2376,68 @@ class TableroTest {
 		tablero.setFilaCompletaConValor(2, 2);
 		tablero.setFilaCompletaConValor(3, 2);
 		tablero.mover("arriba");
+		
 
 		// verify
-		assertTrue(tablero.verificarValoresEnFilaCompleta(0, 4));
+		assertTrue(tablero.getSumaArribaEfectuada() && tablero.getMovArribaEfectuado());
 	}
+	
+	//******************************************
 
 	@Test
-	public void moverParametroAbajoTest() {
+	public void moverParametroAbajo_sumaFalseMovFalse_Test() {
+
+		// setup
+		Tablero tablero = new Tablero();
+
+		// excercise
+		tablero.vaciarTablero();
+		tablero.setFilaCompletaConValor(0, 2);
+		tablero.setFilaCompletaConValor(1, 4);
+		tablero.setFilaCompletaConValor(2, 2);
+		tablero.setFilaCompletaConValor(3, 4);
+		tablero.mover("abajo");
+		
+
+		// verify
+		assertFalse(tablero.getSumaAbajoEfectuada() && tablero.getMovAbajoEfectuado());
+	}
+	
+	@Test
+	public void moverParametroAbajo_sumaTrueMovFalse_Test() {
+
+		// setup
+		Tablero tablero = new Tablero();
+
+		// excercise
+		tablero.vaciarTablero();
+		tablero.setFilaCompletaConValor(2, 2);
+		tablero.setFilaCompletaConValor(3, 2);
+		tablero.mover("abajo");
+		
+
+		// verify
+		assertFalse(tablero.getSumaAbajoEfectuada() && tablero.getMovAbajoEfectuado());
+	}
+	
+	@Test
+	public void moverParametroAbajo_sumaFalseMovTrue_Test() {
+
+		// setup
+		Tablero tablero = new Tablero();
+
+		// excercise
+		tablero.vaciarTablero();
+		tablero.setFilaCompletaConValor(0, 2);
+		tablero.mover("abajo");
+		
+
+		// verify
+		assertFalse(tablero.getSumaAbajoEfectuada() && tablero.getMovAbajoEfectuado());
+	}
+	
+	@Test
+	public void moverParametroAbajo_sumaTrueMovTrue_Test() {
 
 		// setup
 		Tablero tablero = new Tablero();
@@ -2230,10 +2447,13 @@ class TableroTest {
 		tablero.setFilaCompletaConValor(0, 2);
 		tablero.setFilaCompletaConValor(1, 2);
 		tablero.mover("abajo");
+		
 
 		// verify
-		assertTrue(tablero.verificarValoresEnFilaCompleta(3, 4));
+		assertTrue(tablero.getSumaAbajoEfectuada() && tablero.getMovAbajoEfectuado());
 	}
+	
+	//**********************************************
 
 	@Test
 	public void moverParametroVacioTest() {
@@ -2345,11 +2565,8 @@ class TableroTest {
 		Tablero tablero = new Tablero();
 
 		// excercise
-		tablero.setColumnaCompletaConValor(0, 2);
-		tablero.setColumnaCompletaConValor(1, 2);
-		tablero.setColumnaCompletaConValor(2, 2);
-		tablero.setColumnaCompletaConValor(3, 2);
-		tablero.setValor(3, 3, 0);
+		tablero.vaciarTablero();
+		
 		// verify
 		assertTrue(tablero.existeLugarDisponible());		
 	}
