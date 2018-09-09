@@ -9,6 +9,15 @@ public class Tablero {
 	private int columna;
 	private int puntaje;
 	private int record;
+	
+	private boolean sumaDerechaHabilitado;
+	private boolean sumaIzquierdaHabilitado;
+	private boolean sumaArribaHabilitado;
+	private boolean sumaAbajoHabilitado;
+	private boolean movDerechaHabilitado;
+	private boolean movIzquierdaHabilitado;
+	private boolean movArribaHabilitado;
+	private boolean movAbajoHabilitado;
 
 	public Tablero() {
 
@@ -16,6 +25,16 @@ public class Tablero {
 		tablero = new int[tamanio][tamanio];
 		puntaje = 0;
 		record = 0;
+		
+		sumaDerechaHabilitado = true;
+		sumaIzquierdaHabilitado = true;
+		sumaArribaHabilitado = true;
+		sumaAbajoHabilitado = true;
+		movDerechaHabilitado = true;
+		movIzquierdaHabilitado = true;
+		movArribaHabilitado = true;
+		movAbajoHabilitado = true;
+		
 
 		agregarValoresIniciales();
 	}
@@ -175,6 +194,15 @@ public class Tablero {
 		vaciarTablero();
 
 		controlDePuntajes();
+		
+		sumaDerechaHabilitado = true;
+		sumaIzquierdaHabilitado = true;
+		sumaArribaHabilitado = true;
+		sumaAbajoHabilitado = true;
+		movDerechaHabilitado = true;
+		movIzquierdaHabilitado = true;
+		movArribaHabilitado = true;
+		movAbajoHabilitado = true;
 
 		agregarValoresIniciales();
 
@@ -225,37 +253,94 @@ public class Tablero {
 	////////////////////////////////////////////////////////////////////////////////////////
 
 	public boolean mover(String direccion) {
+			
 		if (direccion.equals("derecha")) {
 
-			if(sumarDerecha() || moverDerecha()) {
+			if(sumarDerecha()) {
+				sumaDerechaHabilitado = true;
+			}
+			else {
+				sumaDerechaHabilitado = false;
+			}
+			if(moverDerecha()) {
 				// si logra agregar devuelve true
-				return agregarValorRandom();
+				movDerechaHabilitado = true;
+			}
+			else {
+				movDerechaHabilitado = false;
+			}
+			if(movDerechaHabilitado || sumaDerechaHabilitado) {
+				agregarValorRandom();
 			}
 			 
 		}
 
 		if (direccion.equals("izquierda")) {
 
-			if(sumarIzquierda() || moverIzquierda()) {
+			if(sumarIzquierda()) {
 				// si logra agregar devuelve true
-				return agregarValorRandom();
+				sumaIzquierdaHabilitado = true;
+			}
+			else {
+				sumaIzquierdaHabilitado = false;
+			}
+			if(moverIzquierda()) {
+				// si logra agregar devuelve true
+				movIzquierdaHabilitado = true;
+			}
+			else {
+				movIzquierdaHabilitado = false;
+			}
+			if(movIzquierdaHabilitado || sumaIzquierdaHabilitado) {
+				agregarValorRandom();
 			}
 		}
 
 		if (direccion.equals("arriba")) {
-			if(sumarArriba() || moverArriba()) {
+			if(sumarArriba()) {
 				// si logra agregar devuelve true
-				return agregarValorRandom();
+				sumaArribaHabilitado = true;
+			}
+			else {
+				sumaArribaHabilitado = false;
+			}
+			if(moverArriba()) {
+				// si logra agregar devuelve true
+				movArribaHabilitado = true;
+			}
+			else {
+				movArribaHabilitado = false;
+			}
+			if(movArribaHabilitado || sumaArribaHabilitado) {
+				agregarValorRandom();
 			}
 		}
 
 		if (direccion.equals("abajo")) {
-			if(sumarAbajo() || moverAbajo()) {
+			if(sumarAbajo()) {
 				// si logra agregar devuelve true
-				return agregarValorRandom();
+				sumaAbajoHabilitado = true;
+			}
+			else {
+				sumaAbajoHabilitado = false;
+			}
+			if(moverAbajo()) {
+				// si logra agregar devuelve true
+				movAbajoHabilitado = true;
+			}
+			else {
+				movAbajoHabilitado = false;
+			}
+			if(movAbajoHabilitado || sumaAbajoHabilitado) {
+				agregarValorRandom();
 			}
 		}
-		return false;
+		
+		if(!movDerechaHabilitado && !movIzquierdaHabilitado && !movArribaHabilitado && !movAbajoHabilitado) {
+			return false;
+		}
+		
+		return true;
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////

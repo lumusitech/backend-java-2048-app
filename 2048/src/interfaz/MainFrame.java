@@ -261,15 +261,15 @@ public class MainFrame{
       		
 	    		actualizarPuntaje();
 	    	}
-//	      	else {
-//		  		int opcion=JOptionPane.showConfirmDialog(ventana,"Fin del juego - Desea reintentar?");
-//		  		if(opcion==0) {
-//		  			nuevo();
-//		  		}
-//		  		else if(opcion==1) {
-//		  			System.exit(0);
-//		  		}
-//	      	}
+	      	else {
+		  		int opcion=JOptionPane.showConfirmDialog(ventana,"Fin del juego - Desea reintentar?");
+		  		if(opcion==0) {
+		  			nuevo();
+		  		}
+		  		else if(opcion==1) {
+		  			System.exit(0);
+		  		}
+	      	}
 	    }
 	}
 	
