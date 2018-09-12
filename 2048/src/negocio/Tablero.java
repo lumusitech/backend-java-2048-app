@@ -228,21 +228,14 @@ public class Tablero {
 
 		controlDePuntajes();
 		
-		sumaDerechaEfectuada = true;
-		sumaIzquierdaEfectuada = true;
-		sumaArribaEfectuada = true;
-		sumaAbajoEfectuada = true;
-		movDerechaEfectuado = true;
-		movIzquierdaEfectuado = true;
-		movArribaEfectuado = true;
-		movAbajoEfectuado = true;
+		resetearSumasYMov();
 
 		agregarValoresIniciales();
 
 	}
 
 	public void agregarValoresIniciales() {
-		// Agrega el 1er valor al tablero (posiciï¿½n y valor aleatorio)
+		// Agrega el 1er valor al tablero (posicion y valor aleatorio)
 		agregarValorRandom();
 		int filaPrimerValor = fila;
 		int columnaPrimerValor = columna;
@@ -332,8 +325,16 @@ public class Tablero {
 			}
 		}
 		
-		if( (!sumaDerechaEfectuada && !movDerechaEfectuado) && ( !sumaIzquierdaEfectuada && !movIzquierdaEfectuado)
-		&&  (!sumaArribaEfectuada && !movArribaEfectuado) && (!sumaAbajoEfectuada && !movAbajoEfectuado) ) {
+		return juegoActivo();
+	}
+
+	public boolean juegoActivo() {
+		
+		//si no hay sumas ni movmientos posibles el juego ya no estará activo, termina
+		if( (!getSumaDerechaEfectuada()    &&   !getMovDerechaEfectuado()) 
+		&&  (!getSumaIzquierdaEfectuada()  &&   !getMovIzquierdaEfectuado())
+		&&  (!getSumaArribaEfectuada()     &&   !getMovArribaEfectuado())
+		&&  (!getSumaAbajoEfectuada()      &&   !getMovAbajoEfectuado()) ) {
 			return false;
 		}
 		
@@ -351,74 +352,48 @@ public class Tablero {
 		movIzquierdaEfectuado = true;
 		movArribaEfectuado = true;
 		movAbajoEfectuado = true;
+		
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////
-
+	
 	public boolean sumarDerecha() {
 		boolean ret = false;
 		// fila a fila
 		for (int i = 0; i < 4; i++) {
 			// columna a columna de derecha a izquierda
 			for (int j = 3; j > 0; j--) {
-
+				int fila = i;
 				int actual = j;
-				int anterior = (j - 1);
-
-				// veo si hay algo en la columna actual
-				if (existeValor(i, j)) {
-					if (existeValor(i, anterior) && (getValor(i, actual) == getValor(i, anterior))) {
-						// los sumo
-						setValor(i, j, (getValor(i, actual)) + (getValor(i, anterior)));
-						// se quita el valor del cuadro anterior poque se sumo en el cuadro actual
-						setValor(i, anterior, 0);
-						// sumo al puntaje
-						puntaje += (getValor(i, actual)) + (getValor(i, anterior));
-						//avisa que que se pudo sumar
-						ret =  true;
-					}
-					// Si no hay nada en el cuadro anterior
-					else if (!existeValor(i, anterior)) {
-						// me fijo en la columna siguienteAnterior
-						anterior = anterior - 1;
-						// Me aseguro que este dentro del rango de valores posibles
-						if (anterior >= 0) {
-							if (existeValor(i, anterior) && (getValor(i, actual) == getValor(i, anterior))) {
-								// los sumo
-								setValor(i, j, (getValor(i, actual)) + (getValor(i, anterior)));
-								// se quita el valor del cuadro anterior poque se sumo en el cuadro actual
-								setValor(i, anterior, 0);
-								// sumo al puntaje
-								puntaje += (getValor(i, actual)) + (getValor(i, anterior));
-								//avisa que que se pudo sumar
-								ret =  true;
-							}
-							// si no existe valor en el Siguiente anterior
-							else if (!existeValor(i, anterior)) {
-								// me fijo en la columna SigteSigteAnterior
-								anterior = anterior - 1;
-
-								if (anterior >= 0) {
-									if (existeValor(i, anterior) && (getValor(i, actual) == getValor(i, anterior))) {
-										// los sumo
-										setValor(i, j, (getValor(i, actual)) + (getValor(i, anterior)));
-										// se quita el valor del cuadro anterior poque se sumo en el cuadro actual
-										setValor(i, anterior, 0);
-										// sumo al puntaje
-										puntaje += (getValor(i, actual)) + (getValor(i, anterior));
-										//avisa que que se pudo sumar
-										ret =  true;
-									}
-								}
-							}
-						}
-					}
+				int anerior = j-1;
+				if(sumarDerecha(fila, actual, anerior)) {
+					ret = true;
 				}
 			}
 		}
-		//avisa que que NO se pudo sumar
+		//avisa si se pudo sumar o no
 		return ret;
-		
+	}
+	
+	private boolean sumarDerecha(int fila, int actual, int anterior) {
+
+		if(anterior >= 0 && existeValor(fila, actual)) {
+			if(!existeValor(fila, anterior)) {
+				return sumarDerecha(fila, actual, anterior-1);
+			}
+			else {
+				if ((getValor(fila, actual) == getValor(fila, anterior))) {
+					// los sumo
+					setValor(fila, actual, (getValor(fila, actual)) + (getValor(fila, anterior)));
+					// se quita el valor del cuadro anterior poque se sumo en el cuadro actual
+					setValor(fila, anterior, 0);
+					// sumo al puntaje
+					puntaje += (getValor(fila, actual)) + (getValor(fila, anterior));
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////
