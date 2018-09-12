@@ -233,6 +233,8 @@ public class Tablero {
 		agregarValoresIniciales();
 
 	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////
 
 	public void agregarValoresIniciales() {
 		// Agrega el 1er valor al tablero (posicion y valor aleatorio)
@@ -249,6 +251,8 @@ public class Tablero {
 		System.out.println("Segundo Cuadro--->posici�n(" + filaSegundoValor + ", " + columnaSegundoValor + ")");
 		System.out.println();
 	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////
 
 	public void controlDePuntajes() {
 		// guarda el ultimo puntaje si es mayor al record
@@ -262,10 +266,14 @@ public class Tablero {
 		    setPuntaje(0);
 		}		
 	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////
 
 	public void setRecord(int puntaje) {
 		record=puntaje;
 	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////
 
 	public void vaciarTablero() {
 		for (int i = 0; i < tamanio; i++) {
@@ -289,12 +297,11 @@ public class Tablero {
 				agregarValorRandom();
 				resetearSumasYMov();
 			}
-			 
 		}
 
 		if (direccion.equals("izquierda")) {
 			
-			sumaIzquierdaEfectuada = sumarIzquierda();
+			sumaIzquierdaEfectuada = sumarIzquierda2();
 			movIzquierdaEfectuado = moverIzquierda();
 
 			if(movIzquierdaEfectuado || sumaIzquierdaEfectuada) {
@@ -327,6 +334,8 @@ public class Tablero {
 		
 		return juegoActivo();
 	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////
 
 	public boolean juegoActivo() {
 		
@@ -340,6 +349,8 @@ public class Tablero {
 		
 		return true;
 	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////
 	
 	private void resetearSumasYMov() {
 		
@@ -359,44 +370,29 @@ public class Tablero {
 	
 	public boolean sumarDerecha() {
 		boolean ret = false;
-		// fila a fila
-		for (int i = 0; i < 4; i++) {
-			// columna a columna de derecha a izquierda
-			for (int j = 3; j > 0; j--) {
-				int fila = i;
-				int actual = j;
-				int anerior = j-1;
-				if(sumarDerecha(fila, actual, anerior)) {
-					ret = true;
-				}
+		for (int fila = 0; fila < tamanio; fila++) {
+			for (int columna = tamanio-1; columna > 0; columna--) {
+				ret = sumarDerecha(fila, columna, columna-1);
 			}
 		}
-		//avisa si se pudo sumar o no
 		return ret;
 	}
 	
 	private boolean sumarDerecha(int fila, int actual, int anterior) {
-
 		if(anterior >= 0 && existeValor(fila, actual)) {
 			if(!existeValor(fila, anterior)) {
 				return sumarDerecha(fila, actual, anterior-1);
 			}
-			else {
-				if ((getValor(fila, actual) == getValor(fila, anterior))) {
-					// los sumo
-					setValor(fila, actual, (getValor(fila, actual)) + (getValor(fila, anterior)));
-					// se quita el valor del cuadro anterior poque se sumo en el cuadro actual
-					setValor(fila, anterior, 0);
-					// sumo al puntaje
-					puntaje += (getValor(fila, actual)) + (getValor(fila, anterior));
-					return true;
-				}
+			else if ((getValor(fila, actual) == getValor(fila, anterior))){
+				sumarCuadrosDeFila(fila, actual, anterior);
+				return true;
 			}
 		}
 		return false;
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////
+	
 	public boolean moverDerecha() {
 		boolean ret = false;
 		for (int i = 0; i < tamanio; i++) {
@@ -454,6 +450,31 @@ public class Tablero {
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////
+	
+	public boolean sumarIzquierda2() {
+		boolean ret = false;
+		for (int fila = 0; fila < tamanio; fila++) {
+			for (int columna = 0; columna < tamanio; columna++) {
+				ret = sumarIzquierda2(fila, columna, columna+1);
+			}
+		}
+		return ret;
+	}
+	
+	private boolean sumarIzquierda2(int fila, int actual, int siguiente) {
+		if(siguiente < tamanio-1 && existeValor(fila, actual)) {
+			if(!existeValor(fila, siguiente)) {
+				return sumarDerecha(fila, actual, siguiente+1);
+			}
+			else if ( getValor(fila, actual) == getValor(fila, siguiente) ){
+				sumarCuadrosDeFila(fila, actual, siguiente);
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
 	public boolean sumarIzquierda() {
 		boolean ret = false;
 		// fila a fila
@@ -468,12 +489,7 @@ public class Tablero {
 					// veo si hay algo en la columna actual
 					if (existeValor(i, actual)) {
 						if (existeValor(i, siguiente) && (getValor(i, actual) == getValor(i, siguiente))) {
-							// los sumo
-							setValor(i, actual, (getValor(i, actual)) + (getValor(i, siguiente)));
-							// se quita el valor del cuadro anterior poque se sumo en el cuadro actual
-							setValor(i, siguiente, 0);
-							// sumo al puntaje
-							puntaje += (getValor(i, actual)) + (getValor(i, siguiente));
+							sumarCuadrosDeFila(i, actual, siguiente);
 							//avisa que que se pudo sumar
 							ret =  true;
 						}
@@ -484,12 +500,7 @@ public class Tablero {
 							// Me aseguro que este dentro del rango de valores posibles
 							if (siguiente < tamanio) {
 								if (existeValor(i, siguiente) && (getValor(i, actual) == getValor(i, siguiente))) {
-									// los sumo
-									setValor(i, actual, (getValor(i, actual)) + (getValor(i, siguiente)));
-									// se quita el valor del cuadro anterior poque se sumo en el cuadro actual
-									setValor(i, siguiente, 0);
-									// sumo al puntaje
-									puntaje += (getValor(i, actual)) + (getValor(i, siguiente));
+									sumarCuadrosDeFila(i, actual, siguiente);
 									//avisa que que se pudo sumar
 									ret =  true;
 								}
@@ -501,12 +512,7 @@ public class Tablero {
 									if (siguiente < tamanio) {
 										if (existeValor(i, siguiente)
 												&& (getValor(i, actual) == getValor(i, siguiente))) {
-											// los sumo
-											setValor(i, actual, (getValor(i, actual)) + (getValor(i, siguiente)));
-											// se quita el valor del cuadro anterior poque se sumo en el cuadro actual
-											setValor(i, siguiente, 0);
-											// sumo al puntaje
-											puntaje += (getValor(i, actual)) + (getValor(i, siguiente));
+											sumarCuadrosDeFila(i, actual, siguiente);
 											//avisa que que se pudo sumar
 											ret =  true;
 										}
@@ -842,6 +848,19 @@ public class Tablero {
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////
+	
+	public void sumarCuadrosDeFila(int fila, int actual, int cuadroASumar) {
+		// los sumo
+		int suma = (getValor(fila, actual)) + (getValor(fila, cuadroASumar));
+		setValor(fila, actual, suma);
+		// se quita el valor del cuadro a sumar poque el resultado de la suma queda solo en el actual
+		setValor(fila, cuadroASumar, 0);
+		// sumo al puntaje
+		puntaje += suma;
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////
+	
 	public void moverCuadro(int OrigenFila, int OrigenColumna, int DestinoFila, int DestinoColumna) {
 		setValor(DestinoFila, DestinoColumna, getValor(OrigenFila, OrigenColumna));
 		setValor(OrigenFila, OrigenColumna, 0);
