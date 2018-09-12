@@ -283,89 +283,52 @@ public class Tablero {
 		}
 	}
 
-	////////////////////////////////////////////////////////////////////////////////////////
-
+	////////////////////////////////////////////////////////////////////////////////////////	
+	
 	public boolean mover(String direccion) {
-			
+		
 		if (direccion.equals("derecha")) {
+			
+			sumaDerechaEfectuada = sumarDerecha();
+			movDerechaEfectuado = moverDerecha();
 
-			if(sumarDerecha()) {
-				sumaDerechaEfectuada = true;
-			}
-			else {
-				sumaDerechaEfectuada = false;
-			}
-			if(moverDerecha()) {
-				// si logra agregar devuelve true
-				movDerechaEfectuado = true;
-			}
-			else {
-				movDerechaEfectuado = false;
-			}
 			if(movDerechaEfectuado || sumaDerechaEfectuada) {
 				agregarValorRandom();
+				resetearSumasYMov();
 			}
 			 
 		}
 
 		if (direccion.equals("izquierda")) {
+			
+			sumaIzquierdaEfectuada = sumarIzquierda();
+			movIzquierdaEfectuado = moverIzquierda();
 
-			if(sumarIzquierda()) {
-				// si logra agregar devuelve true
-				sumaIzquierdaEfectuada = true;
-			}
-			else {
-				sumaIzquierdaEfectuada = false;
-			}
-			if(moverIzquierda()) {
-				// si logra agregar devuelve true
-				movIzquierdaEfectuado = true;
-			}
-			else {
-				movIzquierdaEfectuado = false;
-			}
 			if(movIzquierdaEfectuado || sumaIzquierdaEfectuada) {
 				agregarValorRandom();
+				resetearSumasYMov();
 			}
 		}
 
 		if (direccion.equals("arriba")) {
-			if(sumarArriba()) {
-				// si logra agregar devuelve true
-				sumaArribaEfectuada = true;
-			}
-			else {
-				sumaArribaEfectuada = false;
-			}
-			if(moverArriba()) {
-				// si logra agregar devuelve true
-				movArribaEfectuado = true;
-			}
-			else {
-				movArribaEfectuado = false;
-			}
+			
+			sumaArribaEfectuada = sumarArriba();
+			movArribaEfectuado = moverArriba();
+
 			if(movArribaEfectuado || sumaArribaEfectuada) {
 				agregarValorRandom();
+				resetearSumasYMov();
 			}
 		}
 
 		if (direccion.equals("abajo")) {
-			if(sumarAbajo()) {
-				// si logra agregar devuelve true
-				sumaAbajoEfectuada = true;
-			}
-			else {
-				sumaAbajoEfectuada = false;
-			}
-			if(moverAbajo()) {
-				// si logra agregar devuelve true
-				movAbajoEfectuado = true;
-			}
-			else {
-				movAbajoEfectuado = false;
-			}
+			
+			sumaAbajoEfectuada = sumarAbajo();
+			movAbajoEfectuado = moverAbajo();
+
 			if(movAbajoEfectuado || sumaAbajoEfectuada) {
 				agregarValorRandom();
+				resetearSumasYMov();
 			}
 		}
 		
@@ -375,6 +338,19 @@ public class Tablero {
 		}
 		
 		return true;
+	}
+	
+	private void resetearSumasYMov() {
+		
+		sumaDerechaEfectuada = true;
+		sumaIzquierdaEfectuada = true;
+		sumaArribaEfectuada = true;
+		sumaAbajoEfectuada = true;
+		
+		movDerechaEfectuado = true;
+		movIzquierdaEfectuado = true;
+		movArribaEfectuado = true;
+		movAbajoEfectuado = true;
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////
