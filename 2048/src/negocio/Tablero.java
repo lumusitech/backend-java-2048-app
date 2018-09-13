@@ -369,13 +369,15 @@ public class Tablero {
 	////////////////////////////////////////////////////////////////////////////////////////
 	
 	public boolean sumarDerecha() {
-		boolean ret = false;
+		int cont = 0;
 		for (int fila = 0; fila < tamanio; fila++) {
 			for (int columna = tamanio-1; columna > 0; columna--) {
-				ret = sumarDerecha(fila, columna, columna-1);
+				if( sumarDerecha(fila, columna, columna-1) ) {
+					cont++;
+				}
 			}
 		}
-		return ret;
+		return cont > 0;
 	}
 	
 	private boolean sumarDerecha(int fila, int actual, int anterior) {
@@ -394,71 +396,44 @@ public class Tablero {
 	////////////////////////////////////////////////////////////////////////////////////////
 	
 	public boolean moverDerecha() {
-		boolean ret = false;
-		for (int i = 0; i < tamanio; i++) {
-			for (int j = tamanio - 1; j > 0; j--) {
-
-				int actual = j;
-				int anterior = j - 1;
-				int moverAFila = 0;
-				int moverAColumna = 0;
-
-				if (!existeValor(i, actual)) {
-					// guardo la posicion del cuadro libre donde voy a mover y cuento +1
-					moverAFila = i;
-					moverAColumna = actual;
-
-					if (!existeValor(i, anterior)) {
-
-						// actualizo el anterior
-						anterior = anterior - 1;
-						// verifico si esta en rango
-						if (anterior >= 0) {
-							// ahora veo si esta vacio
-							if (!existeValor(i, anterior)) {
-								// actualizo el anterior
-								anterior = anterior - 1;
-								// verifico si esta en rango
-								if (anterior >= 0) {
-									// ahora veo si esta vacio
-									if (existeValor(i, anterior)) {
-										moverCuadro(i, anterior, moverAFila, moverAColumna);
-										//avisa que se pudo mover
-										ret =  true;
-									}
-								}
-							} else {
-								moverCuadro(i, anterior, moverAFila, moverAColumna);
-								//avisa que se pudo mover
-								ret =  true;
-							}
-						}
+		int cont = 0;
+		for (int fila = 0; fila < tamanio; fila++) {
+			for (int columna = tamanio-1; columna > 0; columna--) {
+				if(!existeValor(fila, columna)) {
+					if( moverDerecha(fila, columna, columna-1) ) {
+						cont++;
 					}
-					// si existe, lo muevo al cuadro vacio que guarde
-					else {
-						moverCuadro(i, anterior, moverAFila, moverAColumna);
-						//avisa que se pudo mover
-						ret =  true;
-					}
-
 				}
 			}
 		}
-		
-		//avisa que se NO pudo mover
-		return ret;
+		return cont > 0;
 	}
-
+	
+	private boolean moverDerecha(int fila, int lugarLibre, int anterior) {
+		if(anterior >= 0) {
+			if(!existeValor(fila, anterior)) {
+				return moverDerecha(fila, lugarLibre, anterior-1);
+			}
+			else{
+				moverCuadro(fila, anterior, fila, lugarLibre);
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	////////////////////////////////////////////////////////////////////////////////////////
 	
 	public boolean sumarIzquierda() {
-		boolean ret = false;
+		int cont = 0;
 		for (int fila = 0; fila < tamanio; fila++) {
 			for (int columna = 0; columna < tamanio; columna++) {
-				ret = sumarIzquierda(fila, columna, columna+1);
+				if( sumarIzquierda(fila, columna, columna+1) ) {
+					cont++;
+				}
 			}
 		}
-		return ret;
+		return cont > 0;
 	}
 	
 	private boolean sumarIzquierda(int fila, int actual, int siguiente) {
@@ -475,75 +450,46 @@ public class Tablero {
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////
-
+	
 	public boolean moverIzquierda() {
-		boolean ret = false;
-		for (int i = 0; i < tamanio; i++) {
-			for (int j = 0; j < tamanio; j++) {
-
-				int actual = j;
-				int siguiente = j + 1;
-				int moverAFila = 0;
-				int moverAColumna = 0;
-
-				if (!existeValor(i, actual)) {
-					// guardo la posicion del cuadro libre donde voy a mover
-					moverAFila = i;
-					moverAColumna = actual;
-
-					// me fijo si esta en rango
-					if (siguiente < tamanio) {
-
-						if (!existeValor(i, siguiente)) {
-
-							// actualizo el siguiente
-							siguiente = siguiente + 1;
-							// verifico si esta en rango
-							if (siguiente < tamanio) {
-								// ahora veo si esta vacio
-								if (!existeValor(i, siguiente)) {
-									// actualizo el anterior
-									siguiente = siguiente + 1;
-									// verifico si esta en rango
-									if (siguiente < tamanio) {
-										// ahora veo si esta vacio
-										if (existeValor(i, siguiente)) {
-											moverCuadro(i, siguiente, moverAFila, moverAColumna);
-											//avisa que se pudo mover
-											ret =  true;
-										}
-									}
-								} else {
-									moverCuadro(i, siguiente, moverAFila, moverAColumna);
-									//avisa que se pudo mover
-									ret =  true;
-								}
-							}
-						}
-						// si existe, lo muevo al cuadro vacio que guarde
-						else {
-							moverCuadro(i, siguiente, moverAFila, moverAColumna);
-							//avisa que se pudo mover
-							ret =  true;
-						}
+		int cont = 0;
+		for (int fila = 0; fila < tamanio; fila++) {
+			for (int columna = 0; columna < tamanio; columna++) {
+				if(!existeValor(fila, columna)) {
+					if( moverIzquierda(fila, columna, columna+1) ) {
+						cont++;
 					}
 				}
 			}
 		}
-		//avisa que se NO pudo mover
-		return ret;
+		return cont > 0;
 	}
-
+	
+	private boolean moverIzquierda(int fila, int lugarLibre, int siguiente) {
+		if(siguiente < tamanio) {
+			if(!existeValor(fila, siguiente)) {
+				return moverIzquierda(fila, lugarLibre, siguiente+1);
+			}
+			else{
+				moverCuadro(fila, siguiente, fila, lugarLibre);
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	////////////////////////////////////////////////////////////////////////////////////////
 	
 	public boolean sumarArriba() {
-		boolean ret = false;
+		int cont = 0;
 		for (int columna = 0; columna < tamanio; columna++) {
 			for (int fila = 0; fila < tamanio; fila++) {
-				ret = sumarArriba(columna, fila, fila+1);
+				if( sumarArriba(columna, fila, fila+1) ) {
+					cont++;
+				}
 			}
 		}
-		return ret;
+		return cont > 0;
 	}
 	
 	private boolean sumarArriba(int columna, int actual, int siguiente) {
@@ -560,75 +506,46 @@ public class Tablero {
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////
+	
 	public boolean moverArriba() {
-		boolean ret = false;
-		for (int j = 0; j < tamanio; j++) {
-			for (int i = 0; i < tamanio; i++) {
-
-				int actual = i;
-				int siguiente = i + 1;
-				int moverAFila = 0;
-				int moverAColumna = 0;
-
-				if (!existeValor(actual, j)) {
-					// guardo la posicion del cuadro libre donde voy a mover
-					moverAFila = actual;
-					moverAColumna = j;
-
-					// me fijo si esta en rango
-					if (siguiente < tamanio) {
-
-						if (!existeValor(siguiente, j)) {
-
-							// actualizo el siguiente
-							siguiente = siguiente + 1;
-							// verifico si esta en rango
-							if (siguiente < tamanio) {
-								// ahora veo si esta vacio
-								if (!existeValor(siguiente, j)) {
-									// actualizo el anterior
-									siguiente = siguiente + 1;
-									// verifico si esta en rango
-									if (siguiente < tamanio) {
-										// ahora veo si esta vacio
-										if (existeValor(siguiente, j)) {
-											moverCuadro(siguiente, j, moverAFila, moverAColumna);
-											//avisa que se pudo mover
-											ret =  true;
-										}
-									}
-								} else {
-									moverCuadro(siguiente, j, moverAFila, moverAColumna);
-									//avisa que se pudo mover
-									ret =  true;
-								}
-							}
-						}
-						// si existe, lo muevo al cuadro vacio que guarde
-						else {
-							moverCuadro(siguiente, j, moverAFila, moverAColumna);
-							//avisa que se pudo mover
-							ret =  true;
-						}
+		int cont = 0;
+		for (int columna = 0; columna < tamanio; columna++) {
+			for (int fila = 0; fila < tamanio; fila++) {
+				if(!existeValor(fila, columna)) {
+					if( moverArriba(columna, fila, fila+1) ) {
+						cont++;
 					}
 				}
 			}
 		}
-		
-		//avisa que NO se pudo mover
-		return ret;
+		return cont > 0;
+	}
+	
+	private boolean moverArriba(int columna, int lugarLibre, int siguiente) {
+		if(siguiente < tamanio) {
+			if(!existeValor(siguiente, columna)) {
+				return moverArriba(columna, lugarLibre, siguiente+1);
+			}
+			else{
+				moverCuadro(siguiente, columna, lugarLibre, columna);
+				return true;
+			}
+		}
+		return false;
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////
 	
 	public boolean sumarAbajo() {
-		boolean ret = false;
+		int cont = 0;
 		for (int columna = 0; columna < tamanio; columna++) {
 			for (int fila = tamanio-1; fila > 0; fila--) {
-				ret = sumarAbajo(columna, fila, fila-1);
+				if( sumarAbajo(columna, fila, fila-1) ) {
+					cont++;
+				}
 			}
 		}
-		return ret;
+		return cont > 0;
 	}
 	
 	private boolean sumarAbajo(int columna, int actual, int anterior) {
