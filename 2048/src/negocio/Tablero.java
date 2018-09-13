@@ -462,7 +462,7 @@ public class Tablero {
 	}
 	
 	private boolean sumarIzquierda(int fila, int actual, int siguiente) {
-		if(siguiente < tamanio-1 && existeValor(fila, actual)) {
+		if(siguiente < tamanio && existeValor(fila, actual)) {
 			if(!existeValor(fila, siguiente)) {
 				return sumarIzquierda(fila, actual, siguiente+1);
 			}
@@ -624,7 +624,7 @@ public class Tablero {
 	public boolean sumarAbajo() {
 		boolean ret = false;
 		for (int columna = 0; columna < tamanio; columna++) {
-			for (int fila = 3; fila > 0; fila--) {
+			for (int fila = tamanio-1; fila > 0; fila--) {
 				ret = sumarAbajo(columna, fila, fila-1);
 			}
 		}
