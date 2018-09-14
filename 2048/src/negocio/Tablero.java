@@ -562,60 +562,32 @@ public class Tablero {
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////
+	
 	public boolean moverAbajo() {
-		boolean ret = false;
-		for (int j = 0; j < tamanio; j++) {
-			for (int i = tamanio - 1; i > 0; i--) {
-
-				int actual = i;
-				int anterior = i - 1;
-				int moverAFila = 0;
-				int moverAColumna = 0;
-
-				if (!existeValor(actual, j)) {// 3
-					// guardo la posicion del cuadro libre donde voy a mover y cuento +1
-					moverAFila = actual;
-					moverAColumna = j;
-
-					if (!existeValor(anterior, j)) {// 2
-
-						// actualizo el anterior
-						anterior = anterior - 1;
-						// verifico si esta en rango
-						if (anterior >= 0) {
-							// ahora veo si esta vacio
-							if (!existeValor(anterior, j)) {// 1
-								// actualizo el anterior
-								anterior = anterior - 1;
-								// verifico si esta en rango
-								if (anterior >= 0) {
-									// ahora veo si esta vacio
-									if (existeValor(anterior, j)) {// 0
-										moverCuadro(anterior, j, moverAFila, moverAColumna);
-										//avisa que se pudo mover
-										ret =  true;
-									}
-								}
-							} else {// 1
-								moverCuadro(anterior, j, moverAFila, moverAColumna);
-								//avisa que se pudo mover
-								ret =  true;
-							}
-						}
+		int cont = 0;
+		for (int columna = 0; columna < tamanio; columna++) {
+			for (int fila = tamanio-1; fila > 0; fila--) {
+				if(!existeValor(fila, columna)) {
+					if( moverAbajo(columna, fila, fila-1) ) {
+						cont++;
 					}
-					// si existe, lo muevo al cuadro vacio que guarde
-					else {// 2
-						moverCuadro(anterior, j, moverAFila, moverAColumna);
-						//avisa que se pudo mover
-						ret =  true;
-					}
-
 				}
 			}
 		}
-		
-		//avisa que NO se pudo mover
-		return ret;
+		return cont > 0;
+	}
+	
+	private boolean moverAbajo(int columna, int lugarLibre, int anterior) {
+		if(anterior >= 0) {
+			if(!existeValor(anterior, columna)) {
+				return moverAbajo(columna, lugarLibre, anterior-1);
+			}
+			else{
+				moverCuadro(anterior, columna, lugarLibre, columna);
+				return true;
+			}
+		}
+		return false;
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////
