@@ -8,7 +8,7 @@ public class Tablero {
 	private int fila;
 	private int columna;
 	private int puntaje;
-	private int record;
+	private int [] records;
 	
 	private boolean sumaDerechaEfectuada;
 	private boolean sumaIzquierdaEfectuada;
@@ -24,7 +24,7 @@ public class Tablero {
 		tamanio = 4;
 		tablero = new int[tamanio][tamanio];
 		puntaje = 0;
-		record = 0;
+		records = new int [5];
 		
 		sumaDerechaEfectuada = true;
 		sumaIzquierdaEfectuada = true;
@@ -115,8 +115,8 @@ public class Tablero {
 		return puntaje;
 	}
 
-	public int getRecord() {
-		return record;
+	public int getRecord(int posicion) {
+		return records[posicion];
 	}
 
 	public int getTamanio() {
@@ -255,22 +255,26 @@ public class Tablero {
 	////////////////////////////////////////////////////////////////////////////////////////
 
 	public void controlDePuntajes() {
-		// guarda el ultimo puntaje si es mayor al record
-		if (getPuntaje() > getRecord()) {
-			setRecord(getPuntaje());
-			// resetea el puntaje
-		    setPuntaje(0);
+		int ultmaPosicion = records.length-1;
+		if(getPuntaje() > getRecord(ultmaPosicion)) {
+			setRecord(getPuntaje(), ultmaPosicion);
 		}
-		else {			
-			// resetea el puntaje
-		    setPuntaje(0);
-		}		
+		
+		for(int i=ultmaPosicion-1; i>=0; i--) {
+			int actual = i;
+			int siguiente = i+1;
+			if(getPuntaje() > getRecord(actual)) {
+				setRecord(getRecord(actual), siguiente);
+				setRecord(getPuntaje(), actual);
+			}
+		}
+		setPuntaje(0);
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////
 
-	public void setRecord(int puntaje) {
-		record=puntaje;
+	public void setRecord(int puntaje, int posicion) {
+		records[posicion]=puntaje;
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////

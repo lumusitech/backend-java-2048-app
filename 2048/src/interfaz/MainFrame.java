@@ -32,6 +32,11 @@ public class MainFrame{
 	private String puntaje;
 	private JTextField cuadroRecord;
 	private String record;
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
+	private JTextField textField_3;
+	private JTextField textField_4;
 	
 	//Lanza la aplicacion
 	public static void main(String[] args) {
@@ -65,7 +70,7 @@ public class MainFrame{
 		puntaje();
 		actualizarPuntaje();
 		record();
-		actualizarRecord();
+		actualizarRecords();
 		//Se crea boton de juego nuevo
 		botonJuegoNuevo();
 	}
@@ -175,11 +180,19 @@ public class MainFrame{
 		lblPuntaje.setForeground(new Color(143,122,102));
 		lblPuntaje.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblPuntaje.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPuntaje.setBounds(400, 121, 90, 23);
+		lblPuntaje.setBounds(400, 46, 90, 23);
 		ventana.getContentPane().add(lblPuntaje);
 	}
 	
 	public void record() {
+		
+		JLabel lblRecord = new JLabel("Record");
+		lblRecord.setForeground(new Color(143,122,102));
+		lblRecord.setHorizontalAlignment(SwingConstants.CENTER);
+		lblRecord.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblRecord.setBounds(513, 46, 90, 23);
+		ventana.getContentPane().add(lblRecord);
+		
 		cuadroRecord = new JTextField();
 		cuadroRecord.setFont(new Font("Tahoma", Font.BOLD, 25));
 		cuadroRecord.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -190,13 +203,6 @@ public class MainFrame{
 		cuadroRecord.setForeground(Color.WHITE);
 		cuadroRecord.setBounds(513, 71, 90, 50);
 		ventana.getContentPane().add(cuadroRecord);
-		
-		JLabel lblRecord = new JLabel("Record");
-		lblRecord.setForeground(new Color(143,122,102));
-		lblRecord.setHorizontalAlignment(SwingConstants.CENTER);
-		lblRecord.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblRecord.setBounds(513, 121, 90, 23);
-		ventana.getContentPane().add(lblRecord);
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////
@@ -260,6 +266,12 @@ public class MainFrame{
 	    		actualizarTableroGrafico();
       		
 	    		actualizarPuntaje();
+	    		
+	    		//Si el puntaje supera el record ya lo empieza a mostrar como record
+	    		if(tableroDeValores.getPuntaje() > tableroDeValores.getRecord(0)) {
+	    			puntaje = Integer.toString(tableroDeValores.getPuntaje());
+	    			cuadroRecord.setText(puntaje);
+	    		}
 	    	}
 	      	else {
 		  		int opcion=JOptionPane.showConfirmDialog(ventana,"Fin del juego - Desea reintentar?");
@@ -400,6 +412,44 @@ public class MainFrame{
 		
 		//Despues de reiniciar, se debe indicar de nuevo que escuche eventos de teclado del panel
 		escucharTeclado(null, btnJuegoNuevo);
+		
+		JPanel contenedorDePuntajesHistoricos = new JPanel();
+		contenedorDePuntajesHistoricos.setBackground(new Color(187, 173, 160));
+		contenedorDePuntajesHistoricos.setBounds(400, 162, 204, 199);
+		ventana.getContentPane().add(contenedorDePuntajesHistoricos);
+		contenedorDePuntajesHistoricos.setLayout(null);
+		
+		textField = new JTextField();
+		textField.setBounds(10, 11, 184, 27);
+		contenedorDePuntajesHistoricos.add(textField);
+		textField.setColumns(10);
+		
+		textField_1 = new JTextField();
+		textField_1.setColumns(10);
+		textField_1.setBounds(10, 49, 184, 27);
+		contenedorDePuntajesHistoricos.add(textField_1);
+		
+		textField_2 = new JTextField();
+		textField_2.setColumns(10);
+		textField_2.setBounds(10, 87, 184, 27);
+		contenedorDePuntajesHistoricos.add(textField_2);
+		
+		textField_3 = new JTextField();
+		textField_3.setColumns(10);
+		textField_3.setBounds(10, 125, 184, 27);
+		contenedorDePuntajesHistoricos.add(textField_3);
+		
+		textField_4 = new JTextField();
+		textField_4.setColumns(10);
+		textField_4.setBounds(10, 163, 184, 27);
+		contenedorDePuntajesHistoricos.add(textField_4);
+		
+		JLabel lblRecords = new JLabel("Records hist\u00F3ricos");
+		lblRecords.setHorizontalAlignment(SwingConstants.CENTER);
+		lblRecords.setForeground(new Color(143, 122, 102));
+		lblRecords.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblRecords.setBounds(410, 132, 189, 25);
+		ventana.getContentPane().add(lblRecords);
 	}
 	
 	
@@ -420,7 +470,7 @@ public class MainFrame{
 		}
 		
 		actualizarPuntaje();
-		actualizarRecord();
+		actualizarRecords();
 		actualizarTableroGrafico();
 	}
 
@@ -428,8 +478,8 @@ public class MainFrame{
 		puntaje = Integer.toString(tableroDeValores.getPuntaje());
 		cuadroPuntaje.setText(puntaje);
 	}
-	public void actualizarRecord() {
-		record = Integer.toString(tableroDeValores.getRecord());
+	public void actualizarRecords() {
+		record = Integer.toString(tableroDeValores.getRecord(0));
 		cuadroRecord.setText(record);
 	}
 }
