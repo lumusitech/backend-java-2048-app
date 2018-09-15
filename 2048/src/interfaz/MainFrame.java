@@ -17,6 +17,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Toolkit;
+import javax.swing.JTextArea;
+import javax.swing.JTextPane;
 
 public class MainFrame{
 
@@ -31,12 +33,9 @@ public class MainFrame{
 	private JTextField cuadroPuntaje;
 	private String puntaje;
 	private JTextField cuadroRecord;
+	private JTextField [] cuadrosRecordsHistoricos;
 	private String record;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
+	private JTextArea cuadroDeMsjAlUsuario;
 	
 	//Lanza la aplicacion
 	public static void main(String[] args) {
@@ -69,13 +68,67 @@ public class MainFrame{
 		//Se inicia puntaje
 		puntaje();
 		actualizarPuntaje();
+		
 		record();
+		
+		recordsHistoricos();
+		
 		actualizarRecords();
+		
+		msjAlUsuario();
+		
 		//Se crea boton de juego nuevo
 		botonJuegoNuevo();
 	}
 
 	
+	private void recordsHistoricos() {
+		
+		JPanel contenedorDePuntajesHistoricos = new JPanel();
+		contenedorDePuntajesHistoricos.setBackground(new Color(187, 173, 160));
+		contenedorDePuntajesHistoricos.setBounds(400, 162, 204, 199);
+		ventana.getContentPane().add(contenedorDePuntajesHistoricos);
+		contenedorDePuntajesHistoricos.setLayout(null);
+		
+		JLabel lblRecords = new JLabel("Records hist\u00F3ricos");
+		lblRecords.setHorizontalAlignment(SwingConstants.CENTER);
+		lblRecords.setForeground(new Color(143, 122, 102));
+		lblRecords.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblRecords.setBounds(410, 132, 189, 25);
+		ventana.getContentPane().add(lblRecords);
+		
+		cuadrosRecordsHistoricos = new JTextField[5];
+		int posicion = 11;
+		int distanciaSiguienteCuadro = 38;
+		for (int i = 0; i < cuadrosRecordsHistoricos.length; i++) {
+			
+			cuadrosRecordsHistoricos[i]=new JTextField();
+			cuadrosRecordsHistoricos[i].setBorder(null);
+			cuadrosRecordsHistoricos[i].setBackground(new Color(205,193,180));
+			cuadrosRecordsHistoricos[i].setForeground(Color.WHITE);
+			cuadrosRecordsHistoricos[i].setFont(new Font("Tahoma", Font.BOLD, 25));
+			cuadrosRecordsHistoricos[i].setHorizontalAlignment(SwingConstants.CENTER);
+			cuadrosRecordsHistoricos[i].setEditable(false);
+			if(i==0) {
+				cuadrosRecordsHistoricos[i].setBounds(10, (posicion), 184, 27);
+			}
+			else {
+				cuadrosRecordsHistoricos[i].setBounds(10, (posicion+=distanciaSiguienteCuadro), 184, 27);
+			}
+			cuadrosRecordsHistoricos[i].setColumns(10);
+			contenedorDePuntajesHistoricos.add(cuadrosRecordsHistoricos[i]);
+		}
+		
+		actualizarRecordsHistoricos();
+	}
+	
+	public void actualizarRecordsHistoricos() {
+		for (int i = 0; i < cuadrosRecordsHistoricos.length; i++) {
+			record = Integer.toString(tableroDeValores.getRecord(i));
+			cuadrosRecordsHistoricos[i].setText(record);
+		}
+	}
+
 	////////////////////////////////////////////////////////////////////////////////////////
 	/////////////////////////////////METODOS AUXILIARES/////////////////////////////////////
 	
@@ -412,44 +465,21 @@ public class MainFrame{
 		
 		//Despues de reiniciar, se debe indicar de nuevo que escuche eventos de teclado del panel
 		escucharTeclado(null, btnJuegoNuevo);
-		
-		JPanel contenedorDePuntajesHistoricos = new JPanel();
-		contenedorDePuntajesHistoricos.setBackground(new Color(187, 173, 160));
-		contenedorDePuntajesHistoricos.setBounds(400, 162, 204, 199);
-		ventana.getContentPane().add(contenedorDePuntajesHistoricos);
-		contenedorDePuntajesHistoricos.setLayout(null);
-		
-		textField = new JTextField();
-		textField.setBounds(10, 11, 184, 27);
-		contenedorDePuntajesHistoricos.add(textField);
-		textField.setColumns(10);
-		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(10, 49, 184, 27);
-		contenedorDePuntajesHistoricos.add(textField_1);
-		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(10, 87, 184, 27);
-		contenedorDePuntajesHistoricos.add(textField_2);
-		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(10, 125, 184, 27);
-		contenedorDePuntajesHistoricos.add(textField_3);
-		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(10, 163, 184, 27);
-		contenedorDePuntajesHistoricos.add(textField_4);
-		
-		JLabel lblRecords = new JLabel("Records hist\u00F3ricos");
-		lblRecords.setHorizontalAlignment(SwingConstants.CENTER);
-		lblRecords.setForeground(new Color(143, 122, 102));
-		lblRecords.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblRecords.setBounds(410, 132, 189, 25);
-		ventana.getContentPane().add(lblRecords);
+	}
+
+	public void msjAlUsuario() {
+		cuadroDeMsjAlUsuario = new JTextArea();
+		cuadroDeMsjAlUsuario.setBackground(Color.LIGHT_GRAY);
+		cuadroDeMsjAlUsuario.setBounds(400, 372, 204, 57);
+		cuadroDeMsjAlUsuario.setBackground(new Color(187,173,160));
+		cuadroDeMsjAlUsuario.setFont(new Font("Tahoma", Font.BOLD, 17));
+		cuadroDeMsjAlUsuario.setFocusable(false);
+		cuadroDeMsjAlUsuario.setEditable(false);
+		cuadroDeMsjAlUsuario.setBorder(null);
+		cuadroDeMsjAlUsuario.setBackground(new Color(187,173,160));
+		cuadroDeMsjAlUsuario.setForeground(Color.WHITE);
+		cuadroDeMsjAlUsuario.setText("Hola USUARIO!\nBienvenido a 2048!");
+		ventana.getContentPane().add(cuadroDeMsjAlUsuario);
 	}
 	
 	
@@ -471,6 +501,7 @@ public class MainFrame{
 		
 		actualizarPuntaje();
 		actualizarRecords();
+		actualizarRecordsHistoricos();
 		actualizarTableroGrafico();
 	}
 
