@@ -207,15 +207,38 @@ public class MainFrame{
 			public void actionPerformed(ActionEvent e) {
 				try
 				{
-				//String ruta = "C:\\Users\\lucia\\Desktop\\informe.pdf";
-				String ruta = "C:\\Users\\lucia\\git\\TP1_progra3\\2048\\src\\interfaz\\informe.pdf";
-				Process p = Runtime.getRuntime().exec ("rundll32 SHELL32.DLL,ShellExec_RunDLL "+ruta);
+			
+				@SuppressWarnings("unused")
+				Process p = Runtime.getRuntime().exec ("rundll32 SHELL32.DLL,ShellExec_RunDLL "+"C:\\Users\\lucia\\Desktop\\informe.pdf");
+				
 				}
-				catch (Exception exception)
+				catch (Exception evvv)
 				{
-				JOptionPane.showMessageDialog(ventana, "No se puede abrir el archivo del Informe, probablemente fue borrado","ERROR",JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "No se puede abrir el archivo de ayuda, probablemente fue borrado","ERROR",JOptionPane.ERROR_MESSAGE);
 				 
 				}
+//				JFrame ventanaInforme = new JFrame();
+//				ventanaInforme.setVisible(true);
+//				ventanaInforme.setIconImage(Toolkit.getDefaultToolkit().getImage(MainFrame.class.getResource("/interfaz/icon.png")));
+//				ventanaInforme.getContentPane().setBackground(new Color(250, 248, 239));
+//				ventanaInforme.setTitle("Informe de la aplicación");
+//				ventanaInforme.setBounds(300, 100, 640, 500);
+//				ventanaInforme.setResizable(false);
+//				ventanaInforme.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//				ventanaInforme.getContentPane().setLayout(null);
+//				
+//				cuadroDeMsjAlUsuario = new JTextArea();
+//				cuadroDeMsjAlUsuario.setBackground(Color.LIGHT_GRAY);
+//				cuadroDeMsjAlUsuario.setBounds(10, 10, 615, 450);
+//				cuadroDeMsjAlUsuario.setBackground(new Color(187,173,160));
+//				cuadroDeMsjAlUsuario.setFont(new Font("Tahoma", Font.BOLD, 17));
+//				cuadroDeMsjAlUsuario.setFocusable(false);
+//				cuadroDeMsjAlUsuario.setEditable(false);
+//				cuadroDeMsjAlUsuario.setBorder(null);
+//				cuadroDeMsjAlUsuario.setBackground(new Color(187,173,160));
+//				cuadroDeMsjAlUsuario.setForeground(Color.WHITE);
+//				cuadroDeMsjAlUsuario.setText("        Hola USUARIO!\n    <p>Bienvenido</p> a 2048!");
+//				ventanaInforme.getContentPane().add(cuadroDeMsjAlUsuario);
 			}
 		});
 		mntmAcercaDe.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
