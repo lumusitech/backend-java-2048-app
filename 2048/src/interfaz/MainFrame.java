@@ -11,11 +11,15 @@ import javax.swing.JTextField;
 import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Desktop;
+
 import javax.swing.JButton;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
 import java.awt.Toolkit;
 import javax.swing.JTextArea;
 import javax.swing.JMenuBar;
@@ -205,17 +209,11 @@ public class MainFrame{
 		mntmAcercaDe.setToolTipText("Informaci\u00F3n del juego y su desarrollo");
 		mntmAcercaDe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try
-				{
-			
-				@SuppressWarnings("unused")
-				Process p = Runtime.getRuntime().exec ("rundll32 SHELL32.DLL,ShellExec_RunDLL "+"C:\\Users\\lucia\\Desktop\\informe.pdf");
-				
-				}
-				catch (Exception evvv)
-				{
-				JOptionPane.showMessageDialog(null, "No se puede abrir el archivo de ayuda, probablemente fue borrado","ERROR",JOptionPane.ERROR_MESSAGE);
-				 
+				try {
+				     File ruta = new File ("src/interfaz/informe.pdf");
+				     Desktop.getDesktop().open(ruta);
+				}catch (IOException ex) {
+				     ex.printStackTrace();
 				}
 //				JFrame ventanaInforme = new JFrame();
 //				ventanaInforme.setVisible(true);
