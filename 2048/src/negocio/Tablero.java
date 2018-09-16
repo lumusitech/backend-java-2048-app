@@ -14,6 +14,7 @@ public class Tablero {
 	private boolean sumaIzquierdaEfectuada;
 	private boolean sumaArribaEfectuada;
 	private boolean sumaAbajoEfectuada;
+	
 	private boolean movDerechaEfectuado;
 	private boolean movIzquierdaEfectuado;
 	private boolean movArribaEfectuado;
@@ -80,7 +81,7 @@ public class Tablero {
 	////////////////////////////////////////////////////////////////////////////////////////
 	private int dosOCuatro() {
 		Random r = new Random();
-		if (r.nextInt(100) < 50) {
+		if (r.nextInt(100) < 80) {
 			return 2;
 		}
 		return 4;
@@ -89,8 +90,8 @@ public class Tablero {
 	////////////////////////////////////////////////////////////////////////////////////////
 	public boolean existeLugarDisponible() {
 
-		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < 4; j++) {
+		for (int i = 0; i < getTamanio(); i++) {
+			for (int j = 0; j < getTamanio(); j++) {
 				if (!existeValor(i, j)) {
 					// guarda la fila y columna que encontro vac�a
 					fila = i;
@@ -118,11 +119,16 @@ public class Tablero {
 	public int getRecord(int posicion) {
 		return records[posicion];
 	}
+	
+	public void setRecord(int puntaje, int posicion) {
+		records[posicion]=puntaje;
+	}
 
 	public int getTamanio() {
 		return tamanio;
 	}
 	
+
 	public boolean getSumaDerechaEfectuada() {
 		return sumaDerechaEfectuada;
 	}
@@ -156,72 +162,12 @@ public class Tablero {
 	}
 
 
-	public void setPuntaje(int puntaje) {
+	private void setPuntaje(int puntaje) {
 		this.puntaje = puntaje;
 	}
 
-	public void agregarValoresRandom(int cant) {
-		for (int i = 0; i < cant; i++) {
-			agregarValorRandom();
-		}
-	}
-
-	public void setFilaCompletaConValor(int fila, int valor) {
-
-		for (int columna = 0; columna < getTamanio(); columna++) {
-			setValor(fila, columna, valor);
-		}
-	}
-
-	public void setColumnaCompletaConValor(int columna, int valor) {
-
-		for (int fila = 0; fila < getTamanio(); fila++) {
-			setValor(fila, columna, valor);
-		}
-	}
-
-	public boolean verificarValoresEnColumnaCompleta(int columna, int valor) {
-		boolean ret = false;
-		for (int fila = 0; fila < getTamanio(); fila++) {
-			if (getValor(fila, columna) == valor) {
-				ret = true;
-			} else {
-				return false;
-			}
-		}
-
-		return ret;
-	}
-
-	public boolean verificarValoresEnFilaCompleta(int fila, int valor) {
-		boolean ret = false;
-		for (int columna = 0; columna < getTamanio(); columna++) {
-			if (getValor(fila, columna) == valor) {
-				ret = true;
-			} else {
-				return false;
-			}
-		}
-
-		return ret;
-	}
-
-	public boolean verificarValoresEnTableroCompleto(int valor) {
-		boolean ret = false;
-		for (int fila = 0; fila < getTamanio(); fila++) {
-			for (int columna = 0; columna < getTamanio(); columna++) {
-				if (getValor(fila, columna) == 0) {
-					ret = true;
-				} else {
-					return false;
-				}
-			}
-		}
-
-		return ret;
-	}
-
 	////////////////////////////////////////////////////////////////////////////////////////
+	
 	public void reiniciar() {
 
 		vaciarTablero();
@@ -246,7 +192,7 @@ public class Tablero {
 		agregarValorRandom();
 		int filaSegundoValor = fila;
 		int columnaSegundoValor = columna;
-
+		//impresion para control interno por consola
 		System.out.println("Primer Cuadro--->posici�n(" + filaPrimerValor + ", " + columnaPrimerValor + ")");
 		System.out.println("Segundo Cuadro--->posici�n(" + filaSegundoValor + ", " + columnaSegundoValor + ")");
 		System.out.println();
@@ -269,12 +215,6 @@ public class Tablero {
 			}
 		}
 		setPuntaje(0);
-	}
-	
-	////////////////////////////////////////////////////////////////////////////////////////
-
-	public void setRecord(int puntaje, int posicion) {
-		records[posicion]=puntaje;
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////
@@ -335,7 +275,6 @@ public class Tablero {
 				resetearSumasYMov();
 			}
 		}
-		
 		return juegoActivo();
 	}
 	
@@ -357,7 +296,7 @@ public class Tablero {
 	////////////////////////////////////////////////////////////////////////////////////////
 	
 	private void resetearSumasYMov() {
-		
+		//agregar los set correspondientes
 		sumaDerechaEfectuada = true;
 		sumaIzquierdaEfectuada = true;
 		sumaArribaEfectuada = true;
@@ -627,5 +566,55 @@ public class Tablero {
 		setValor(DestinoFila, DestinoColumna, getValor(OrigenFila, OrigenColumna));
 		setValor(OrigenFila, OrigenColumna, 0);
 	}
-	////////////////////////////////////////////////////////////////////////////////////////
+	
+	
+	/////////////////////////////METODOS PARA TESTING///////////////////////////////////
+	public void agregarValoresRandom(int cant) {
+		for (int i = 0; i < cant; i++) {
+			agregarValorRandom();
+		}
+	}
+
+	public void setFilaCompletaConValor(int fila, int valor) {
+
+		for (int columna = 0; columna < getTamanio(); columna++) {
+			setValor(fila, columna, valor);
+		}
+	}
+
+	public void setColumnaCompletaConValor(int columna, int valor) {
+
+		for (int fila = 0; fila < getTamanio(); fila++) {
+			setValor(fila, columna, valor);
+		}
+	}
+	
+	// Se utiliza acumuladores booleanos
+	public boolean verificarValoresEnColumnaCompleta(int columna, int valor) {
+		boolean ret = true;
+		for (int fila = 0; fila < getTamanio() && ret; fila++) {
+			ret = ret && (getValor(fila, columna) == valor);
+		}
+		return ret;
+	}
+		
+	// Se utiliza acumuladores booleanos
+	public boolean verificarValoresEnFilaCompleta(int fila, int valor) {
+		boolean ret = true;
+		for (int columna = 0; columna < getTamanio() && ret; columna++) {
+			ret = ret && (getValor(fila, columna) == valor);			
+		}
+		return ret;
+	}
+
+	// Se utiliza acumuladores booleanos
+	public boolean verificarValoresEnTableroCompleto(int valor) {
+		boolean ret = true;
+		for (int fila = 0; fila < getTamanio(); fila++) {
+			for (int columna = 0; columna < getTamanio() && ret; columna++) {
+				ret = ret && (getValor(fila, columna) == 0);
+			}
+		}
+		return ret;
+	}
 }

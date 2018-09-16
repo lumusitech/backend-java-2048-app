@@ -18,7 +18,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Toolkit;
 import javax.swing.JTextArea;
-import javax.swing.JTextPane;
 
 public class MainFrame{
 
@@ -51,7 +50,7 @@ public class MainFrame{
 		});
 	}
 
-	//crea la aplicacion
+	//Constructor: crea la aplicacion
 	public MainFrame() {
 		initialize();
 	}
@@ -136,7 +135,7 @@ public class MainFrame{
 		ventana = new JFrame();
 		ventana.setIconImage(Toolkit.getDefaultToolkit().getImage(MainFrame.class.getResource("/interfaz/icon.png")));
 		ventana.getContentPane().setBackground(new Color(250, 248, 239));
-		ventana.setTitle("Juego 2048");
+		ventana.setTitle("2048");
 		ventana.setBounds(100, 100, 640, 480);
 		ventana.setResizable(false);
 		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -146,11 +145,9 @@ public class MainFrame{
 		JLabel titulo = new JLabel("2048");
 		titulo.setBounds(120, 11, 158, 50);
 		titulo.setHorizontalAlignment(SwingConstants.CENTER);
-		//titulo.setForeground(new Color(119,110,101));
 		titulo.setFont(new Font("Times New Roman", Font.BOLD, 50));
 		titulo.setForeground(new Color(143,122,102));
 		ventana.getContentPane().add(titulo);
-
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////
@@ -320,6 +317,7 @@ public class MainFrame{
       		
 	    		actualizarPuntaje();
 	    		
+	    		
 	    		//Si el puntaje supera el record ya lo empieza a mostrar como record
 	    		if(tableroDeValores.getPuntaje() > tableroDeValores.getRecord(0)) {
 	    			puntaje = Integer.toString(tableroDeValores.getPuntaje());
@@ -478,7 +476,7 @@ public class MainFrame{
 		cuadroDeMsjAlUsuario.setBorder(null);
 		cuadroDeMsjAlUsuario.setBackground(new Color(187,173,160));
 		cuadroDeMsjAlUsuario.setForeground(Color.WHITE);
-		cuadroDeMsjAlUsuario.setText("Hola USUARIO!\nBienvenido a 2048!");
+		cuadroDeMsjAlUsuario.setText("        Hola USUARIO!\n    Bienvenido a 2048!");
 		ventana.getContentPane().add(cuadroDeMsjAlUsuario);
 	}
 	
