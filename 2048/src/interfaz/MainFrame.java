@@ -205,7 +205,17 @@ public class MainFrame{
 		mntmAcercaDe.setToolTipText("Informaci\u00F3n del juego y su desarrollo");
 		mntmAcercaDe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				try
+				{
+				//String ruta = "C:\\Users\\lucia\\Desktop\\informe.pdf";
+				String ruta = "C:\\Users\\lucia\\git\\TP1_progra3\\2048\\src\\interfaz\\informe.pdf";
+				Process p = Runtime.getRuntime().exec ("rundll32 SHELL32.DLL,ShellExec_RunDLL "+ruta);
+				}
+				catch (Exception exception)
+				{
+				JOptionPane.showMessageDialog(ventana, "No se puede abrir el archivo del Informe, probablemente fue borrado","ERROR",JOptionPane.ERROR_MESSAGE);
+				 
+				}
 			}
 		});
 		mntmAcercaDe.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));

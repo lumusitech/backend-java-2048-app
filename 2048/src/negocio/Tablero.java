@@ -105,7 +105,6 @@ public class Tablero {
 	}
 
 	private String getNivel() {
-		// TODO Auto-generated method stub
 		return nivel;
 	}
 
