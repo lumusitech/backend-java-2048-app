@@ -18,6 +18,14 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Toolkit;
 import javax.swing.JTextArea;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.ButtonGroup;
+import javax.swing.KeyStroke;
+import java.awt.event.InputEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MainFrame{
 
@@ -35,6 +43,7 @@ public class MainFrame{
 	private JTextField [] cuadrosRecordsHistoricos;
 	private String record;
 	private JTextArea cuadroDeMsjAlUsuario;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
 	
 	//Lanza la aplicacion
 	public static void main(String[] args) {
@@ -108,6 +117,8 @@ public class MainFrame{
 			cuadrosRecordsHistoricos[i].setFont(new Font("Tahoma", Font.BOLD, 25));
 			cuadrosRecordsHistoricos[i].setHorizontalAlignment(SwingConstants.CENTER);
 			cuadrosRecordsHistoricos[i].setEditable(false);
+			cuadrosRecordsHistoricos[i].setFocusable(false);
+			
 			if(i==0) {
 				cuadrosRecordsHistoricos[i].setBounds(10, (posicion), 184, 27);
 			}
@@ -136,7 +147,7 @@ public class MainFrame{
 		ventana.setIconImage(Toolkit.getDefaultToolkit().getImage(MainFrame.class.getResource("/interfaz/icon.png")));
 		ventana.getContentPane().setBackground(new Color(250, 248, 239));
 		ventana.setTitle("2048");
-		ventana.setBounds(100, 100, 640, 480);
+		ventana.setBounds(100, 100, 640, 500);
 		ventana.setResizable(false);
 		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ventana.getContentPane().setLayout(null);
@@ -148,6 +159,57 @@ public class MainFrame{
 		titulo.setFont(new Font("Times New Roman", Font.BOLD, 50));
 		titulo.setForeground(new Color(143,122,102));
 		ventana.getContentPane().add(titulo);
+		
+		JMenuBar menuBar = new JMenuBar();
+		ventana.setJMenuBar(menuBar);
+		
+		JMenu mnArchivo = new JMenu("Archivo");
+		menuBar.add(mnArchivo);
+		
+		JMenuItem mntmJuegoNuevo_1 = new JMenuItem("Juego nuevo");
+		mntmJuegoNuevo_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				seleccionDeNivel();
+			}
+		});
+		mntmJuegoNuevo_1.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK));
+		buttonGroup.add(mntmJuegoNuevo_1);
+		mntmJuegoNuevo_1.setHorizontalAlignment(SwingConstants.LEFT);
+		mnArchivo.add(mntmJuegoNuevo_1);
+		
+		JMenuItem mntmJuegoNuevo = new JMenuItem("Salir");
+		mntmJuegoNuevo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int opcion=JOptionPane.showConfirmDialog(ventana,"Seguro que quieres salir del juego?");
+        		if(opcion==0) {
+        			System.exit(0);
+        		}
+			}
+		});
+		
+		JMenuItem mntmReiniciar = new JMenuItem("Reiniciar");
+		mntmReiniciar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				nuevo();
+			}
+		});
+		mntmReiniciar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_MASK));
+		mnArchivo.add(mntmReiniciar);
+		mntmJuegoNuevo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
+		mnArchivo.add(mntmJuegoNuevo);
+		
+		JMenu mnAyuda = new JMenu("Ayuda");
+		menuBar.add(mnAyuda);
+		
+		JMenuItem mntmAcercaDe = new JMenuItem("Acerca De");
+		mntmAcercaDe.setToolTipText("Informaci\u00F3n del juego y su desarrollo");
+		mntmAcercaDe.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		mntmAcercaDe.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
+		mnAyuda.add(mntmAcercaDe);
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////
@@ -189,6 +251,7 @@ public class MainFrame{
 				cuadros[i][j].setFont(new Font("Tahoma", Font.BOLD, 25));
 				cuadros[i][j].setHorizontalAlignment(SwingConstants.CENTER);
 				cuadros[i][j].setEditable(false);
+				cuadros[i][j].setFocusable(false);
 				cuadros[i][j].setBounds(cuadroPosY, cuadroPosX, cuadrosTamanio, cuadrosTamanio);
 				contenedorDeCuadros.add(cuadros[i][j]);
 				cuadros[i][j].setColumns(10);
@@ -199,7 +262,6 @@ public class MainFrame{
 				}
 			}
 		}
-		
 		actualizarTableroGrafico();
 		
 	}
@@ -283,7 +345,7 @@ public class MainFrame{
                 if(e.getKeyCode()==KeyEvent.VK_ENTER){
                 	int opcion=JOptionPane.showConfirmDialog(ventana,"Seguro que quieres reiniciar el juego?");
             		if(opcion==0) {
-            			nuevo();
+            			seleccionDeNivel();
             		}
                 }
                 
@@ -327,13 +389,29 @@ public class MainFrame{
 	      	else {
 		  		int opcion=JOptionPane.showConfirmDialog(ventana,"Fin del juego - Desea reintentar?");
 		  		if(opcion==0) {
-		  			nuevo();
+		  			//Si se da el evento click, se crea un juego nuevo a partir del metodo nuevo()
+					seleccionDeNivel();
 		  		}
 		  		else if(opcion==1) {
 		  			System.exit(0);
 		  		}
 	      	}
 	    }
+	}
+
+	public void seleccionDeNivel() {
+		try {
+			Object [] niveles ={"principiante","intermedio","experto"};
+			Object opcion = JOptionPane.showInputDialog(ventana,"Selecciona un Nivel", "Elegir",JOptionPane.QUESTION_MESSAGE,null,niveles, niveles[0]);
+			String dificultad = (String)opcion;
+			if(!dificultad.equals(null)) {
+				tableroDeValores.setNivel(dificultad); nuevo();
+				System.out.println("nivel en MainFrame: "+opcion);
+			}
+		} catch (Exception e) {
+			
+			System.out.println("mensaje de error: "+e.getMessage());
+		}
 	}
 	
 	
@@ -436,8 +514,7 @@ public class MainFrame{
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				//Si se da el evento click, se crea un juego nuevo a partir del metodo nuevo()
-				nuevo();
+				seleccionDeNivel();
 			}
 			
 			@Override

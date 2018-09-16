@@ -7,6 +7,7 @@ public class Tablero {
 	private int tamanio;
 	private int fila;
 	private int columna;
+	private String nivel;
 	private int puntaje;
 	private int [] records;
 	
@@ -26,6 +27,7 @@ public class Tablero {
 		tablero = new int[tamanio][tamanio];
 		puntaje = 0;
 		records = new int [5];
+		nivel = "principiante";
 		
 		sumaDerechaEfectuada = true;
 		sumaIzquierdaEfectuada = true;
@@ -80,11 +82,31 @@ public class Tablero {
 
 	////////////////////////////////////////////////////////////////////////////////////////
 	private int dosOCuatro() {
+		int porcentaje = 0;
+		String dificultad = getNivel();
+		System.out.println("nivel en Tablero: "+dificultad);
+//		"principiante","intermedio","experto"
+		if(dificultad.equals("principiante")) {
+			porcentaje = 10;
+		}
+		else if(dificultad.equals("intermedio")) {
+			porcentaje = 50;
+		}
+		else if(dificultad.equals("experto")) {
+			porcentaje = 80;
+		}
+		
+		System.out.println(porcentaje+"%");
 		Random r = new Random();
-		if (r.nextInt(100) < 80) {
+		if (r.nextInt(100) < porcentaje) {
 			return 2;
 		}
 		return 4;
+	}
+
+	private String getNivel() {
+		// TODO Auto-generated method stub
+		return nivel;
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////
@@ -616,5 +638,10 @@ public class Tablero {
 			}
 		}
 		return ret;
+	}
+
+	public void setNivel(String nivel) {
+		// TODO Auto-generated method stub
+		this.nivel = nivel;
 	}
 }
