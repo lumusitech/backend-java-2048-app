@@ -7,9 +7,10 @@ public class Tablero {
 	private int tamanio;
 	private int fila;
 	private int columna;
+	private String usuario;
 	private String nivel;
 	private int puntaje;
-	private int [] records;
+	private String [][] records;
 	
 	private boolean sumaDerechaEfectuada;
 	private boolean sumaIzquierdaEfectuada;
@@ -25,8 +26,14 @@ public class Tablero {
 
 		tamanio = 4;
 		tablero = new int[tamanio][tamanio];
+		usuario = "Anónimo";
 		puntaje = 0;
-		records = new int [5];
+		records = new String [5][3];
+		for(int i=0; i<records.length; i++) {
+			records[i][0]="";
+			records[i][1]="0";
+			records[i][2]="";
+		}
 		nivel = "principiante";
 		
 		sumaDerechaEfectuada = true;
@@ -47,10 +54,8 @@ public class Tablero {
 		if (lugarAleatorio()) {
 			// busca un lugar aleatorio disponible
 			setValor(fila, columna, dosOCuatro());// asigna a ese lugar dos o cuatro aleatoriamente
-			System.out.println("se agrega el cuadro aleatorio: (" + fila + "," + columna + ")");
 			return true;
 		}
-		System.out.println("No se puede agregar valor! Tablero completo");
 		return false;
 	}
 
@@ -73,7 +78,6 @@ public class Tablero {
 		// en busca de un lugar libre
 		if (contador == 10) {
 			if (!existeLugarDisponible()) {
-				System.out.println("No existe lugar disponible");
 				return false;
 			}
 		}
@@ -84,8 +88,7 @@ public class Tablero {
 	private int dosOCuatro() {
 		int porcentaje = 0;
 		String dificultad = getNivel();
-		System.out.println("nivel en Tablero: "+dificultad);
-//		"principiante","intermedio","experto"
+		
 		if(dificultad.equals("principiante")) {
 			porcentaje = 10;
 		}
@@ -96,16 +99,11 @@ public class Tablero {
 			porcentaje = 80;
 		}
 		
-		System.out.println(porcentaje+"%");
 		Random r = new Random();
 		if (r.nextInt(100) < porcentaje) {
 			return 2;
 		}
 		return 4;
-	}
-
-	private String getNivel() {
-		return nivel;
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////
@@ -125,6 +123,11 @@ public class Tablero {
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////
+	
+	public int getTamanio() {
+		return tamanio;
+	}
+	
 	public int getValor(int fila, int columna) {
 		return tablero[fila][columna];
 	}
@@ -132,24 +135,99 @@ public class Tablero {
 	public void setValor(int fila, int columna, int valor) {
 		tablero[fila][columna] = valor;
 	}
+	
+	/////////////////////////////////////////
+	
+	public String getUsuario() {
+		return usuario;
+	}
+	
+	public void setUsuario(String usuario) {
 
+		if(usuario==null || usuario.equals("")) {
+			this.usuario = "Anónimo";
+		}
+		else if(usuario.length()>15) {
+			this.usuario="";
+			for(int i=0; i<15; i++) {
+				this.usuario+=usuario.charAt(i);
+			}
+		}
+		else {
+			this.usuario = usuario;
+		}
+	}
+	
+	/////////////////////////////////////////
+	
 	public int getPuntaje() {
 		return puntaje;
 	}
+	
+	private void setPuntaje(int puntaje) {
+		this.puntaje = puntaje;
+	}
+	
+	/////////////////////////////////////////
 
 	public int getRecord(int posicion) {
-		return records[posicion];
+		return Integer.parseInt(records[posicion][1]);
 	}
 	
 	public void setRecord(int puntaje, int posicion) {
-		records[posicion]=puntaje;
-	}
-
-	public int getTamanio() {
-		return tamanio;
+		records[posicion][1]=Integer.toString(getPuntaje());
 	}
 	
+	/////////////////////////////////////////
+	
+	public String getNivel() {
+		return nivel;
+	}
+	
+	public void setNivel(String nivel) {
+		this.nivel = nivel;
+	}
+	
+	public String getNivelDeLaLista(int posicion) {
+		return records[posicion][2];
+	}
+	
+	public void setNivelDeLaLista(String nivel, int posicion) {
+		records[posicion][2]=nivel;
+	}
+	
+	/////////////////////////////////////////
+	
+	public String getUsuarioConRecord(int posicion) {
+		return records[posicion][0];
+	}
+	
+	public void setUsuarioConRecord(String usuario, int posicion) {
+		this.records[posicion][0]=usuario;
+	}
+	
+	/////////////////////////////////////////
+	
+	public String getRecordRealizado(int posicion) {
+		return records[posicion][1];
+	}
+	
+	public void setRecordRealizado(String record, int posicion) {
+		this.records[posicion][1]=record;
+	}
 
+	/////////////////////////////////////////
+	
+	public String getNivelUsado(int posicion) {
+		return records[posicion][2];
+	}
+	
+	public void setNivelUsado(String nivelUsado, int posicion) {
+		this.records[posicion][2]=nivelUsado;
+	}
+	
+	/////////////////////////////////////////
+	
 	public boolean getSumaDerechaEfectuada() {
 		return sumaDerechaEfectuada;
 	}
@@ -182,17 +260,12 @@ public class Tablero {
 		return movAbajoEfectuado;
 	}
 
-
-	private void setPuntaje(int puntaje) {
-		this.puntaje = puntaje;
-	}
-
 	////////////////////////////////////////////////////////////////////////////////////////
 	
 	public void reiniciar() {
 
 		vaciarTablero();
-
+		
 		controlDePuntajes();
 		
 		resetearSumasYMov();
@@ -206,35 +279,38 @@ public class Tablero {
 	public void agregarValoresIniciales() {
 		// Agrega el 1er valor al tablero (posicion y valor aleatorio)
 		agregarValorRandom();
-		int filaPrimerValor = fila;
-		int columnaPrimerValor = columna;
 
 		// Agrega el 2do valor al tablero (posiciï¿½n y valor aleatorio)
 		agregarValorRandom();
-		int filaSegundoValor = fila;
-		int columnaSegundoValor = columna;
-		//impresion para control interno por consola
-		System.out.println("Primer Cuadro--->posiciï¿½n(" + filaPrimerValor + ", " + columnaPrimerValor + ")");
-		System.out.println("Segundo Cuadro--->posiciï¿½n(" + filaSegundoValor + ", " + columnaSegundoValor + ")");
-		System.out.println();
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////
 
 	public void controlDePuntajes() {
-		int ultmaPosicion = records.length-1;
-		if(getPuntaje() > getRecord(ultmaPosicion)) {
-			setRecord(getPuntaje(), ultmaPosicion);
-		}
 		
-		for(int i=ultmaPosicion-1; i>=0; i--) {
+		for(int i=records.length-1; i>=0; i--) {
+			
 			int actual = i;
-			int siguiente = i+1;
-			if(getPuntaje() > getRecord(actual)) {
-				setRecord(getRecord(actual), siguiente);
-				setRecord(getPuntaje(), actual);
+			int siguiente = actual+1;
+			if( puntaje > getRecord(actual) ) {
+				if(actual==4) {
+					setUsuarioConRecord(getUsuario(), actual);
+					setRecordRealizado(Integer.toString(getPuntaje()), actual);
+					setNivelUsado(getNivel(), actual);
+				}
+				else {
+					setUsuarioConRecord(getUsuarioConRecord(actual), siguiente);
+					setUsuarioConRecord(getUsuario(), actual);
+					
+					setRecordRealizado(Integer.toString(getRecord(actual)), siguiente);
+					setRecordRealizado(Integer.toString(getPuntaje()), actual);
+					
+					setNivelDeLaLista(getNivelDeLaLista(actual), siguiente);
+					setNivelUsado(getNivel(), actual);
+				}
 			}
 		}
+			
 		setPuntaje(0);
 	}
 	
@@ -637,10 +713,5 @@ public class Tablero {
 			}
 		}
 		return ret;
-	}
-
-	public void setNivel(String nivel) {
-		// TODO Auto-generated method stub
-		this.nivel = nivel;
 	}
 }
