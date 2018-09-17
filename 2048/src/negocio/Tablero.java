@@ -1,8 +1,10 @@
 package negocio;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public class Tablero {
+@SuppressWarnings("serial")
+public class Tablero implements Serializable{
 	private int[][] tablero;
 	private int tamanio;
 	private int fila;
@@ -156,9 +158,9 @@ public class Tablero {
 		if(usuario==null || usuario.equals("")) {
 			this.usuario = "Anónimo";
 		}
-		else if(usuario.length()>15) {
+		else if(usuario.length()>8) {
 			this.usuario="";
-			for(int i=0; i<15; i++) {
+			for(int i=0; i<8; i++) {
 				this.usuario+=usuario.charAt(i);
 			}
 		}
@@ -223,6 +225,14 @@ public class Tablero {
 	
 	public void setRecordRealizado(String record, int posicion) {
 		this.records[posicion][1]=record;
+	}
+	
+	public void borrarRecords() {
+		for (int i = 0; i < records.length; i++) {
+			setUsuarioConRecord("", i);
+			setRecord(0, i);
+			setNivelDeLaLista("", i);
+		}
 	}
 
 	/////////////////////////////////////////

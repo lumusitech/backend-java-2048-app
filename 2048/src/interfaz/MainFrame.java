@@ -23,7 +23,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.awt.Toolkit;
 import javax.swing.JTextArea;
 import javax.swing.JMenuBar;
@@ -55,7 +59,8 @@ public class MainFrame{
 	private JPanel contenedorDePuntajesHistoricos;
 	private JTextField [] cuadrosRecordsHistoricos; 
 	
-	private JTextArea cuadroDeMsj;
+	private JTextArea cuadroDeMsj; 
+
 	
 	//Lanza la aplicacion
 	public static void main(String[] args) {
@@ -81,6 +86,8 @@ public class MainFrame{
 		
 		ventanaPrincipal();
 		
+		inicio();
+		
 		tableroDeJuego();
 		
 		puntaje();
@@ -90,15 +97,18 @@ public class MainFrame{
 		recordsHistoricos();
 		actualizarRecord();
 		
-		cuadroDeMsjAlUsuario();
-		setMsj("Hola "+tableroDeValores.getUsuario()+" Bienvenid@ a 2048");
-		
 		botonJuegoNuevo();
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////
 	/////////////////////////////////METODOS AUXILIARES/////////////////////////////////////
-	
+	private void close(){
+        if (JOptionPane.showConfirmDialog(ventana, "¿Desea realmente salir del sistema?",
+           "Salir del sistema", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
+        
+    } 
 	public void ventanaPrincipal () {
 		ventana = new JFrame();
 		ventana.setIconImage(Toolkit.getDefaultToolkit().getImage(MainFrame.class.getResource("/interfaz/icon.png")));
@@ -106,8 +116,16 @@ public class MainFrame{
 		ventana.setTitle("2048");
 		ventana.setBounds(100, 100, 640, 500);
 		ventana.setResizable(false);
-		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ventana.getContentPane().setLayout(null);
+		
+		ventana.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+		 
+		ventana.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                close();
+            }
+        });
 		
 		//Ttulo
 		JLabel titulo = new JLabel("2048");
@@ -149,14 +167,19 @@ public class MainFrame{
 		}); 
 		mntmReiniciar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_MASK));
 		mnArchivo.add(mntmReiniciar);
+		
 				
 		//Archivo --> Salir
 		JMenuItem mntmSalir = new JMenuItem("Salir");
 		mntmSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int opcion=JOptionPane.showConfirmDialog(ventana,"Seguro que quieres salir del juego?");
+				int opcion=JOptionPane.showConfirmDialog(ventana,"Seguro que quieres reiniciar?");
         		if(opcion==0) {
+        			guardarJuego();
         			System.exit(0);
+        		}
+        		else {
+        			setMsj("Excelente! sigue sumando!");
         		}
 			}
 		});
@@ -171,7 +194,7 @@ public class MainFrame{
 		
 		//////////////////////////Items de Ayuda//////////////////////////////////
 		
-		//Archivo --> Acerca De
+		//Ayuda --> Acerca De
 		JMenuItem mntmAcercaDe = new JMenuItem("Acerca De");
 		mntmAcercaDe.setToolTipText("Informaci\u00F3n del juego y su desarrollo");
 		mntmAcercaDe.addActionListener(new ActionListener() {
@@ -189,8 +212,33 @@ public class MainFrame{
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////
+	
+	public void inicio() {
+		int eleccion = JOptionPane.showConfirmDialog(ventana, "Desea continuar con la última partida guardada?");
+		if(eleccion==0) {
+			tableroDeValores = new Tablero();
+			leerJuegoGuardado();
+			cuadroDeMsjAlUsuario();
+			setMsj("Esta partida fue guardada por "+tableroDeValores.getUsuario()+". Intenta alcanzar 2048!");
+		}
+		else if(eleccion==1){
+			tableroDeValores = new Tablero();
+			leerJuegoGuardado();
+			tableroDeValores.reiniciar();
+			setUsuarioNuevo();
+			seleccionDeNivel();
+			cuadroDeMsjAlUsuario();
+			setMsj("Hola "+tableroDeValores.getUsuario()+". Intenta alcanzar 2048!");
+		}
+		else {
+			System.exit(0);
+		}
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////
 
 	public void tableroDeJuego() {
+		
 		//Se crea el panel que contiene a los cuadros
 		contenedorDeCuadros = new JPanel();
 		contenedorDeCuadros.setBackground(new Color(187, 173, 160));
@@ -201,13 +249,7 @@ public class MainFrame{
 		//Se escuchan eventos de teclado del panel
 		escucharTeclado(contenedorDeCuadros, null);
 		
-		//Se crea un nuevo tablero de valores (negocio)
-		tableroDeValores = new Tablero();
-		setUsuarioNuevo();
-		seleccionDeNivel();
-		agregarValoresIniciales();
-		
-		int tamanio= tableroDeValores.getTamanio();
+		int tamanio = tableroDeValores.getTamanio();
 		//Inicializan variables del tablero grafico y la posicion de los cuadros
 		cuadros=new JTextField[tamanio][tamanio]; 
 		cuadrosTamanio=60;
@@ -349,20 +391,20 @@ public class MainFrame{
 			if(Integer.parseInt(recordDeUsuario)!=0) {
 				cuadrosRecordsHistoricos[i].setText(usuarioConRecord+" "+recordDeUsuario);
 			}
-			
+			else {
+				cuadrosRecordsHistoricos[i].setBackground(new Color(205,193,180));
+			}
 			
 			if(nivelDeUsuario.equals("principiante")) {
 				cuadrosRecordsHistoricos[i].setBackground(new Color(180,200,180));
 			}
 			else if(nivelDeUsuario.equals("intermedio")) {
-				cuadrosRecordsHistoricos[i].setBackground(new Color(200,200,150));
+				cuadrosRecordsHistoricos[i].setBackground(new Color(215,200,150));
 			}
 			else if(nivelDeUsuario.equals("experto")) {
 				cuadrosRecordsHistoricos[i].setBackground(new Color(200,150,150));
 			}
-			else {
-				cuadrosRecordsHistoricos[i].setBackground(new Color(205,193,180));
-			}
+			
 		}
 	}
 	
@@ -389,12 +431,13 @@ public class MainFrame{
                 	String usuarioActual = tableroDeValores.getUsuario();
                 	setMsj("No te rindas "+usuarioActual+" llevas solo "+puntajeAMostrar+" puntos :(");
                 	
-                	int opcion=JOptionPane.showConfirmDialog(ventana,"Seguro que quieres salir del juego?");
+                	int opcion=JOptionPane.showConfirmDialog(ventana,"Seguro que quieres reiniciar?");
             		if(opcion==0) {
+            			guardarJuego();
             			System.exit(0);
             		}
             		else {
-            			setMsj(":) Sabía que lo reconsiderarías");
+            			setMsj("Excelente! sigue sumando!");
             		}
                 }
                 
@@ -430,7 +473,6 @@ public class MainFrame{
 		}
 		
 	    if(e.getKeyCode()==codigoTecla){
-	    	cuadroDeMsjAlUsuario();
 	    	if(tableroDeValores.mover(tecla)) {
 	    		actualizarTableroGrafico();
 	    		actualizarPuntaje();
@@ -446,10 +488,11 @@ public class MainFrame{
 	      	else {
 		  		int opcion=JOptionPane.showConfirmDialog(ventana,"Fin del juego - Desea reintentar?");
 		  		if(opcion==0) {
-					seleccionDeNivel();
 					reinicioOnuevo("reinicio");
+					setMsj("Sigue intentando "+tableroDeValores.getUsuario()+"! Descubre la lógica del juego y alcanza 2048");
 		  		}
 		  		else if(opcion==1) {
+		  			guardarJuego();
 		  			System.exit(0);
 		  		}
 	      	}
@@ -490,53 +533,75 @@ public class MainFrame{
 			if(cuadro.getText().equals("2")) {
 				cuadro.setBackground(new Color(238,228,218));
 				cuadro.setForeground(new Color(119,110,101));
+				cuadro.setFont(new Font("Tahoma", Font.BOLD, 25));
 			}
-			else if(cuadro.getText().equals("4")){
+			if(cuadro.getText().equals("4")){
 				cuadro.setBackground(new Color(237,224,200));
 				cuadro.setForeground(new Color(119,110,101));
+				cuadro.setFont(new Font("Tahoma", Font.BOLD, 25));
 			}
 			
 			//A partir de acï¿½ hay que configurar los colores, hacer cuando se halla resuelto la funcion de las teclas
-			else if(cuadro.getText().equals("8")){
+			if(cuadro.getText().equals("8")){
 				cuadro.setBackground(new Color(242,177,121));
 				cuadro.setForeground(new Color(249,246,242));
+				cuadro.setFont(new Font("Tahoma", Font.BOLD, 25));
 			}
-			else if(cuadro.getText().equals("16")){
+			if(cuadro.getText().equals("16")){
 				cuadro.setBackground(new Color(245,149,99));
 				cuadro.setForeground(new Color(249,246,242));
+				cuadro.setFont(new Font("Tahoma", Font.BOLD, 25));
 			}
-			else if(cuadro.getText().equals("32")){
+			if(cuadro.getText().equals("32")){
 				cuadro.setBackground(new Color(246,124,95));
 				cuadro.setForeground(new Color(249,246,242));
+				cuadro.setFont(new Font("Tahoma", Font.BOLD, 25));
 			}
-			else if(cuadro.getText().equals("64")){
+			if(cuadro.getText().equals("64")){
 				cuadro.setBackground(new Color(246,94,59));
 				cuadro.setForeground(new Color(249,246,242));
+				cuadro.setFont(new Font("Tahoma", Font.BOLD, 25));
 			}
-			else if(cuadro.getText().equals("128")){
+			if(cuadro.getText().equals("128")){
 				cuadro.setBackground(new Color(237,207,114));
 				cuadro.setForeground(new Color(249,246,242));
+				cuadro.setFont(new Font("Tahoma", Font.BOLD, 25));
 			}
-			else if(cuadro.getText().equals("256")){
+			if(cuadro.getText().equals("256")){
 				cuadro.setBackground(new Color(237,207,114));
 				cuadro.setForeground(new Color(249,246,242));
+				cuadro.setFont(new Font("Tahoma", Font.BOLD, 25));
 			}
-			else if(cuadro.getText().equals("512")){
+			if(cuadro.getText().equals("512")){
 				cuadro.setBackground(new Color(236,200,80));
 				cuadro.setForeground(new Color(249,246,242));
+				cuadro.setFont(new Font("Tahoma", Font.BOLD, 25));
 			}
-			else if(cuadro.getText().equals("1024")){
+			if(cuadro.getText().equals("1024")){
 				cuadro.setBackground(new Color(237,197,63));
 				cuadro.setForeground(new Color(249,246,242));
+				cuadro.setFont(new Font("Tahoma", Font.BOLD, 20));
 			}
-			else if(cuadro.getText().equals("2048")){
+			if(cuadro.getText().equals("2048")){
 				cuadro.setBackground(new Color(238,194,46));
 				cuadro.setForeground(new Color(249,246,242));
+				cuadro.setFont(new Font("Tahoma", Font.BOLD, 20));
 			}
-			else {
+			if(Integer.parseInt(cuadro.getText())>2048){
 				cuadro.setBackground(new Color(61,58,51));
 				cuadro.setForeground(new Color(249,246,242));
+				cuadro.setFont(new Font("Tahoma", Font.BOLD, 20));
+				
+				if(Integer.parseInt(cuadro.getText())>=16384) {
+					cuadro.setFont(new Font("Tahoma", Font.BOLD, 15));
+				}
+				if(Integer.parseInt(cuadro.getText())>=131072) {
+					cuadro.setFont(new Font("Tahoma", Font.BOLD, 14));
+				}
 			}
+			
+			
+			
 		}
 		//Si es cero
 		else {
@@ -592,6 +657,9 @@ public class MainFrame{
 		
 		//Despues de reiniciar, se debe indicar de nuevo que escuche eventos de teclado del panel
 		escucharTeclado(null, btnJuegoNuevo);
+		
+		
+		
 	}
 	
 	public void setUsuarioNuevo() {
@@ -641,6 +709,9 @@ public class MainFrame{
 			
 			setMsj("Hola "+tableroDeValores.getUsuario()+" Bienvenido a 2048");
 		}
+		else {
+			setMsj("Sigue intentando "+tableroDeValores.getUsuario()+"! Descubre la lógica del juego y alcanza 2048");
+		}
 		
 		actualizarTableroGrafico();
 	}
@@ -657,5 +728,34 @@ public class MainFrame{
 	public void setMsj(String msj) {
 		cuadroDeMsj.selectAll();//selecciona todo el texto del jTextArea
 		cuadroDeMsj.replaceSelection(msj);//Reemplaza la seleccion con el texto que recibe
+	}
+	
+	public void guardarJuego() {
+		try {
+		
+			FileOutputStream fos = new FileOutputStream("juegoGuardado.txt");
+			ObjectOutputStream out = new ObjectOutputStream(fos);
+			
+			out.writeObject(tableroDeValores);
+			
+			out.close();
+		}
+		catch (Exception ex) {
+		}
+	}
+	
+	public void leerJuegoGuardado() {
+		
+		try {
+			
+			FileInputStream fis = new FileInputStream("juegoGuardado.txt");
+			ObjectInputStream in = new ObjectInputStream(fis);
+			
+			tableroDeValores = (Tablero) in.readObject();
+			
+			in.close();
+		}
+		catch (Exception ex) {
+		}
 	}
 }
