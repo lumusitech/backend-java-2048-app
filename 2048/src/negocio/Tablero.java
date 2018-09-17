@@ -3,8 +3,11 @@ package negocio;
 import java.io.Serializable;
 import java.util.Random;
 
+////////////////////////////////////////////////////////////////////////////////////////
+
 @SuppressWarnings("serial")
 public class Tablero implements Serializable{
+	
 	private int[][] tablero;
 	private int tamanio;
 	private int fila;
@@ -23,7 +26,9 @@ public class Tablero implements Serializable{
 	private boolean movIzquierdaEfectuado;
 	private boolean movArribaEfectuado;
 	private boolean movAbajoEfectuado;
-
+	
+	////////////////////////////////////////////////////////////////////////////////////////
+	
 	public Tablero() {
 
 		tamanio = 4;
@@ -95,6 +100,7 @@ public class Tablero implements Serializable{
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////
+	
 	private int dosOCuatro() {
 		int porcentaje = 0;
 		String dificultad = nivel;
@@ -147,7 +153,7 @@ public class Tablero implements Serializable{
 		tablero[fila][columna] = valor;
 	}
 	
-	/////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////////
 	
 	public String getUsuario() {
 		return usuario;
@@ -169,7 +175,7 @@ public class Tablero implements Serializable{
 		}
 	}
 	
-	/////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////////
 	
 	public int getPuntaje() {
 		return puntaje;
@@ -179,7 +185,7 @@ public class Tablero implements Serializable{
 		this.puntaje = puntaje;
 	}
 	
-	/////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////////
 
 	public int getRecord(int posicion) {
 		return Integer.parseInt(records[posicion][1]);
@@ -189,7 +195,7 @@ public class Tablero implements Serializable{
 		records[posicion][1]=Integer.toString(getPuntaje());
 	}
 	
-	/////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////////
 	
 	public String getNivel() {
 		return nivel;
@@ -199,15 +205,15 @@ public class Tablero implements Serializable{
 		this.nivel = nivel;
 	}
 	
-	public String getNivelDeLaLista(int posicion) {
+	public String getNivelDeLaListaDeRecords(int posicion) {
 		return records[posicion][2];
 	}
 	
-	public void setNivelDeLaLista(String nivel, int posicion) {
-		records[posicion][2]=nivel;
+	public void setNivelDeLaListaDeRecords(String nivel, int posicion) {
+		records[posicion][2]=nivel; 
 	}
 	
-	/////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////////
 	
 	public String getUsuarioConRecord(int posicion) {
 		return records[posicion][0];
@@ -217,7 +223,7 @@ public class Tablero implements Serializable{
 		this.records[posicion][0]=usuario;
 	}
 	
-	/////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////////
 	
 	public String getRecordRealizado(int posicion) {
 		return records[posicion][1];
@@ -226,16 +232,8 @@ public class Tablero implements Serializable{
 	public void setRecordRealizado(String record, int posicion) {
 		this.records[posicion][1]=record;
 	}
-	
-	public void borrarRecords() {
-		for (int i = 0; i < records.length; i++) {
-			setUsuarioConRecord("", i);
-			setRecord(0, i);
-			setNivelDeLaLista("", i);
-		}
-	}
 
-	/////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////////
 	
 	public String getNivelUsado(int posicion) {
 		return records[posicion][2];
@@ -245,7 +243,7 @@ public class Tablero implements Serializable{
 		this.records[posicion][2]=nivelUsado;
 	}
 	
-	/////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////////
 	
 	public boolean getSumaDerechaEfectuada() {
 		return sumaDerechaEfectuada;
@@ -255,6 +253,8 @@ public class Tablero implements Serializable{
 		return movDerechaEfectuado;
 	}
 	
+	////////////////////////////////////////////////////////////////////////////////////////
+	
 	public boolean getSumaIzquierdaEfectuada() {
 		return sumaIzquierdaEfectuada;
 	}
@@ -263,6 +263,8 @@ public class Tablero implements Serializable{
 		return movIzquierdaEfectuado;
 	}
 	
+	////////////////////////////////////////////////////////////////////////////////////////
+	
 	public boolean getSumaArribaEfectuada() {
 		return sumaArribaEfectuada;
 	}
@@ -270,6 +272,8 @@ public class Tablero implements Serializable{
 	public boolean getMovArribaEfectuado() {
 		return movArribaEfectuado;
 	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////
 	
 	public boolean getSumaAbajoEfectuada() {
 		return sumaAbajoEfectuada;
@@ -314,7 +318,7 @@ public class Tablero implements Serializable{
 					setRecordRealizado(Integer.toString(getRecord(actual)), siguiente);
 					setRecordRealizado(Integer.toString(getPuntaje()), actual);
 					
-					setNivelDeLaLista(getNivelDeLaLista(actual), siguiente);
+					setNivelDeLaListaDeRecords(getNivelDeLaListaDeRecords(actual), siguiente);
 					setNivelUsado(getNivel(), actual);
 				}
 			}
@@ -640,6 +644,7 @@ public class Tablero implements Serializable{
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////
+	
 	public boolean existeValor(int fila, int columna) {
 		return getValor(fila, columna) != 0;
 	}
@@ -674,12 +679,15 @@ public class Tablero implements Serializable{
 	}
 	
 	
-	/////////////////////////////METODOS PARA TESTING///////////////////////////////////
+	/////////////////////////////METODOS PARA TESTING///////////////////////////////////////
+	
 	public void agregarValoresRandom(int cant) {
 		for (int i = 0; i < cant; i++) {
 			agregarValorRandom();
 		}
 	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////
 
 	public void setFilaCompletaConValor(int fila, int valor) {
 
@@ -687,6 +695,8 @@ public class Tablero implements Serializable{
 			setValor(fila, columna, valor);
 		}
 	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////
 
 	public void setColumnaCompletaConValor(int columna, int valor) {
 
@@ -694,6 +704,8 @@ public class Tablero implements Serializable{
 			setValor(fila, columna, valor);
 		}
 	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////
 	
 	// Se utiliza acumuladores booleanos
 	public boolean verificarValoresEnColumnaCompleta(int columna, int valor) {
@@ -703,6 +715,8 @@ public class Tablero implements Serializable{
 		}
 		return ret;
 	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////
 		
 	// Se utiliza acumuladores booleanos
 	public boolean verificarValoresEnFilaCompleta(int fila, int valor) {
@@ -712,6 +726,8 @@ public class Tablero implements Serializable{
 		}
 		return ret;
 	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////
 
 	// Se utiliza acumuladores booleanos
 	public boolean verificarValoresEnTableroCompleto(int valor) {

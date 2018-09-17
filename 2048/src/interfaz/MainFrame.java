@@ -6,17 +6,13 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import java.awt.Font;
 import java.awt.Insets;
-
 import javax.swing.SwingConstants;
-
 import negocio.Tablero;
 import javax.swing.JTextField;
 import javax.swing.JPanel;
-
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Desktop;
-
 import javax.swing.JButton;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -37,6 +33,8 @@ import javax.swing.KeyStroke;
 import java.awt.event.InputEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
+////////////////////////////////////////////////////////////////////////////////////////
 
 public class MainFrame{
 
@@ -61,6 +59,7 @@ public class MainFrame{
 	
 	private JTextArea cuadroDeMsj; 
 
+	////////////////////////////////////////////////////////////////////////////////////////
 	
 	//Lanza la aplicacion
 	public static void main(String[] args) {
@@ -75,11 +74,15 @@ public class MainFrame{
 			}
 		});
 	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////
 
 	//Constructor: crea la aplicacion
 	public MainFrame() {
 		initialize();
 	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////
 
 	//Inicializa los contenidos de la ventana
 	private void initialize() {
@@ -101,14 +104,7 @@ public class MainFrame{
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////
-	/////////////////////////////////METODOS AUXILIARES/////////////////////////////////////
-	private void close(){
-        if (JOptionPane.showConfirmDialog(ventana, "¿Desea realmente salir del sistema?",
-           "Salir del sistema", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            System.exit(0);
-        }
-        
-    } 
+	
 	public void ventanaPrincipal () {
 		ventana = new JFrame();
 		ventana.setIconImage(Toolkit.getDefaultToolkit().getImage(MainFrame.class.getResource("/interfaz/icon.png")));
@@ -118,11 +114,12 @@ public class MainFrame{
 		ventana.setResizable(false);
 		ventana.getContentPane().setLayout(null);
 		
+		//Manejo del cierre de ventana
 		ventana.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-		 
 		ventana.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent evt) {
+            	guardarJuego();
                 close();
             }
         });
@@ -210,6 +207,16 @@ public class MainFrame{
 		mntmAcercaDe.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
 		mnAyuda.add(mntmAcercaDe);
 	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////
+	
+	private void close(){
+        if (JOptionPane.showConfirmDialog(ventana, "¿Desea realmente salir del sistema?",
+           "Salir del sistema", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
+        
+    } 
 	
 	////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -315,6 +322,8 @@ public class MainFrame{
 		ventana.getContentPane().add(lblPuntaje);
 	}
 	
+	////////////////////////////////////////////////////////////////////////////////////////
+	
 	public void record() {
 		
 		JLabel lblRecord = new JLabel("Record");
@@ -336,6 +345,7 @@ public class MainFrame{
 		ventana.getContentPane().add(cuadroRecord);
 	}
 	
+	////////////////////////////////////////////////////////////////////////////////////////
 	
 	private void recordsHistoricos() {
 		
@@ -379,6 +389,8 @@ public class MainFrame{
 		actualizarRecordsHistoricos();
 	}
 	
+	////////////////////////////////////////////////////////////////////////////////////////
+	
 	public void actualizarRecordsHistoricos() {
 		for (int i = 0; i < cuadrosRecordsHistoricos.length; i++) {
 			
@@ -409,6 +421,7 @@ public class MainFrame{
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////
+	
 	public void escucharTeclado(JPanel panel, JButton boton){
 		Object o = new Object();
 		if(panel != null) {
@@ -451,6 +464,8 @@ public class MainFrame{
             }
 		});
 	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////
 	
 	public void controlDeMovimiento(KeyEvent e) {
 		String tecla="";
@@ -498,6 +513,8 @@ public class MainFrame{
 	      	}
 	    }
 	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////
 
 	public void seleccionDeNivel() {
 		
@@ -511,6 +528,7 @@ public class MainFrame{
 	
 	
 	////////////////////////////////////////////////////////////////////////////////////////
+	
 	public void actualizarTableroGrafico() {
 		for(int i=0; i<4; i++) {
 			for(int j=0; j<4; j++) {
@@ -599,20 +617,16 @@ public class MainFrame{
 					cuadro.setFont(new Font("Tahoma", Font.BOLD, 14));
 				}
 			}
-			
-			
-			
 		}
 		//Si es cero
 		else {
 			cuadro.setText(null);
 			cuadro.setBackground(new Color(205,193,180));
 		}
-			
 	}
 
-
 	////////////////////////////////////////////////////////////////////////////////////////
+	
 	public void botonJuegoNuevo() {
 		
 		JButton btnJuegoNuevo = new JButton("Juego nuevo");
@@ -657,15 +671,16 @@ public class MainFrame{
 		
 		//Despues de reiniciar, se debe indicar de nuevo que escuche eventos de teclado del panel
 		escucharTeclado(null, btnJuegoNuevo);
-		
-		
-		
 	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////
 	
 	public void setUsuarioNuevo() {
 		String usuarioAMostrar = JOptionPane.showInputDialog("Ingrese su nombre de usuario: ");
 		tableroDeValores.setUsuario(usuarioAMostrar);
 	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////
 
 	public void cuadroDeMsjAlUsuario() {
 
@@ -682,6 +697,8 @@ public class MainFrame{
 
 		ventana.getContentPane().add(cuadroDeMsj);
 	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////
 	
 	public void reinicioOnuevo(String eleccion) {
 		//Se pide al tablero de negocio que se reinicie
@@ -715,20 +732,29 @@ public class MainFrame{
 		
 		actualizarTableroGrafico();
 	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////
 
 	public void actualizarPuntaje() {
 		puntajeAMostrar = Integer.toString(tableroDeValores.getPuntaje());
 		cuadroPuntaje.setText(puntajeAMostrar);
 	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////
+	
 	public void actualizarRecord() {
 		recordAMostrar = Integer.toString(tableroDeValores.getRecord(0));
 		cuadroRecord.setText(recordAMostrar);
 	}
 	
+	////////////////////////////////////////////////////////////////////////////////////////
+	
 	public void setMsj(String msj) {
 		cuadroDeMsj.selectAll();//selecciona todo el texto del jTextArea
 		cuadroDeMsj.replaceSelection(msj);//Reemplaza la seleccion con el texto que recibe
 	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////
 	
 	public void guardarJuego() {
 		try {
@@ -743,6 +769,8 @@ public class MainFrame{
 		catch (Exception ex) {
 		}
 	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////
 	
 	public void leerJuegoGuardado() {
 		
