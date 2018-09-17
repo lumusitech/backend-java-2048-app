@@ -26,16 +26,16 @@ public class Tablero {
 
 		tamanio = 4;
 		tablero = new int[tamanio][tamanio];
-		usuario = "Anónimo";
+		usuario = "";
+		nivel = "";
 		puntaje = 0;
 		records = new String [5][3];
 		for(int i=0; i<records.length; i++) {
-			records[i][0]="";
-			records[i][1]="0";
-			records[i][2]="";
+			records[i][0]="";//Nombre del Jugador con record
+			records[i][1]="0";//Record
+			records[i][2]="";//Nivel con el que hizo ese record
 		}
-		nivel = "principiante";
-		
+	
 		sumaDerechaEfectuada = true;
 		sumaIzquierdaEfectuada = true;
 		sumaArribaEfectuada = true;
@@ -44,9 +44,17 @@ public class Tablero {
 		movIzquierdaEfectuado = true;
 		movArribaEfectuado = true;
 		movAbajoEfectuado = true;
-		
 
-		agregarValoresIniciales();
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////
+	
+	public void agregarValoresIniciales() {
+		// Agrega el 1er valor al tablero (posicion y valor aleatorio)
+		agregarValorRandom();
+
+		// Agrega el 2do valor al tablero (posiciï¿½n y valor aleatorio)
+		agregarValorRandom();
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////
@@ -87,23 +95,24 @@ public class Tablero {
 	////////////////////////////////////////////////////////////////////////////////////////
 	private int dosOCuatro() {
 		int porcentaje = 0;
-		String dificultad = getNivel();
+		String dificultad = nivel;
 		
 		if(dificultad.equals("principiante")) {
 			porcentaje = 10;
 		}
-		else if(dificultad.equals("intermedio")) {
+		if(dificultad.equals("intermedio")) {
 			porcentaje = 50;
 		}
-		else if(dificultad.equals("experto")) {
-			porcentaje = 80;
+		if(dificultad.equals("experto")) {
+			porcentaje = 85;
 		}
 		
 		Random r = new Random();
 		if (r.nextInt(100) < porcentaje) {
 			return 2;
 		}
-		return 4;
+	
+		return 4; 
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////
@@ -272,16 +281,6 @@ public class Tablero {
 
 		agregarValoresIniciales();
 
-	}
-	
-	////////////////////////////////////////////////////////////////////////////////////////
-
-	public void agregarValoresIniciales() {
-		// Agrega el 1er valor al tablero (posicion y valor aleatorio)
-		agregarValorRandom();
-
-		// Agrega el 2do valor al tablero (posiciï¿½n y valor aleatorio)
-		agregarValorRandom();
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////

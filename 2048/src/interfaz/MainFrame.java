@@ -90,10 +90,7 @@ public class MainFrame{
 		recordsHistoricos();
 		actualizarRecord();
 		
-		usuarioNuevo();
-		
 		cuadroDeMsjAlUsuario();
-		
 		setMsj("Hola "+tableroDeValores.getUsuario()+" Bienvenid@ a 2048");
 		
 		botonJuegoNuevo();
@@ -206,6 +203,9 @@ public class MainFrame{
 		
 		//Se crea un nuevo tablero de valores (negocio)
 		tableroDeValores = new Tablero();
+		setUsuarioNuevo();
+		seleccionDeNivel();
+		agregarValoresIniciales();
 		
 		int tamanio= tableroDeValores.getTamanio();
 		//Inicializan variables del tablero grafico y la posicion de los cuadros
@@ -241,8 +241,14 @@ public class MainFrame{
 				}
 			}
 		}
-		actualizarTableroGrafico();
 		
+		actualizarTableroGrafico();
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////
+
+	public void agregarValoresIniciales() {
+		tableroDeValores.agregarValoresIniciales();
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////
@@ -346,13 +352,13 @@ public class MainFrame{
 			
 			
 			if(nivelDeUsuario.equals("principiante")) {
-				cuadrosRecordsHistoricos[i].setBackground(new Color(100,193,100));
+				cuadrosRecordsHistoricos[i].setBackground(new Color(180,200,180));
 			}
 			else if(nivelDeUsuario.equals("intermedio")) {
-				cuadrosRecordsHistoricos[i].setBackground(new Color(193,193,100));
+				cuadrosRecordsHistoricos[i].setBackground(new Color(200,200,150));
 			}
 			else if(nivelDeUsuario.equals("experto")) {
-				cuadrosRecordsHistoricos[i].setBackground(new Color(193,100,100));
+				cuadrosRecordsHistoricos[i].setBackground(new Color(200,150,150));
 			}
 			else {
 				cuadrosRecordsHistoricos[i].setBackground(new Color(205,193,180));
@@ -588,11 +594,9 @@ public class MainFrame{
 		escucharTeclado(null, btnJuegoNuevo);
 	}
 	
-	public void usuarioNuevo() {
-		String usuarioIngresado = JOptionPane.showInputDialog("Ingrese su nombre de usuario: ");
-		if(usuarioIngresado!=null) {
-			tableroDeValores.setUsuario(usuarioIngresado);
-		}
+	public void setUsuarioNuevo() {
+		String usuarioAMostrar = JOptionPane.showInputDialog("Ingrese su nombre de usuario: ");
+		tableroDeValores.setUsuario(usuarioAMostrar);
 	}
 
 	public void cuadroDeMsjAlUsuario() {
@@ -632,7 +636,7 @@ public class MainFrame{
 		actualizarRecordsHistoricos();
 		
 		if(eleccion.equals("nuevo")) {
-			usuarioNuevo();
+			setUsuarioNuevo();
 			seleccionDeNivel();
 			
 			setMsj("Hola "+tableroDeValores.getUsuario()+" Bienvenido a 2048");
