@@ -783,7 +783,7 @@ public class MainFrame{
 	public void msjPorEscape() {
 		String usuarioActual = tableroDeValores.getUsuario();
 		int puntaje = Integer.parseInt(puntajeAMostrar);
-		int record = Integer.parseInt(recordAMostrar);
+		int record = tableroDeValores.getRecord(0);
 		if(puntaje == 0) {
 			setMsj("No te rindas "+usuarioActual+" que acabas de empezar!");
 		}
