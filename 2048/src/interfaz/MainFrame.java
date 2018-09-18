@@ -861,7 +861,7 @@ public class MainFrame{
 			if(opcion==0) {
 				
 			}
-			else if(opcion==1){
+			else if(opcion==1){ 
 				setMsj("Lo sabía "+usuarioActual+"! Esa forma de moverse no es de humanos XD!");
 			}
 		}

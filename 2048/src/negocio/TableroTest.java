@@ -5,7 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-class TableroTest {
+class TableroTest { 
 
 	@Test
 	public void agregarValorRandomTableroCompletoTest() {

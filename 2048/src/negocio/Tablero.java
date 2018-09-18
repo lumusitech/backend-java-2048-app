@@ -65,7 +65,7 @@ public class Tablero implements Serializable{
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////
-	public boolean agregarValorRandom() {
+	boolean agregarValorRandom() {
 		if (lugarAleatorio()) {
 			// busca un lugar aleatorio disponible
 			setValor(fila, columna, dosOCuatro());// asigna a ese lugar dos o cuatro aleatoriamente
@@ -75,7 +75,7 @@ public class Tablero implements Serializable{
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////
-	private boolean lugarAleatorio() {
+	boolean lugarAleatorio() {
 		Random r1 = new Random();
 		Random r2 = new Random();
 
@@ -101,7 +101,7 @@ public class Tablero implements Serializable{
 
 	////////////////////////////////////////////////////////////////////////////////////////
 	
-	private int dosOCuatro() {
+	int dosOCuatro() {
 		int porcentaje = 0;
 		String dificultad = nivel;
 		
@@ -124,7 +124,7 @@ public class Tablero implements Serializable{
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////
-	public boolean existeLugarDisponible() {
+	boolean existeLugarDisponible() {
 
 		for (int i = 0; i < getTamanio(); i++) {
 			for (int j = 0; j < getTamanio(); j++) {
@@ -181,7 +181,7 @@ public class Tablero implements Serializable{
 		return puntaje;
 	}
 	
-	private void setPuntaje(int puntaje) {
+	void setPuntaje(int puntaje) {
 		this.puntaje = puntaje;
 	}
 	
@@ -205,11 +205,11 @@ public class Tablero implements Serializable{
 		this.nivel = nivel;
 	}
 	
-	public String getNivelDeLaListaDeRecords(int posicion) {
+	String getNivelDeLaListaDeRecords(int posicion) {
 		return records[posicion][2];
 	}
 	
-	public void setNivelDeLaListaDeRecords(String nivel, int posicion) {
+	void setNivelDeLaListaDeRecords(String nivel, int posicion) {
 		records[posicion][2]=nivel; 
 	}
 	
@@ -225,11 +225,11 @@ public class Tablero implements Serializable{
 	
 	////////////////////////////////////////////////////////////////////////////////////////
 	
-	public String getRecordRealizado(int posicion) {
+	String getRecordRealizado(int posicion) {
 		return records[posicion][1];
 	}
 	
-	public void setRecordRealizado(String record, int posicion) {
+	void setRecordRealizado(String record, int posicion) {
 		this.records[posicion][1]=record;
 	}
 
@@ -239,7 +239,7 @@ public class Tablero implements Serializable{
 		return records[posicion][2];
 	}
 	
-	public void setNivelUsado(String nivelUsado, int posicion) {
+	void setNivelUsado(String nivelUsado, int posicion) {
 		this.records[posicion][2]=nivelUsado;
 	}
 	
@@ -258,41 +258,41 @@ public class Tablero implements Serializable{
 	
 	////////////////////////////////////////////////////////////////////////////////////////
 	
-	public boolean getSumaDerechaEfectuada() {
+	boolean getSumaDerechaEfectuada() {
 		return sumaDerechaEfectuada;
 	}
 	
-	public boolean getMovDerechaEfectuado() {
+	boolean getMovDerechaEfectuado() {
 		return movDerechaEfectuado;
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////
 	
-	public boolean getSumaIzquierdaEfectuada() {
+	boolean getSumaIzquierdaEfectuada() {
 		return sumaIzquierdaEfectuada;
 	}
 	
-	public boolean getMovIzquierdaEfectuado() {
+	boolean getMovIzquierdaEfectuado() {
 		return movIzquierdaEfectuado;
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////
 	
-	public boolean getSumaArribaEfectuada() {
+	boolean getSumaArribaEfectuada() {
 		return sumaArribaEfectuada;
 	}
 	
-	public boolean getMovArribaEfectuado() {
+	boolean getMovArribaEfectuado() {
 		return movArribaEfectuado;
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////
 	
-	public boolean getSumaAbajoEfectuada() {
+	boolean getSumaAbajoEfectuada() {
 		return sumaAbajoEfectuada;
 	}
 	
-	public boolean getMovAbajoEfectuado() {
+	boolean getMovAbajoEfectuado() {
 		return movAbajoEfectuado;
 	}
 
@@ -312,7 +312,7 @@ public class Tablero implements Serializable{
 	
 	////////////////////////////////////////////////////////////////////////////////////////
 
-	public void controlDePuntajes() {
+	void controlDePuntajes() {
 		
 		for(int i=records.length-1; i>=0; i--) {
 			
@@ -342,7 +342,7 @@ public class Tablero implements Serializable{
 	
 	////////////////////////////////////////////////////////////////////////////////////////
 
-	public void vaciarTablero() {
+	void vaciarTablero() {
 		for (int i = 0; i < tamanio; i++) {
 			for (int j = 0; j < tamanio; j++) {
 				// Pone a todas las posiciones en cero
@@ -403,7 +403,7 @@ public class Tablero implements Serializable{
 	
 	////////////////////////////////////////////////////////////////////////////////////////
 
-	public boolean juegoActivo() {
+	boolean juegoActivo() {
 		
 		//si no hay sumas ni movmientos posibles el juego ya no estará activo, termina
 		if( (!getSumaDerechaEfectuada()    &&   !getMovDerechaEfectuado()) 
@@ -418,7 +418,7 @@ public class Tablero implements Serializable{
 	
 	////////////////////////////////////////////////////////////////////////////////////////
 	
-	private void resetearSumasYMov() {
+	void resetearSumasYMov() {
 		//agregar los set correspondientes
 		sumaDerechaEfectuada = true;
 		sumaIzquierdaEfectuada = true;
@@ -434,7 +434,7 @@ public class Tablero implements Serializable{
 
 	////////////////////////////////////////////////////////////////////////////////////////
 	
-	public boolean sumarDerecha() {
+	boolean sumarDerecha() {
 		int cont = 0;
 		for (int fila = 0; fila < tamanio; fila++) {
 			for (int columna = tamanio-1; columna > 0; columna--) {
@@ -446,7 +446,7 @@ public class Tablero implements Serializable{
 		return cont > 0;
 	}
 	
-	private boolean sumarDerecha(int fila, int actual, int anterior) {
+	boolean sumarDerecha(int fila, int actual, int anterior) {
 		if(anterior >= 0 && existeValor(fila, actual)) {
 			if(!existeValor(fila, anterior)) {
 				return sumarDerecha(fila, actual, anterior-1);
@@ -461,7 +461,7 @@ public class Tablero implements Serializable{
 
 	////////////////////////////////////////////////////////////////////////////////////////
 	
-	public boolean moverDerecha() {
+	boolean moverDerecha() {
 		int cont = 0;
 		for (int fila = 0; fila < tamanio; fila++) {
 			for (int columna = tamanio-1; columna > 0; columna--) {
@@ -475,7 +475,7 @@ public class Tablero implements Serializable{
 		return cont > 0;
 	}
 	
-	private boolean moverDerecha(int fila, int lugarLibre, int anterior) {
+	boolean moverDerecha(int fila, int lugarLibre, int anterior) {
 		if(anterior >= 0) {
 			if(!existeValor(fila, anterior)) {
 				return moverDerecha(fila, lugarLibre, anterior-1);
@@ -490,7 +490,7 @@ public class Tablero implements Serializable{
 	
 	////////////////////////////////////////////////////////////////////////////////////////
 	
-	public boolean sumarIzquierda() {
+	boolean sumarIzquierda() {
 		int cont = 0;
 		for (int fila = 0; fila < tamanio; fila++) {
 			for (int columna = 0; columna < tamanio; columna++) {
@@ -502,7 +502,7 @@ public class Tablero implements Serializable{
 		return cont > 0;
 	}
 	
-	private boolean sumarIzquierda(int fila, int actual, int siguiente) {
+	boolean sumarIzquierda(int fila, int actual, int siguiente) {
 		if(siguiente < tamanio && existeValor(fila, actual)) {
 			if(!existeValor(fila, siguiente)) {
 				return sumarIzquierda(fila, actual, siguiente+1);
@@ -517,7 +517,7 @@ public class Tablero implements Serializable{
 	
 	////////////////////////////////////////////////////////////////////////////////////////
 	
-	public boolean moverIzquierda() {
+	boolean moverIzquierda() {
 		int cont = 0;
 		for (int fila = 0; fila < tamanio; fila++) {
 			for (int columna = 0; columna < tamanio; columna++) {
@@ -531,7 +531,7 @@ public class Tablero implements Serializable{
 		return cont > 0;
 	}
 	
-	private boolean moverIzquierda(int fila, int lugarLibre, int siguiente) {
+	boolean moverIzquierda(int fila, int lugarLibre, int siguiente) {
 		if(siguiente < tamanio) {
 			if(!existeValor(fila, siguiente)) {
 				return moverIzquierda(fila, lugarLibre, siguiente+1);
@@ -546,7 +546,7 @@ public class Tablero implements Serializable{
 	
 	////////////////////////////////////////////////////////////////////////////////////////
 	
-	public boolean sumarArriba() {
+	boolean sumarArriba() {
 		int cont = 0;
 		for (int columna = 0; columna < tamanio; columna++) {
 			for (int fila = 0; fila < tamanio; fila++) {
@@ -558,7 +558,7 @@ public class Tablero implements Serializable{
 		return cont > 0;
 	}
 	
-	private boolean sumarArriba(int columna, int actual, int siguiente) {
+	boolean sumarArriba(int columna, int actual, int siguiente) {
 		if(siguiente < tamanio && existeValor(actual, columna)) {
 			if(!existeValor(siguiente, columna)) {
 				return sumarArriba(columna, actual, siguiente+1);
@@ -573,7 +573,7 @@ public class Tablero implements Serializable{
 	
 	////////////////////////////////////////////////////////////////////////////////////////
 	
-	public boolean moverArriba() {
+	boolean moverArriba() {
 		int cont = 0;
 		for (int columna = 0; columna < tamanio; columna++) {
 			for (int fila = 0; fila < tamanio; fila++) {
@@ -587,7 +587,7 @@ public class Tablero implements Serializable{
 		return cont > 0;
 	}
 	
-	private boolean moverArriba(int columna, int lugarLibre, int siguiente) {
+	boolean moverArriba(int columna, int lugarLibre, int siguiente) {
 		if(siguiente < tamanio) {
 			if(!existeValor(siguiente, columna)) {
 				return moverArriba(columna, lugarLibre, siguiente+1);
@@ -602,7 +602,7 @@ public class Tablero implements Serializable{
 
 	////////////////////////////////////////////////////////////////////////////////////////
 	
-	public boolean sumarAbajo() {
+	boolean sumarAbajo() {
 		int cont = 0;
 		for (int columna = 0; columna < tamanio; columna++) {
 			for (int fila = tamanio-1; fila > 0; fila--) {
@@ -614,7 +614,7 @@ public class Tablero implements Serializable{
 		return cont > 0;
 	}
 	
-	private boolean sumarAbajo(int columna, int actual, int anterior) {
+	boolean sumarAbajo(int columna, int actual, int anterior) {
 		if(anterior >= 0 && existeValor(actual, columna)) {
 			if(!existeValor(anterior, columna)) {
 				return sumarAbajo(columna, actual, anterior-1);
@@ -629,7 +629,7 @@ public class Tablero implements Serializable{
 
 	////////////////////////////////////////////////////////////////////////////////////////
 	
-	public boolean moverAbajo() {
+	boolean moverAbajo() {
 		int cont = 0;
 		for (int columna = 0; columna < tamanio; columna++) {
 			for (int fila = tamanio-1; fila > 0; fila--) {
@@ -643,7 +643,7 @@ public class Tablero implements Serializable{
 		return cont > 0;
 	}
 	
-	private boolean moverAbajo(int columna, int lugarLibre, int anterior) {
+	boolean moverAbajo(int columna, int lugarLibre, int anterior) {
 		if(anterior >= 0) {
 			if(!existeValor(anterior, columna)) {
 				return moverAbajo(columna, lugarLibre, anterior-1);
@@ -658,13 +658,13 @@ public class Tablero implements Serializable{
 
 	////////////////////////////////////////////////////////////////////////////////////////
 	
-	public boolean existeValor(int fila, int columna) {
+	boolean existeValor(int fila, int columna) {
 		return getValor(fila, columna) != 0;
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////
 	
-	public void sumarCuadrosDeFila(int fila, int actual, int cuadroASumar) {
+	void sumarCuadrosDeFila(int fila, int actual, int cuadroASumar) {
 		// los sumo
 		int suma = (getValor(fila, actual)) + (getValor(fila, cuadroASumar));
 		setValor(fila, actual, suma);
@@ -674,7 +674,7 @@ public class Tablero implements Serializable{
 		puntaje += suma;
 	}
 	
-	public void sumarCuadrosDeColumna(int columna, int actual, int cuadroASumar) {
+	void sumarCuadrosDeColumna(int columna, int actual, int cuadroASumar) {
 		// los sumo
 		int suma = (getValor(actual, columna)) + (getValor(cuadroASumar, columna));
 		setValor(actual, columna, suma);
@@ -686,7 +686,7 @@ public class Tablero implements Serializable{
 	
 	////////////////////////////////////////////////////////////////////////////////////////
 	
-	public void moverCuadro(int OrigenFila, int OrigenColumna, int DestinoFila, int DestinoColumna) {
+	void moverCuadro(int OrigenFila, int OrigenColumna, int DestinoFila, int DestinoColumna) {
 		setValor(DestinoFila, DestinoColumna, getValor(OrigenFila, OrigenColumna));
 		setValor(OrigenFila, OrigenColumna, 0);
 	}
@@ -694,7 +694,7 @@ public class Tablero implements Serializable{
 	
 	/////////////////////////////METODOS PARA TESTING///////////////////////////////////////
 	
-	public void agregarValoresRandom(int cant) {
+	void agregarValoresRandom(int cant) {
 		for (int i = 0; i < cant; i++) {
 			agregarValorRandom();
 		}
@@ -702,7 +702,7 @@ public class Tablero implements Serializable{
 	
 	////////////////////////////////////////////////////////////////////////////////////////
 
-	public void setFilaCompletaConValor(int fila, int valor) {
+	void setFilaCompletaConValor(int fila, int valor) {
 
 		for (int columna = 0; columna < getTamanio(); columna++) {
 			setValor(fila, columna, valor);
@@ -711,7 +711,7 @@ public class Tablero implements Serializable{
 	
 	////////////////////////////////////////////////////////////////////////////////////////
 
-	public void setColumnaCompletaConValor(int columna, int valor) {
+	void setColumnaCompletaConValor(int columna, int valor) {
 
 		for (int fila = 0; fila < getTamanio(); fila++) {
 			setValor(fila, columna, valor);
@@ -721,7 +721,7 @@ public class Tablero implements Serializable{
 	////////////////////////////////////////////////////////////////////////////////////////
 	
 	// Se utiliza acumuladores booleanos
-	public boolean verificarValoresEnColumnaCompleta(int columna, int valor) {
+	boolean verificarValoresEnColumnaCompleta(int columna, int valor) {
 		boolean ret = true;
 		for (int fila = 0; fila < getTamanio() && ret; fila++) {
 			ret = ret && (getValor(fila, columna) == valor);
@@ -732,9 +732,9 @@ public class Tablero implements Serializable{
 	////////////////////////////////////////////////////////////////////////////////////////
 		
 	// Se utiliza acumuladores booleanos
-	public boolean verificarValoresEnFilaCompleta(int fila, int valor) {
+	boolean verificarValoresEnFilaCompleta(int fila, int valor) {
 		boolean ret = true;
-		for (int columna = 0; columna < getTamanio() && ret; columna++) {
+		for (int columna = 0; columna < getTamanio() && ret; columna++) { 
 			ret = ret && (getValor(fila, columna) == valor);			
 		}
 		return ret;
@@ -743,7 +743,7 @@ public class Tablero implements Serializable{
 	////////////////////////////////////////////////////////////////////////////////////////
 
 	// Se utiliza acumuladores booleanos
-	public boolean verificarValoresEnTableroCompleto(int valor) {
+	boolean verificarValoresEnTableroCompleto(int valor) {
 		boolean ret = true;
 		for (int fila = 0; fila < getTamanio(); fila++) {
 			for (int columna = 0; columna < getTamanio() && ret; columna++) {
