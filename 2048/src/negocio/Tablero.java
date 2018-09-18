@@ -243,6 +243,17 @@ public class Tablero implements Serializable{
 		this.records[posicion][2]=nivelUsado;
 	}
 	
+	public boolean estaValor2048EnTablero() {
+		for (int i = 0; i < tamanio; i++) {
+			for (int j = 0; j < tamanio; j++) {
+				if(getValor(i, j)==2048) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
 	////////////////////////////////////////////////////////////////////////////////////////
 	
 	public boolean getSumaDerechaEfectuada() {

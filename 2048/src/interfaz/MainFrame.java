@@ -476,6 +476,11 @@ public class MainFrame{
 		
 	    if(e.getKeyCode()==codigoTecla){
 	    	if(tableroDeValores.mover(tecla)) {
+	    		msjPorPuntaje();
+	    		if(Integer.parseInt(puntajeAMostrar)==8000) {
+	    			msjPorLograr2048EnTablero();
+	    		}
+	    		
 	    		actualizarTableroGrafico();
 	    		actualizarPuntaje();
 	    		
@@ -827,6 +832,8 @@ public class MainFrame{
 		}
 	}
 	
+	////////////////////////////////////////////////////////////////////////////////////////
+	
 	public void msjPorSuperarRecord() {
 		String usuarioActual = tableroDeValores.getUsuario();
 		int puntaje = Integer.parseInt(puntajeAMostrar);
@@ -835,6 +842,40 @@ public class MainFrame{
 		}
 		if(puntaje >= 4000) {
 			setMsj("Muy bien hecho "+usuarioActual+"! tu record va a ser difícil de superar! ");
+		}
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////
+	
+	public void msjPorPuntaje() {
+		String usuarioActual = tableroDeValores.getUsuario();
+		int puntaje = Integer.parseInt(puntajeAMostrar);
+		if(puntaje == 1000) {
+			setMsj("Observa tu puntaje "+usuarioActual+"!  Ya superaste la barrera de los 1000");
+		}
+		else if(puntaje == 2000) {
+			setMsj("Observa tu puntaje "+usuarioActual+"!  Ya superaste la barrera de los 2000");
+		}
+		else if(puntaje == 5000) {
+			int opcion=JOptionPane.showConfirmDialog(ventana,"Wow!!! Seguro que eres humano "+usuarioActual+"?");
+			if(opcion==0) {
+				
+			}
+			else if(opcion==1){
+				setMsj("Lo sabía "+usuarioActual+"! Esa forma de moverse no es de humanos XD!");
+			}
+		}
+		else if(puntaje > 8000){
+			setMsj("Sigue sumando "+usuarioActual+"! Intenta alcanzar 2048 en un cuadro del del tablero!");
+		}
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////
+	
+	public void msjPorLograr2048EnTablero() {
+		String usuarioActual = tableroDeValores.getUsuario();
+		if(tableroDeValores.estaValor2048EnTablero()) {
+			setMsj("Lograste Formar 2048 en el tablero "+usuarioActual+"! Consigue un record inalcanzable!");
 		}
 	}
 }
