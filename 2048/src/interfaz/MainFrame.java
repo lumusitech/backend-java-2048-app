@@ -156,8 +156,9 @@ public class MainFrame{
 		JMenuItem mntmReiniciar = new JMenuItem("Reiniciar");
 		mntmReiniciar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int opcion=JOptionPane.showConfirmDialog(ventana,"Seguro que quieres reiniciar el juego?");
+				int opcion=JOptionPane.showConfirmDialog(ventana,"Confirmas que quieres reiniciar el juego?");
         		if(opcion==0) {
+        			guardarJuego();
         			reinicioOnuevo("reinicio");
         		}
 			}
@@ -170,13 +171,13 @@ public class MainFrame{
 		JMenuItem mntmSalir = new JMenuItem("Salir");
 		mntmSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int opcion=JOptionPane.showConfirmDialog(ventana,"Seguro que quieres reiniciar?");
+				int opcion=JOptionPane.showConfirmDialog(ventana,"Confirmas que quieres salir de juego?");
         		if(opcion==0) {
         			guardarJuego();
         			System.exit(0);
         		}
         		else {
-        			setMsj("Excelente! sigue sumando!");
+        			setMsj("Excelente! sigue sumando "+tableroDeValores.getUsuario()+"!");
         		}
 			}
 		});
@@ -193,7 +194,7 @@ public class MainFrame{
 		
 		//Ayuda --> Acerca De
 		JMenuItem mntmAcercaDe = new JMenuItem("Acerca De");
-		mntmAcercaDe.setToolTipText("Informaci\u00F3n del juego y su desarrollo");
+		mntmAcercaDe.setToolTipText("Informe del juego y su desarrollo");
 		mntmAcercaDe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
 				try {
@@ -211,7 +212,7 @@ public class MainFrame{
 	////////////////////////////////////////////////////////////////////////////////////////
 	
 	private void close(){
-        if (JOptionPane.showConfirmDialog(ventana, "¿Desea realmente salir del sistema?",
+        if (JOptionPane.showConfirmDialog(ventana, "¿Desea realmente salir del Juego?",
            "Salir del sistema", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             System.exit(0);
         }
@@ -439,26 +440,12 @@ public class MainFrame{
 				//metodo que controla el movimiento de teclas
 				controlDeMovimiento(e);
 
-                if(e.getKeyCode()==KeyEvent.VK_ESCAPE){
-                	
-                	String usuarioActual = tableroDeValores.getUsuario();
-                	setMsj("No te rindas "+usuarioActual+" llevas solo "+puntajeAMostrar+" puntos :(");
-                	
-                	int opcion=JOptionPane.showConfirmDialog(ventana,"Seguro que quieres reiniciar?");
-            		if(opcion==0) {
-            			guardarJuego();
-            			System.exit(0);
-            		}
-            		else {
-            			setMsj("Excelente! sigue sumando!");
-            		}
+                if(e.getKeyCode()==KeyEvent.VK_ESCAPE){	
+                	msjPorEscape();
                 }
                 
                 if(e.getKeyCode()==KeyEvent.VK_ENTER){
-                	int opcion=JOptionPane.showConfirmDialog(ventana,"Seguro que quieres reiniciar el juego?");
-            		if(opcion==0) {
-            			reinicioOnuevo("reinicio");
-            		}
+                	msjPorReinicio();
                 }
                 
             }
@@ -496,8 +483,7 @@ public class MainFrame{
 	    		if(tableroDeValores.getPuntaje() > tableroDeValores.getRecord(0)) {
 	    			puntajeAMostrar = Integer.toString(tableroDeValores.getPuntaje());
 	    			cuadroRecord.setText(puntajeAMostrar);
-	    			
-	    			setMsj("Excelente! Lograste superar el record de "+tableroDeValores.getRecord(0));
+	    			msjPorSuperarRecord();
 	    		}
 	    	}
 	      	else {
@@ -784,6 +770,71 @@ public class MainFrame{
 			in.close();
 		}
 		catch (Exception ex) {
+		}
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////
+	
+	public void msjPorEscape() {
+		String usuarioActual = tableroDeValores.getUsuario();
+		int puntaje = Integer.parseInt(puntajeAMostrar);
+		int record = Integer.parseInt(recordAMostrar);
+		if(puntaje == 0) {
+			setMsj("No te rindas "+usuarioActual+" que acabas de empezar!");
+		}
+		else if(puntaje < 200) {
+			setMsj("No te rindas "+usuarioActual+" que recién llevas "+puntajeAMostrar+" puntos :(");
+		}
+		if(puntaje >= 200 && puntaje < 2000) {
+			if(puntaje >= record) {
+				setMsj("Mira tu record "+usuarioActual+"!  aún es muy bajo y fácil de superar por otros!");
+			}
+			else {
+				setMsj("No te rindas "+usuarioActual+" que "+puntajeAMostrar+" puntos es muy bajo aún :(");
+			}
+		}
+		if(puntaje >= 2000) {
+			if(puntaje >= record) {
+				setMsj("Mira tu record "+usuarioActual+"! "+record+" puntos no está nada mal! ");
+			}
+			else {
+				setMsj("No te rindas "+usuarioActual+" que ya superaste los "+puntajeAMostrar+" puntos :(");
+			}
+		}
+		
+		int opcion=JOptionPane.showConfirmDialog(ventana,"Seguro que quieres salir del juego?");
+		if(opcion==0) {
+			guardarJuego();
+			System.exit(0);
+		}
+		else {
+			if(puntaje == 0) {
+				setMsj("Excelente! comienza a sumar!");
+			}
+			else {
+				setMsj("Excelente! sigue sumando!");
+			}
+			
+		}
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////
+	
+	public void msjPorReinicio() {
+		int opcion=JOptionPane.showConfirmDialog(ventana,"Seguro que quieres reiniciar el juego?");
+		if(opcion==0) {
+			reinicioOnuevo("reinicio");
+		}
+	}
+	
+	public void msjPorSuperarRecord() {
+		String usuarioActual = tableroDeValores.getUsuario();
+		int puntaje = Integer.parseInt(puntajeAMostrar);
+		if(puntaje >= 0 && puntaje < 4000 ) {
+			setMsj("Llevas el record de "+puntaje+" puntos "+usuarioActual+"! ");
+		}
+		if(puntaje >= 4000) {
+			setMsj("Muy bien hecho "+usuarioActual+"! tu record va a ser difícil de superar! ");
 		}
 	}
 }
