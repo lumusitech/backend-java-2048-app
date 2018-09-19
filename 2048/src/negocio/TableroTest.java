@@ -22,51 +22,6 @@ class TableroTest {
 		
 	}
 
-//	@Test
-//	public void controlDePuntajesMenorQueRecordTest() {
-//
-//		// setup
-//		Tablero tablero = new Tablero();
-//
-//		// excercise
-//		tablero.setPuntaje(2000);
-//		tablero.setRecord(64);
-//		tablero.controlDePuntajes();
-//		
-//		// verify
-//		assertTrue(tablero.getRecord() == 2000);
-//	}
-//	
-//	@Test
-//	public void controlDePuntajesMayorQueRecordTest() {
-//
-//		// setup
-//		Tablero tablero = new Tablero();
-//
-//		// excercise
-//		tablero.setPuntaje(2000);
-//		tablero.setRecord(4000);
-//		tablero.controlDePuntajes();
-//		
-//		// verify
-//		assertTrue(tablero.getRecord() == 4000);
-//	}
-	
-//	@Test
-//	public void controlDePuntajesIgualQueRecordTest() {
-//
-//		// setup
-//		Tablero tablero = new Tablero();
-//
-//		// excercise
-//		tablero.setPuntaje(2000);
-//		tablero.reiniciar();
-//		tablero.setPuntaje(2000);
-//		
-//		// verify
-//		assertTrue(tablero.getPuntaje() == tablero.getRecord());
-//	}
-
 	@Test
 	public void moverCuadroPosicionOrigenTest() {
 
@@ -2596,35 +2551,4 @@ class TableroTest {
 		assertTrue(tablero.existeLugarDisponible());
 		
 	}
-	
-//	@Test
-//	public void puntajeTest() {
-//		// setup
-//		Tablero tablero = new Tablero(); 
-//
-//		// excercise
-//		tablero.reiniciar();
-//		tablero.setPuntaje(128);
-//		tablero.setRecord(64);
-//		
-//		
-//		// verify
-//		assertFalse(tablero.getPuntaje() < tablero.getRecord());
-//		
-//	}
-//	
-//	@Test
-//	public void puntajeMayorTest() {
-//		// setup
-//		Tablero tablero = new Tablero();
-//
-//		// excercise
-//		tablero.setPuntaje(128);
-//		tablero.setRecord(64);
-//		
-//		// verify
-//		assertTrue(tablero.getPuntaje() > tablero.getRecord());
-//		
-//	}
-
 }
